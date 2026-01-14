@@ -98,7 +98,9 @@ public class AbsoluteDrive extends Command {
       // the joystick is near the center (i. e. has been released), in which case the angle is held
       // at the last valid joystick input (hold position when stick released).
       if (Math.hypot(headingHorizontal.getAsDouble(), headingVertical.getAsDouble()) < 0.5) {
-        angle = lastAngle;
+        //angle = lastAngle; //used for pass years normal swerve
+        angle = Math.atan2(vX.getAsDouble(),vY.getAsDouble()); //fake tank
+
       } else {
         angle = Math.atan2(headingHorizontal.getAsDouble(), headingVertical.getAsDouble());
       }
