@@ -3,8 +3,9 @@ package frc.robot;
 // import com.revrobotics.spark.SparkFlex;
 // import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.RelativeEncoder;
@@ -71,13 +72,14 @@ public class SwerveModule {
             .averageDepth(1);
         angleMotorConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-            .pidf(Drivebase.MODULE_KP,
-                  Drivebase.MODULE_KI,
-                  Drivebase.MODULE_KD,
-                  Drivebase.MODULE_KF)
             .iZone(Drivebase.MODULE_IZ)
             .positionWrappingEnabled(true)
-            .positionWrappingInputRange(-180,180);
+            .positionWrappingInputRange(-180,180)
+            .pid(Drivebase.MODULE_KP,
+                  Drivebase.MODULE_KI,
+                  Drivebase.MODULE_KD)
+            .feedForward.kV(Drivebase.MODULE_KF);
+
             
         angleMotor.configure(angleMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
             
@@ -99,14 +101,14 @@ public class SwerveModule {
             .uvwAverageDepth(1); //uvwAverageDepth instead of quadratureAverageDepth, guessed based on old value
         driveMotorConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pidf(Drivebase.VELOCITY_KP,
-                  Drivebase.VELOCITY_KI,
-                  Drivebase.VELOCITY_KD,
-                  Drivebase.VELOCITY_KF)
             .iZone(Drivebase.VELOCITY_IZ)
             .positionWrappingEnabled(true)
-            .positionWrappingInputRange(-180,180);
-            
+            .positionWrappingInputRange(-180,180)
+            .pid(Drivebase.VELOCITY_KP,
+                  Drivebase.VELOCITY_KI,
+                  Drivebase.VELOCITY_KD)
+            .feedForward.kV(Drivebase.VELOCITY_KF);
+        
             
         driveMotor.configure(driveMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -142,13 +144,13 @@ public class SwerveModule {
             driveMotor.set(percentOutput);
         } else {
             double velocity = desiredState.speedMetersPerSecond;
-            driveController.setReference(velocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0, feedforward.calculate(velocity));
+            driveController.setSetpoint(velocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0, feedforward.calculate(velocity));
         }
 
         double angle = ((Math.abs(desiredState.speedMetersPerSecond) <= (Drivebase.MAX_SPEED * 0.001)) && antijitter ? 
             lastAngle :
             desiredState.angle.getDegrees()); // Prevents module rotation if speed is less than 1%
-        angleController.setReference(angle, ControlType.kPosition);
+        angleController.setSetpoint(angle, ControlType.kPosition);
         lastAngle = angle;
 
         this.angle = desiredState.angle.getDegrees();
@@ -162,7 +164,7 @@ public class SwerveModule {
     }
 
     public void setAzimuth(Rotation2d azimuth) {
-        angleController.setReference(azimuth.getDegrees(), ControlType.kPosition);
+        angleController.setSetpoint(azimuth.getDegrees(), ControlType.kPosition);
     }
 
     public void setDriveVolts(double volts) {

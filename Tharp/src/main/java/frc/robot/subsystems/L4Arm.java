@@ -25,7 +25,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import edu.wpi.first.units.Measure;
@@ -82,11 +82,12 @@ public class L4Arm extends SubsystemBase {
 
     shoulderConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-      .pidf(L4ArmConstants.KP,
+      
+      .outputRange(L4ArmConstants.OutputRangeMin, L4ArmConstants.OutputRangeMax)
+      .pid(L4ArmConstants.KP,
             L4ArmConstants.KI,
-            L4ArmConstants.KD,
-            L4ArmConstants.KF)
-      .outputRange(L4ArmConstants.OutputRangeMin, L4ArmConstants.OutputRangeMax);
+            L4ArmConstants.KD)
+      .feedForward.kV(L4ArmConstants.KF);
     
     
     shoulderConfig.absoluteEncoder
