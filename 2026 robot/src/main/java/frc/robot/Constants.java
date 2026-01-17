@@ -195,6 +195,43 @@ public final class Constants {
 
         public static final int PIGEON = 30;
     }
+    public static final class ShooterConstants{
+        public static final int TOPROLLER_ID = 1;
+
+        public static final boolean TOPROLLERINVERTED = false;
+
+        public static final int TOPROLLER_SMARTCURRENTLIMIT = 30;
+
+        public static final boolean PRIMARY_ENCODER_POSITION_ALWAYS_ON = false;
+        public static final boolean PRIMARY_ENCODER_VELOCITY_ALWAYS_ON = true;
+        public static final int PRIMARY_ENCODER_VELOCITY_PERIOD = 20;
+        public static final boolean PRIMARY_ENCODER_INVERTED = false;
+        public static final double PRIMARY_ENCODER_OFFSET = 0;
+
+        public static final double TOPROLLER_KP = 0;
+        public static final double TOPROLLER_KI = 0;
+        public static final double TOPROLLER_KD = 0;
+        public static final double TOPROLLER_KS = 0;
+        public static final double TOPROLLER_KV = 0;
+        public static final double TOPROLLER_KA = 0;
+
+
+        public static final int BOTTOMROLLER_ID = 2;
+
+        public static final boolean BOTTOMROLLERINVERTED = false;
+
+        public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 30;
+
+        public static final double BOTTOMROLLER_KP = 0;
+        public static final double BOTTOMROLLER_KI = 0;
+        public static final double BOTTOMROLLER_KD = 0;
+        public static final double BOTTOMROLLER_KS = 0;
+        public static final double BOTTOMROLLER_KV = 0;
+        public static final double BOTTOMROLLER_KA = 0;
+
+
+
+    }
     public static final class Vision {
         public static final int DEBUG_FLAG = 0b10;
 

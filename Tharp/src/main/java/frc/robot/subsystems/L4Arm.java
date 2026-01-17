@@ -82,7 +82,6 @@ public class L4Arm extends SubsystemBase {
 
     shoulderConfig.closedLoop
       .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-      
       .outputRange(L4ArmConstants.OutputRangeMin, L4ArmConstants.OutputRangeMax)
       .pid(L4ArmConstants.KP,
             L4ArmConstants.KI,
@@ -130,8 +129,8 @@ public class L4Arm extends SubsystemBase {
     L4Characterizer = new SysIdRoutine(
         new SysIdRoutine.Config(),
         new SysIdRoutine.Mechanism(
-            volatage -> {
-              shoulder.setVoltage(volatage);
+            voltage -> {
+              shoulder.setVoltage(voltage.in(Volts));
             },
             log -> {
               log.motor("L4Shoulder")
