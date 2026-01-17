@@ -5,11 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.Auton;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.CommandDebugFlags;
 import frc.robot.Constants.Drivebase;
-import frc.robot.Constants.L1ArmConstants;
-import frc.robot.Constants.L4ArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.Vision;
 import frc.robot.commands.Autos;
@@ -168,15 +164,6 @@ public class RobotContainer {
     SmartDashboard.putNumber("KI", 0);
     SmartDashboard.putNumber("KD", 0);
 
-    SmartDashboard.putNumber("shoulderKP", L4ArmConstants.KP);
-    SmartDashboard.putNumber("shoulderKI", 0);
-    SmartDashboard.putNumber("shoulderKD", 0);
-    SmartDashboard.putNumber("shoulderKF", 0);
-
-    SmartDashboard.putNumber("shoulderKS",  0);
-    SmartDashboard.putNumber("shoulderKG", L4ArmConstants.KG);
-    SmartDashboard.putNumber("shoulderKV", 0);
-    SmartDashboard.putNumber("shoulderKA", 0);
 
     SmartDashboard.putNumber("setShoulderAngleNumber", 0);
 

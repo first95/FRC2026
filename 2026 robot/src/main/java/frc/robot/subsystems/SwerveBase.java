@@ -34,7 +34,6 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.SwerveModule;
 import frc.robot.Constants.Auton;
-import frc.robot.Constants.CommandDebugFlags;
 import frc.robot.Constants.Drivebase;
 import frc.robot.Constants.Vision;
 
@@ -144,7 +143,6 @@ public class SwerveBase extends SubsystemBase {
     SmartDashboard.putData("Field", field);
     poseErrorCounter = 0;
 
-    debugFlags = (int)SmartDashboard.getNumber(CommandDebugFlags.FLAGS_KEY, 0);
 
     driveCharacterizer = new SysIdRoutine(
       new SysIdRoutine.Config(),
@@ -496,8 +494,6 @@ public class SwerveBase extends SubsystemBase {
   @Override
   public void periodic() {
     // Read active flags
-    debugFlags = (int)SmartDashboard.getNumber(CommandDebugFlags.FLAGS_KEY, 0);
-    
 
     // Update odometry and current pose/velocity
     for (SwerveModule module : swerveModules) {

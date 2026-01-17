@@ -15,7 +15,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Constants.CommandDebugFlags;
 import frc.robot.Constants.Drivebase;
 import frc.robot.subsystems.SwerveBase;
 
@@ -74,13 +73,11 @@ public class AbsoluteDrive extends Command {
     lastAngle = swerve.getTelePose().getRotation().getRadians();
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
     swerve.drive(new Translation2d(), 0, true, false);
-    debugFlags = (int) SmartDashboard.getNumber(CommandDebugFlags.FLAGS_KEY, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    debugFlags = (int) SmartDashboard.getNumber(CommandDebugFlags.FLAGS_KEY, 0);
     // Checks if the gyro was reset, and, if so, sets the commanded heading to zero.
     // This allows the field refrence frame (which way is away from the alliance wall) to be
     // reset without the robot immediately rotating to the previously-commanded angle in the new
