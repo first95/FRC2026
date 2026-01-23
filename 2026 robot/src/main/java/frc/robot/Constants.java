@@ -62,7 +62,7 @@ public final class Constants {
 
         public static final int SWERVE_MODULE_CURRENT_LIMIT = 50;
 
-        public static final double HEADING_TOLERANCE = Math.toRadians(2.5);
+        public static final double HEADING_TOLERANCE = Math.toRadians(0.1);
 
         // Motor and encoder inversions
         public static final boolean ABSOLUTE_ENCODER_INVERT = true;
@@ -118,6 +118,7 @@ public final class Constants {
 
     public static final double HEADING_MIN_ANGULAR_CONTROL_EFFORT = 0.05; // rad/s— Prevent oscillation by cancelling rotational commands less than this
 
+        public static final Translation2d CENTEROFROTATION = new Translation2d(0,0);
         // Swerve base kinematics object
         public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(MODULE_LOCATIONS);
 
@@ -164,7 +165,7 @@ public final class Constants {
         public static final class Mod0 {
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ANGLE_MOTOR_ID = 2;
-            public static final double ANGLE_OFFSET = 360 - 259;
+            public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(0, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, FRONT_LEFT_X, FRONT_LEFT_Y);
         }
@@ -172,7 +173,7 @@ public final class Constants {
         public static final class Mod1 {
             public static final int DRIVE_MOTOR_ID = 5;
             public static final int ANGLE_MOTOR_ID = 4;
-            public static final double ANGLE_OFFSET = 360 - 5.65;
+            public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(1, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, FRONT_RIGHT_X, FRONT_RIGHT_Y);
         }
@@ -180,7 +181,7 @@ public final class Constants {
         public static final class Mod2 {
             public static final int DRIVE_MOTOR_ID = 7;
             public static final int ANGLE_MOTOR_ID = 6;
-            public static final double ANGLE_OFFSET = 180 - 128.9;
+            public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(2, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, BACK_LEFT_X, BACK_LEFT_Y);
         }
@@ -188,12 +189,13 @@ public final class Constants {
         public static final class Mod3 {
             public static final int DRIVE_MOTOR_ID = 9;
             public static final int ANGLE_MOTOR_ID = 8;
-            public static final double ANGLE_OFFSET = 360 - 257.8;
+            public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(3, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, BACK_RIGHT_X, BACK_RIGHT_Y);
         }
 
         public static final int PIGEON = 30;
+
     }
     public static final class ShooterConstants{
         public static final int TOPROLLER_ID = 1;
@@ -202,11 +204,11 @@ public final class Constants {
 
         public static final int TOPROLLER_SMARTCURRENTLIMIT = 30;
 
-        public static final boolean PRIMARY_ENCODER_POSITION_ALWAYS_ON = false;
-        public static final boolean PRIMARY_ENCODER_VELOCITY_ALWAYS_ON = true;
-        public static final int PRIMARY_ENCODER_VELOCITY_PERIOD = 20;
-        public static final boolean PRIMARY_ENCODER_INVERTED = false;
-        public static final double PRIMARY_ENCODER_OFFSET = 0;
+        public static final boolean SHOOTER_ENCODER_POSITION_ALWAYS_ON = false;
+        public static final boolean SHOOTER_VELOCITY_ALWAYS_ON = true;
+        public static final int SHOOTER_VELOCITY_PERIOD = 20;
+        public static final boolean SHOOTER_INVERTED = false;
+        public static final int SHOOTEROUTPUTCURRENT_PERIOD = 20;
 
         public static final double TOPROLLER_KP = 0;
         public static final double TOPROLLER_KI = 0;
@@ -214,7 +216,6 @@ public final class Constants {
         public static final double TOPROLLER_KS = 0;
         public static final double TOPROLLER_KV = 0;
         public static final double TOPROLLER_KA = 0;
-
 
         public static final int BOTTOMROLLER_ID = 2;
 
@@ -229,6 +230,53 @@ public final class Constants {
         public static final double BOTTOMROLLER_KV = 0;
         public static final double BOTTOMROLLER_KA = 0;
 
+        public static final double TOPROLLER_IDLE_SPEED = 0;
+        public static final double BOTTOMROLLER_IDLE_SPEED = 0;
+
+        public static final double TOPROLLER_JUGGLING_SPEED = 0;
+        public static final double BOTTOMROLLER_JUGGLING_SPEED = 0;
+
+        public static final double INDEXINGSPEED = 0;
+        public static final double INDEXER_CLEARSHOOTERSPEED = 0;
+        public static final double INDEXERPREPSPEED = 0;
+
+        public static final double INDEXER_PREPINDEXER_CURRENT_THRESHOLD = 0;
+
+
+        public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
+        public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
+
+        public static final double SHOOTERTOLERANCE = 0.1;
+
+        public static final int INDEXER_ID = 3;
+
+        public static final boolean INDEXER_INVERTED = false;
+
+        public static final int INDEXER_SMARTCURRENTLIMIT = 30;
+
+        public static final int INDEXER_FAULTS_PERIOD_MS = 20;
+        public static final int INDEXER_POSITION_PERIOD = 60000;
+        public static final int INDEXER_VELOCITY_PERIOD = 5900;
+        public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
+
+        public static final Translation2d SHOOTERTRANSLATION2D = new Translation2d(0,0);
+
+    }
+    public static final class IntakeConstants{
+        public static final int MOTOR1_ID = 4;
+
+        public static final boolean MOTOR1_INVERTED = false;
+
+        public static final int SMARTCURRENTLIMIT = 30;
+
+        public static final int FAULTSPERIOD = 20;
+        public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
+
+        public static final int MOTOR2_ID = 5;
+
+        public static final boolean MOTOR2_INVERTED = true;
+
+        public static final double INTAKINGSPEED = 0;
 
 
     }
@@ -291,7 +339,7 @@ public final class Constants {
         
         
         private static final Map<String, Pose2d> BLUE_MAP = Map.ofEntries(
-            Map.entry("L0", new Pose2d(new Translation2d(1.2, FIELD_WIDTH - 1.1), Rotation2d.fromDegrees(126)))
+            Map.entry("Hub", new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)))
             
         );
         

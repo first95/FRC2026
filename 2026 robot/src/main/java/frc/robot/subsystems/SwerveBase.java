@@ -199,6 +199,9 @@ public class SwerveBase extends SubsystemBase {
    * @param isOpenLoop  Whether or not to use closed-loop velocity control.  Set to true to disable closed-loop.
    */
   public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+    drive(translation, rotation,fieldRelative, isOpenLoop, Constants.Drivebase.CENTEROFROTATION);
+  }
+  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, Translation2d centerOfRotation) {
     // Creates a robot-relative ChassisSpeeds object, converting from field-relative speeds if necessary.
     ChassisSpeeds velocity = fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
       correctForDynamics(
@@ -225,7 +228,7 @@ public class SwerveBase extends SubsystemBase {
     // Calculate required module states via kinematics
     SwerveModuleState[] swerveModuleStates = 
       Drivebase.KINEMATICS.toSwerveModuleStates(
-        velocity
+        velocity, centerOfRotation
       );
     
     // Desaturate calculated speeds

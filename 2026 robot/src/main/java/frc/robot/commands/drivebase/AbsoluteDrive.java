@@ -4,6 +4,7 @@
 
 package frc.robot.commands.drivebase;
 
+import java.security.spec.ECPublicKeySpec;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -30,8 +31,10 @@ public class AbsoluteDrive extends Command {
   private final boolean isOpenLoop;
   private Translation2d horizontalCG;
   private Translation3d robotCG;
-  private int debugFlags;
 
+  private Translation2d centerOfRotation = Constants.Drivebase.CENTEROFROTATION;
+  
+  private boolean locustDriving;
   /**
    * Used to drive a swerve robot in full field-centric mode.  vX and vY supply 
    * translation inputs, where x is torwards/away from alliance wall and y is left/right.
@@ -64,9 +67,7 @@ public class AbsoluteDrive extends Command {
     
     addRequirements(swerve);
   }
-  public void setHeading(Rotation2d heading) {
-    lastAngle = heading.getRadians();
-  }
+
 
   @Override
   public void initialize() {
@@ -95,9 +96,12 @@ public class AbsoluteDrive extends Command {
       // the joystick is near the center (i. e. has been released), in which case the angle is held
       // at the last valid joystick input (hold position when stick released).
       if (Math.hypot(headingHorizontal.getAsDouble(), headingVertical.getAsDouble()) < 0.5) {
-        //angle = lastAngle; //used for pass years normal swerve
-        angle = Math.atan2(vX.getAsDouble(),vY.getAsDouble()); //fake tank
-
+        if (locustDriving){
+          angle = Math.atan2(vX.getAsDouble(),vY.getAsDouble());
+        }
+        else{
+          angle = lastAngle;
+        }
       } else {
         angle = Math.atan2(headingHorizontal.getAsDouble(), headingVertical.getAsDouble());
       }
@@ -131,7 +135,7 @@ public class AbsoluteDrive extends Command {
       
 
       // Make the robot move
-      swerve.drive(translation, omega, true, isOpenLoop);
+      swerve.drive(translation, omega, true, isOpenLoop, centerOfRotation);
 
       SmartDashboard.putNumber("HeadingSetpoint", angle);
       SmartDashboard.putNumber("CommandedOmega", omega);
@@ -158,6 +162,18 @@ public class AbsoluteDrive extends Command {
   
   public void setBrake(boolean setBrake){
     brake = setBrake;
+  }
+
+  public void setHeading(Rotation2d heading) {
+    lastAngle = heading.getRadians();
+  }
+  
+  public void setCenterOfRotation(Translation2d centerofrotation){
+    centerOfRotation = centerofrotation;
+  }
+  
+  public void setLocustDriving(boolean is_enabled){
+    locustDriving = is_enabled;
   }
   /**
    * Calculates the maximum acceleration allowed in a direction without tipping the robot.

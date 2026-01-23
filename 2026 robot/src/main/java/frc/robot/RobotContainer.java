@@ -7,11 +7,15 @@ package frc.robot;
 import frc.robot.Constants.Auton;
 import frc.robot.Constants.Drivebase;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.Vision;
 import frc.robot.commands.Autos;
+import frc.robot.commands.FuelHandlerCommand;
 import frc.robot.commands.autocommands.AlignToPose;
 import frc.robot.commands.drivebase.AbsoluteDrive;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 //import frc.robot.commands.drivebase.TeleopDrive;
 import frc.robot.subsystems.SwerveBase;
 
@@ -75,6 +79,10 @@ public class RobotContainer {
   private final SwerveBase drivebase = new SwerveBase();
   //private final TeleopDrive openRobotRel, closedRobotRel, openFieldRel, closedFieldRel;
   private final AbsoluteDrive absoluteDrive;
+  private final FuelHandlerCommand fuelhandler;
+
+  private final Shooter shooter = new Shooter();
+  private final Intake intake = new Intake();
 
   private final CommandJoystick driveController = new CommandJoystick(OperatorConstants.driveControllerPort);
   private final CommandJoystick headingController = new CommandJoystick(OperatorConstants.headingControllerPort);
@@ -151,7 +159,17 @@ public class RobotContainer {
 
         drivebase.setDefaultCommand(absoluteDrive);
 
-
+    fuelhandler = new FuelHandlerCommand(
+      () -> driveController.getHID().getRawButton(1), //intake Button
+      () -> headingController.getHID().getRawButton(1), //shoot Button
+      () -> headingController.getHID().getRawButton(2), //aimButton
+      shooter, 
+      null, 
+      absoluteDrive, 
+      drivebase);
+    
+    shooter.setDefaultCommand(fuelhandler);
+    intake.setDefaultCommand(fuelhandler);
 
     // Configure the trigger bindings
     configureBindings();
@@ -164,9 +182,6 @@ public class RobotContainer {
     SmartDashboard.putNumber("KI", 0);
     SmartDashboard.putNumber("KD", 0);
 
-
-    SmartDashboard.putNumber("setShoulderAngleNumber", 0);
-
     
     autoChooser = new AutoChooser();
     autos = new Autos(drivebase);
@@ -178,22 +193,6 @@ public class RobotContainer {
     //autoChooser.addCmd("Example Auto Command", this::exampleAutoCommand);
 
     modularAutoTargetChooser.addOption("S0", "S0");
-    modularAutoTargetChooser.addOption("S1", "S1");
-    modularAutoTargetChooser.addOption("S2", "S2");
-    modularAutoTargetChooser.addOption("R00", "R00");
-    modularAutoTargetChooser.addOption("R01", "R01");
-    modularAutoTargetChooser.addOption("R10", "R10");
-    modularAutoTargetChooser.addOption("R11", "R11");
-    modularAutoTargetChooser.addOption("R20", "R20");
-    modularAutoTargetChooser.addOption("R21", "R21");
-    modularAutoTargetChooser.addOption("R30", "R30");
-    modularAutoTargetChooser.addOption("R31", "R31");
-    modularAutoTargetChooser.addOption("R40", "R40");
-    modularAutoTargetChooser.addOption("R41", "R41");
-    modularAutoTargetChooser.addOption("R50", "R50");
-    modularAutoTargetChooser.addOption("R51", "R51");
-    modularAutoTargetChooser.addOption("L0", "L0");
-    modularAutoTargetChooser.addOption("L1", "L1");
     
     SmartDashboard.putData("autoChooser",autoChooser);
     
@@ -214,6 +213,24 @@ public class RobotContainer {
     )
     .ignoringDisable(true)
     );
+
+    SmartDashboard.putNumber("topRollerKS",ShooterConstants.TOPROLLER_KS);
+    SmartDashboard.putNumber("topRollerKV",ShooterConstants.TOPROLLER_KV);
+    SmartDashboard.putNumber("topRollerKA",ShooterConstants.TOPROLLER_KA);
+
+    SmartDashboard.putNumber("topRollerKP",ShooterConstants.TOPROLLER_KP);
+    SmartDashboard.putNumber("topRollerKI",ShooterConstants.TOPROLLER_KI);
+    SmartDashboard.putNumber("topRollerKD",ShooterConstants.TOPROLLER_KD);
+
+    SmartDashboard.putNumber("bottomRollerKS",ShooterConstants.BOTTOMROLLER_KS);
+    SmartDashboard.putNumber("bottomRollerKV",ShooterConstants.BOTTOMROLLER_KV);
+    SmartDashboard.putNumber("bottomRollerKA",ShooterConstants.BOTTOMROLLER_KA);
+
+    SmartDashboard.putNumber("bottomRollerKP",ShooterConstants.BOTTOMROLLER_KP);
+    SmartDashboard.putNumber("bottomRollerKI",ShooterConstants.BOTTOMROLLER_KI);
+    SmartDashboard.putNumber("bottomRollerKD",ShooterConstants.BOTTOMROLLER_KD);
+
+    SmartDashboard.putData("setShooterGains", new InstantCommand(shooter::setGains));
 
     SmartDashboard.putData("setGains", new InstantCommand(drivebase::setVelocityModuleGains));
     SmartDashboard.putData("SendAlliance",
