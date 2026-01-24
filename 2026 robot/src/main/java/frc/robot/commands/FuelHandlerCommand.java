@@ -250,7 +250,7 @@ public class FuelHandlerCommand extends Command {
 
     Pose2d robotPose = swerve.getPose();
 
-    Pose2d shooterPose = swerve.getPose().plus(ShooterConstants.SHOOTERTRANSFORM);
+    Pose2d shooterPose = robotPose.plus(ShooterConstants.SHOOTERTRANSFORM);
 
     Rotation2d heading = Rotation2d.fromRadians(Math.atan2(shooterPose.getY() - target.getY(),shooterPose.getX() - target.getX())).rotateBy(Rotation2d.fromDegrees(180));
 

@@ -64,7 +64,8 @@ public class Shooter extends SubsystemBase {
     topRollerConfig.closedLoop
       .pid(ShooterConstants.TOPROLLER_KP
         ,ShooterConstants.TOPROLLER_KI
-        ,ShooterConstants.TOPROLLER_KD);
+        ,ShooterConstants.TOPROLLER_KD)
+      .outputRange(0, 1);;
     
     topRoller.configure(topRollerConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
 
@@ -91,7 +92,8 @@ public class Shooter extends SubsystemBase {
     bottomRollerMotor1Config.closedLoop
       .pid(ShooterConstants.BOTTOMROLLER_KP
         ,ShooterConstants.BOTTOMROLLER_KI
-        ,ShooterConstants.BOTTOMROLLER_KD);
+        ,ShooterConstants.BOTTOMROLLER_KD)
+      .outputRange(0, 1);
     
     bottomRollerMotor1.configure(bottomRollerMotor1Config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
 
@@ -124,6 +126,9 @@ public class Shooter extends SubsystemBase {
       .outputCurrentPeriodMs(ShooterConstants.INDEXER_OUTPUT_CURRENT_PERIOD);
     
     indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    indexer.set(0.3);
+    setShooterSpeeds(1900,1900);
 
     topRollerCharacterizer = new SysIdRoutine(
         new SysIdRoutine.Config(),
@@ -185,9 +190,11 @@ public class Shooter extends SubsystemBase {
   public void setTopRollerRaw(double speed){
     topRoller.set(speed);
   }
-  
+  public void setSpeedsSmartDashboard(){
+    setShooterSpeeds(SmartDashboard.getNumber("setTopRoller", 0),SmartDashboard.getNumber("setBottomRoller", 0));
+  }
   public void setBottomRollerRaw(double speed){
-    topRoller.set(speed);
+    bottomRollerMotor1.set(speed);
   }
 
   public void setIndexerSpeed(double speed){
@@ -227,7 +234,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.getNumber("bottomRollerKP",0),
     SmartDashboard.getNumber("bottomRollerKI",0),
     SmartDashboard.getNumber("bottomRollerKD",0));
-    topRoller.configure(topRollerConfig,ResetMode.kNoResetSafeParameters,PersistMode.kNoPersistParameters);
+    bottomRollerMotor1.configure(bottomRollerMotor1Config,ResetMode.kNoResetSafeParameters,PersistMode.kNoPersistParameters);
   }
   
 
@@ -255,7 +262,10 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("bottomRollerCurrent",getBottomRollerCurrent());
     SmartDashboard.putNumber("topRollerRPM",topRollerEncoder.getVelocity());
     SmartDashboard.putNumber("bottomRollerRPM",bottomRollerEncoder.getVelocity());
-
+    SmartDashboard.putNumber("topRollerVoltage", topRoller.getBusVoltage());
+    SmartDashboard.putNumber("bottomRollerVoltage", bottomRollerMotor1.getBusVoltage());
+    SmartDashboard.putNumber("topRollerControlEffort", topRoller.getAppliedOutput());
+    SmartDashboard.putNumber("topRollerControlEffort", bottomRollerMotor1.getAppliedOutput());
   }
 
   @Override

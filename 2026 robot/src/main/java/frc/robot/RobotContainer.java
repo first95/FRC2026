@@ -239,6 +239,7 @@ public class RobotContainer {
       )
       .ignoringDisable(true)
     );
+    SmartDashboard.putData("setShooterSpeedstopRoller", new InstantCommand(() -> shooter.setSpeedsSmartDashboard()));
     SmartDashboard.putBoolean("bool", false);
 
     RobotModeTriggers.autonomous().whileTrue(autoChooser.selectedCommandScheduler());

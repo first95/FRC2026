@@ -200,9 +200,9 @@ public final class Constants {
     public static final class ShooterConstants{
         public static final int TOPROLLER_ID = 15;
 
-        public static final boolean TOPROLLERINVERTED = false;
+        public static final boolean TOPROLLERINVERTED = true;
 
-        public static final int TOPROLLER_SMARTCURRENTLIMIT = 30;
+        public static final int TOPROLLER_SMARTCURRENTLIMIT = 80;
 
         public static final boolean SHOOTER_ENCODER_POSITION_ALWAYS_ON = false;
         public static final boolean SHOOTER_VELOCITY_ALWAYS_ON = true;
@@ -210,27 +210,27 @@ public final class Constants {
         public static final boolean SHOOTER_INVERTED = false;
         public static final int SHOOTEROUTPUTCURRENT_PERIOD = 20;
 
-        public static final double TOPROLLER_KP = 0;
+        public static final double TOPROLLER_KP = 0.0025;
         public static final double TOPROLLER_KI = 0;
-        public static final double TOPROLLER_KD = 0;
-        public static final double TOPROLLER_KS = 0;
-        public static final double TOPROLLER_KV = 0;
+        public static final double TOPROLLER_KD = 0.03;
+        public static final double TOPROLLER_KS = 0.0630628;
+        public static final double TOPROLLER_KV = 0.00178204;
         public static final double TOPROLLER_KA = 0;
 
-        public static final int BOTTOMROLLER_ID = 17;
-        public static final int BOTTOMROLLERMOTOR2_ID = 16;
+        public static final int BOTTOMROLLER_ID = 16;
+        public static final int BOTTOMROLLERMOTOR2_ID = 12;
 
 
         public static final boolean BOTTOMROLLER2INVERTED = true;
         public static final boolean BOTTOMROLLERINVERTED = false;
 
-        public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 30;
+        public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 80;
 
-        public static final double BOTTOMROLLER_KP = 0;
+        public static final double BOTTOMROLLER_KP = 0.0025;
         public static final double BOTTOMROLLER_KI = 0;
-        public static final double BOTTOMROLLER_KD = 0;
-        public static final double BOTTOMROLLER_KS = 0;
-        public static final double BOTTOMROLLER_KV = 0;
+        public static final double BOTTOMROLLER_KD = 0.03;
+        public static final double BOTTOMROLLER_KS = 0.0657847;
+        public static final double BOTTOMROLLER_KV = 0.00179472;
         public static final double BOTTOMROLLER_KA = 0;
 
         public static final double TOPROLLER_IDLE_SPEED = 0;
@@ -251,7 +251,7 @@ public final class Constants {
 
         public static final double SHOOTERTOLERANCE = 0.1;
 
-        public static final int INDEXER_ID = 20;
+        public static final int INDEXER_ID = 14;
 
         public static final boolean INDEXER_INVERTED = false;
 
