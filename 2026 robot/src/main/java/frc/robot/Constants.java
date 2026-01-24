@@ -218,7 +218,10 @@ public final class Constants {
         public static final double TOPROLLER_KA = 0;
 
         public static final int BOTTOMROLLER_ID = 13;
+        public static final int BOTTOMROLLERMOTOR2_ID = 20;
 
+
+        public static final boolean BOTTOMROLLER2INVERTED = true;
         public static final boolean BOTTOMROLLERINVERTED = false;
 
         public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 30;

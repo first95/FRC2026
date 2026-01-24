@@ -265,6 +265,18 @@ public class RobotContainer {
     operatorController.start().onTrue(new InstantCommand(drivebase::clearOdometrySeed).ignoringDisable(true));
     driveController.button(8).onTrue(new InstantCommand(drivebase::clearOdometrySeed).ignoringDisable(true));
     operatorController.button(9).onTrue(new InstantCommand(() -> setBrakes(false)).ignoringDisable(true));
+
+    operatorController.a().whileTrue(shooter.sysIdDynBottompRoller(SysIdRoutine.Direction.kForward));
+    operatorController.b().whileTrue(shooter.sysIdDynBottompRoller(SysIdRoutine.Direction.kReverse));
+    operatorController.x().whileTrue(shooter.sysIdDynTopRoller(SysIdRoutine.Direction.kForward));
+    operatorController.y().whileTrue(shooter.sysIdDynTopRoller(SysIdRoutine.Direction.kReverse));
+
+    operatorController.povDown().whileTrue(shooter.sysIdQuasiBottompRoller(SysIdRoutine.Direction.kForward));
+    operatorController.povRight().whileTrue(shooter.sysIdQuasiBottompRoller(SysIdRoutine.Direction.kReverse));
+    operatorController.povLeft().whileTrue(shooter.sysIdQuasiTopRoller(SysIdRoutine.Direction.kForward));
+    operatorController.povUp().whileTrue(shooter.sysIdQuasiTopRoller(SysIdRoutine.Direction.kReverse));
+    
+
     // operatorController.button(5).whileTrue(
     //   new AlignToPose("Reef", drivebase)//align to scoring position
     //   .andThen(new InstantCommand(() -> operatorController.setRumble(RumbleType.kBothRumble,1)))//when aligned vibrate the controller
