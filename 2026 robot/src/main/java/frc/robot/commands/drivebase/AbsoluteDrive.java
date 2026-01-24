@@ -97,7 +97,7 @@ public class AbsoluteDrive extends Command {
       // at the last valid joystick input (hold position when stick released).
       if (Math.hypot(headingHorizontal.getAsDouble(), headingVertical.getAsDouble()) < 0.5) {
         if (locustDriving){
-          angle = Math.atan2(vX.getAsDouble(),vY.getAsDouble());
+          angle = Math.atan2(vY.getAsDouble(),vX.getAsDouble());
         }
         else{
           angle = lastAngle;

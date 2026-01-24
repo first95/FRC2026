@@ -160,11 +160,11 @@ public class RobotContainer {
         drivebase.setDefaultCommand(absoluteDrive);
 
     fuelhandler = new FuelHandlerCommand(
-      () -> driveController.getHID().getRawButton(1), //intake Button
-      () -> headingController.getHID().getRawButton(1), //shoot Button
+      () -> headingController.getHID().getRawButton(1), //intake Button
+      () -> driveController.getHID().getRawButton(1), //shoot Button
       () -> headingController.getHID().getRawButton(2), //aimButton
       shooter, 
-      null, 
+      intake, 
       absoluteDrive, 
       drivebase);
     

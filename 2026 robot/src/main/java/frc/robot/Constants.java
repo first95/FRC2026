@@ -42,8 +42,8 @@ public final class Constants {
   public static final double VORTEX_STALL_TORQUE = 3.6; // N * m
 
     public static final double GRAVITY = 9.81; // m/s/s
-    public static final double FIELD_WIDTH = 8.0518;
-    public static final double FIELD_LENGTH = 17.548225;
+    public static final double FIELD_WIDTH = 8.069263;
+    public static final double FIELD_LENGTH = 16.541052;
 
   public static final double LOOP_CYCLE = 0.02; // 20m
 
@@ -198,7 +198,7 @@ public final class Constants {
 
     }
     public static final class ShooterConstants{
-        public static final int TOPROLLER_ID = 1;
+        public static final int TOPROLLER_ID = 14;
 
         public static final boolean TOPROLLERINVERTED = false;
 
@@ -217,7 +217,7 @@ public final class Constants {
         public static final double TOPROLLER_KV = 0;
         public static final double TOPROLLER_KA = 0;
 
-        public static final int BOTTOMROLLER_ID = 2;
+        public static final int BOTTOMROLLER_ID = 13;
 
         public static final boolean BOTTOMROLLERINVERTED = false;
 
@@ -248,7 +248,7 @@ public final class Constants {
 
         public static final double SHOOTERTOLERANCE = 0.1;
 
-        public static final int INDEXER_ID = 3;
+        public static final int INDEXER_ID = 20;
 
         public static final boolean INDEXER_INVERTED = false;
 
@@ -259,11 +259,19 @@ public final class Constants {
         public static final int INDEXER_VELOCITY_PERIOD = 5900;
         public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
 
-        public static final Translation2d SHOOTERTRANSLATION2D = new Translation2d(0,0);
+        public static final Translation3d SHOOTERLOCATION = new Translation3d(
+            -0.685800/2 + 0.205674,
+            0,
+            0
+        );
+        public static final Transform2d SHOOTERTRANSFORM = new Transform2d(SHOOTERLOCATION.toTranslation2d(),new Rotation2d(1,0));
+        public static final Rotation2d SHOOTER_EXIT_ANGLE = Rotation2d.fromDegrees(90-32.8);
+
+        public static final int N_NEWTONLINERIZATIONS = 500;
 
     }
     public static final class IntakeConstants{
-        public static final int MOTOR1_ID = 4;
+        public static final int MOTOR1_ID = 15;
 
         public static final boolean MOTOR1_INVERTED = false;
 
@@ -272,7 +280,7 @@ public final class Constants {
         public static final int FAULTSPERIOD = 20;
         public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
 
-        public static final int MOTOR2_ID = 5;
+        public static final int MOTOR2_ID = 25;
 
         public static final boolean MOTOR2_INVERTED = true;
 
@@ -337,7 +345,8 @@ public final class Constants {
 
         public static final double DRIVE_POSITIONAL_TOLERANCE = 0.05; // m
         
-        
+        public static final Translation3d BLUEHUB = new Translation3d(0,0,0); 
+        public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Pose2d> BLUE_MAP = Map.ofEntries(
             Map.entry("Hub", new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)))
             
