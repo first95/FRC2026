@@ -89,7 +89,7 @@ public class AlignToPose extends Command {
     
     if (stringPose) {
       try {
-        target = Auton.POSE_MAP.get(swerve.getAlliance()).get(targetName);
+        //target = Auton.POSE_MAP.get(swerve.getAlliance()).get(targetName);
       } catch (NullPointerException e) {
         DriverStation.reportError("AlignToPose aborted! Alliance Invalid; could not fetch poses!", false);
         cancel();

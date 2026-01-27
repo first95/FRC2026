@@ -79,10 +79,10 @@ public class RobotContainer {
   private final SwerveBase drivebase = new SwerveBase();
   //private final TeleopDrive openRobotRel, closedRobotRel, openFieldRel, closedFieldRel;
   private final AbsoluteDrive absoluteDrive;
-  private final FuelHandlerCommand fuelhandler;
+  //private final FuelHandlerCommand fuelhandler;
 
   private final Shooter shooter = new Shooter();
-  private final Intake intake = new Intake();
+  //private final Intake intake = new Intake();
 
   private final CommandJoystick driveController = new CommandJoystick(OperatorConstants.driveControllerPort);
   private final CommandJoystick headingController = new CommandJoystick(OperatorConstants.headingControllerPort);
@@ -159,17 +159,17 @@ public class RobotContainer {
 
         drivebase.setDefaultCommand(absoluteDrive);
 
-    fuelhandler = new FuelHandlerCommand(
-      () -> headingController.getHID().getRawButton(1), //intake Button
-      () -> driveController.getHID().getRawButton(1), //shoot Button
-      () -> headingController.getHID().getRawButton(2), //aimButton
-      shooter, 
-      intake, 
-      absoluteDrive, 
-      drivebase);
+    // fuelhandler = new FuelHandlerCommand(
+    //   () -> headingController.getHID().getRawButton(1), //intake Button
+    //   () -> driveController.getHID().getRawButton(1), //shoot Button
+    //   () -> headingController.getHID().getRawButton(2), //aimButton
+    //   shooter, 
+    //   intake, 
+    //   absoluteDrive, 
+    //   drivebase);
     
-    shooter.setDefaultCommand(fuelhandler);
-    intake.setDefaultCommand(fuelhandler);
+    // shooter.setDefaultCommand(fuelhandler);
+    // intake.setDefaultCommand(fuelhandler);
 
     // Configure the trigger bindings
     configureBindings();
@@ -239,8 +239,7 @@ public class RobotContainer {
       )
       .ignoringDisable(true)
     );
-    SmartDashboard.putData("setShooterSpeedstopRoller", new InstantCommand(() -> shooter.setSpeedsSmartDashboard()));
-    SmartDashboard.putBoolean("bool", false);
+    SmartDashboard.putData("setShooterSpeeds", new InstantCommand(() -> shooter.setSpeedsSmartDashboard()));
 
     RobotModeTriggers.autonomous().whileTrue(autoChooser.selectedCommandScheduler());
     
@@ -266,17 +265,6 @@ public class RobotContainer {
     operatorController.start().onTrue(new InstantCommand(drivebase::clearOdometrySeed).ignoringDisable(true));
     driveController.button(8).onTrue(new InstantCommand(drivebase::clearOdometrySeed).ignoringDisable(true));
     operatorController.button(9).onTrue(new InstantCommand(() -> setBrakes(false)).ignoringDisable(true));
-
-    operatorController.a().whileTrue(shooter.sysIdDynBottompRoller(SysIdRoutine.Direction.kForward));
-    operatorController.b().whileTrue(shooter.sysIdDynBottompRoller(SysIdRoutine.Direction.kReverse));
-    operatorController.x().whileTrue(shooter.sysIdDynTopRoller(SysIdRoutine.Direction.kForward));
-    operatorController.y().whileTrue(shooter.sysIdDynTopRoller(SysIdRoutine.Direction.kReverse));
-
-    operatorController.povDown().whileTrue(shooter.sysIdQuasiBottompRoller(SysIdRoutine.Direction.kForward));
-    operatorController.povRight().whileTrue(shooter.sysIdQuasiBottompRoller(SysIdRoutine.Direction.kReverse));
-    operatorController.povLeft().whileTrue(shooter.sysIdQuasiTopRoller(SysIdRoutine.Direction.kForward));
-    operatorController.povUp().whileTrue(shooter.sysIdQuasiTopRoller(SysIdRoutine.Direction.kReverse));
-    
 
     // operatorController.button(5).whileTrue(
     //   new AlignToPose("Reef", drivebase)//align to scoring position

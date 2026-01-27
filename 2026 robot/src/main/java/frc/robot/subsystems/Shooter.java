@@ -25,16 +25,11 @@ import com.revrobotics.ResetMode;
 
 import frc.robot.Constants.ShooterConstants;
 
-import static edu.wpi.first.units.Units.Volts;
-import static edu.wpi.first.units.Units.Radians;
-import static edu.wpi.first.units.Units.RadiansPerSecond;
-import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.RotationsPerSecond; 
 
 public class Shooter extends SubsystemBase {
-  private final SparkFlex topRoller, bottomRollerMotor1, bottomRollerMotor2; 
+  private final SparkFlex topRollerMotor1, topRollerMotor2, bottomRollerMotor1, bottomRollerMotor2; 
   private final SparkMax indexer;
-  private final SparkFlexConfig topRollerConfig, bottomRollerMotor1Config, bottomRollerMotor2Config;
+  private final SparkFlexConfig topRollerMotor1Config, topRollerMotor2Config, bottomRollerMotor1Config, bottomRollerMotor2Config;
   private final SparkMaxConfig indexerConfig;
   private final SparkClosedLoopController topRollerPID, bottomRollerPID;
   private SimpleMotorFeedforward topRollerfeedforward, bottomRollerfeedforward;
@@ -42,36 +37,45 @@ public class Shooter extends SubsystemBase {
 
   private double topRollerSetPoint, bottomRollerSetPoint;
 
-  private final SysIdRoutine topRollerCharacterizer,bottomRollerCharacterizer;
-
   public Shooter() {
-    topRoller = new SparkFlex(ShooterConstants.TOPROLLER_ID, MotorType.kBrushless);
-    topRollerConfig = new SparkFlexConfig();
-    topRollerPID = topRoller.getClosedLoopController();
-    topRollerEncoder = topRoller.getEncoder();
+    topRollerMotor1 = new SparkFlex(ShooterConstants.TOPROLLER_ID, MotorType.kBrushless);
+    topRollerMotor1Config = new SparkFlexConfig();
+    topRollerPID = topRollerMotor1.getClosedLoopController();
+    topRollerEncoder = topRollerMotor1.getEncoder();
 
-    topRollerConfig
+    topRollerMotor1Config
       .inverted(ShooterConstants.TOPROLLERINVERTED)
       .idleMode(IdleMode.kCoast)
       .smartCurrentLimit(ShooterConstants.TOPROLLER_SMARTCURRENTLIMIT);
     
-    topRollerConfig.signals
+    topRollerMotor1Config.signals
       .primaryEncoderPositionAlwaysOn(ShooterConstants.SHOOTER_ENCODER_POSITION_ALWAYS_ON)
       .primaryEncoderVelocityAlwaysOn(ShooterConstants.SHOOTER_VELOCITY_ALWAYS_ON)
       .primaryEncoderVelocityPeriodMs(ShooterConstants.SHOOTER_VELOCITY_PERIOD)
       .outputCurrentPeriodMs(ShooterConstants.SHOOTEROUTPUTCURRENT_PERIOD);
 
-    topRollerConfig.closedLoop
+    topRollerMotor1Config.closedLoop
       .pid(ShooterConstants.TOPROLLER_KP
         ,ShooterConstants.TOPROLLER_KI
         ,ShooterConstants.TOPROLLER_KD)
-      .outputRange(0, 1);;
+      .outputRange(0, 1);
     
-    topRoller.configure(topRollerConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+    topRollerMotor1.configure(topRollerMotor1Config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
 
     topRollerfeedforward = new SimpleMotorFeedforward(ShooterConstants.TOPROLLER_KS, ShooterConstants.TOPROLLER_KV, ShooterConstants.TOPROLLER_KA);
 
     topRollerSetPoint = ShooterConstants.TOPROLLER_IDLE_SPEED;
+
+    topRollerMotor2 = new SparkFlex(ShooterConstants.TOPROLLERMOTOR2_ID, MotorType.kBrushless);
+    topRollerMotor2Config = new SparkFlexConfig();
+
+    topRollerMotor2Config
+      .follow(topRollerMotor1, ShooterConstants.TOPROLLERMOTOR2INVERTED)
+      .idleMode(IdleMode.kCoast)
+      .smartCurrentLimit(ShooterConstants.TOPROLLER_SMARTCURRENTLIMIT);
+    
+    topRollerMotor2.configure(topRollerMotor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
 
     bottomRollerMotor1 = new SparkFlex(ShooterConstants.BOTTOMROLLER_ID, MotorType.kBrushless);
     bottomRollerMotor1Config = new SparkFlexConfig();
@@ -104,6 +108,8 @@ public class Shooter extends SubsystemBase {
       .follow(bottomRollerMotor1, ShooterConstants.BOTTOMROLLER2INVERTED)
       .idleMode(IdleMode.kCoast)
       .smartCurrentLimit(ShooterConstants.BOTTOMROLLER_SMARTCURRENTLIMIT);
+
+    bottomRollerMotor2.configure(bottomRollerMotor2Config,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
 
     bottomRollerfeedforward = new SimpleMotorFeedforward(ShooterConstants.BOTTOMROLLER_KS, ShooterConstants.BOTTOMROLLER_KV, ShooterConstants.BOTTOMROLLER_KA);
@@ -128,35 +134,12 @@ public class Shooter extends SubsystemBase {
     indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     indexer.set(0.3);
-    setShooterSpeeds(1900,1900);
+    
+    setShooterSpeeds(1900, 1900);
+    // topRollerMotor1.setVoltage(0);
+    // bottomRollerMotor1.setVoltage(0);
 
-    topRollerCharacterizer = new SysIdRoutine(
-        new SysIdRoutine.Config(),
-        new SysIdRoutine.Mechanism(
-            (voltage) -> {
-              topRoller.setVoltage(voltage.in(Volts));
-            },
-            log -> {
-              log.motor("topRollerofShooter")
-                  .voltage(Volts.of(topRoller.getAppliedOutput() * topRoller.getBusVoltage()))
-                  .angularPosition(Rotations.of(topRoller.getEncoder().getPosition()))
-                  .angularVelocity(RotationsPerSecond.of(topRoller.getEncoder().getVelocity()*60));
-            },
-            this));
-     bottomRollerCharacterizer = new SysIdRoutine(
-        new SysIdRoutine.Config(),
-        new SysIdRoutine.Mechanism(
-            (voltage) -> {
-              bottomRollerMotor1.setVoltage(voltage.in(Volts));
-              bottomRollerMotor2.setVoltage(voltage.in(Volts));
-            },
-            log -> {
-              log.motor("bottomRollerofShooter")
-                  .voltage(Volts.of(topRoller.getAppliedOutput() * topRoller.getBusVoltage()))
-                  .angularPosition(Rotations.of(topRoller.getEncoder().getPosition()))
-                  .angularVelocity(RotationsPerSecond.of(topRoller.getEncoder().getVelocity()*60));
-            },
-            this));
+  
   }
 
 
@@ -188,10 +171,12 @@ public class Shooter extends SubsystemBase {
   } 
 
   public void setTopRollerRaw(double speed){
-    topRoller.set(speed);
+    topRollerMotor1.set(speed);
   }
   public void setSpeedsSmartDashboard(){
     setShooterSpeeds(SmartDashboard.getNumber("setTopRoller", 0),SmartDashboard.getNumber("setBottomRoller", 0));
+    // topRollerMotor1.setVoltage(SmartDashboard.getNumber("setTopRoller", 0));
+    // bottomRollerMotor1.setVoltage(SmartDashboard.getNumber("setBottomRoller", 0));
   }
   public void setBottomRollerRaw(double speed){
     bottomRollerMotor1.set(speed);
@@ -202,7 +187,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getTopRollerCurrent(){
-    return topRoller.getOutputCurrent();
+    return topRollerMotor1.getOutputCurrent();
   }
 
   public double getBottomRollerCurrent(){
@@ -219,11 +204,11 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.getNumber("topRollerKV",0),
     SmartDashboard.getNumber("topRollerKA",0));
 
-    topRollerConfig.closedLoop.pid(
+    topRollerMotor1Config.closedLoop.pid(
     SmartDashboard.getNumber("topRollerKP",0),
     SmartDashboard.getNumber("topRollerKI",0),
     SmartDashboard.getNumber("topRollerKD",0));
-    topRoller.configure(topRollerConfig,ResetMode.kNoResetSafeParameters,PersistMode.kNoPersistParameters);
+    topRollerMotor1.configure(topRollerMotor1Config,ResetMode.kNoResetSafeParameters,PersistMode.kNoPersistParameters);
 
     bottomRollerfeedforward = new SimpleMotorFeedforward(
     SmartDashboard.getNumber("bottomRollerKS",0),
@@ -238,18 +223,7 @@ public class Shooter extends SubsystemBase {
   }
   
 
-  public Command sysIdDynTopRoller(SysIdRoutine.Direction direction){
-    return topRollerCharacterizer.dynamic(direction);
-  }
-  public Command sysIdDynBottompRoller(SysIdRoutine.Direction direction){
-    return bottomRollerCharacterizer.dynamic(direction);
-  }
-  public Command sysIdQuasiTopRoller(SysIdRoutine.Direction direction){
-    return topRollerCharacterizer.quasistatic(direction);
-  }
-  public Command sysIdQuasiBottompRoller(SysIdRoutine.Direction direction){
-    return bottomRollerCharacterizer.quasistatic(direction);
-  }
+  
   
   public boolean exampleCondition() {
     // Query some boolean state, such as a digital sensor.
@@ -262,10 +236,13 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("bottomRollerCurrent",getBottomRollerCurrent());
     SmartDashboard.putNumber("topRollerRPM",topRollerEncoder.getVelocity());
     SmartDashboard.putNumber("bottomRollerRPM",bottomRollerEncoder.getVelocity());
-    SmartDashboard.putNumber("topRollerVoltage", topRoller.getBusVoltage());
+    SmartDashboard.putNumber("topRollerVoltage", topRollerMotor1.getBusVoltage());
     SmartDashboard.putNumber("bottomRollerVoltage", bottomRollerMotor1.getBusVoltage());
-    SmartDashboard.putNumber("topRollerControlEffort", topRoller.getAppliedOutput());
-    SmartDashboard.putNumber("topRollerControlEffort", bottomRollerMotor1.getAppliedOutput());
+    
+    SmartDashboard.putNumber("topRoller1ControlEffort", topRollerMotor1.getAppliedOutput());
+    SmartDashboard.putNumber("bottomRoller1ControlEffort", bottomRollerMotor1.getAppliedOutput());
+    SmartDashboard.putNumber("topRoller2ControlEffort", topRollerMotor2.getAppliedOutput());
+    SmartDashboard.putNumber("bottomRoller2ControlEffort", bottomRollerMotor2.getAppliedOutput());
   }
 
   @Override

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -199,8 +200,10 @@ public final class Constants {
     }
     public static final class ShooterConstants{
         public static final int TOPROLLER_ID = 15;
+        public static final int TOPROLLERMOTOR2_ID = 20;
 
         public static final boolean TOPROLLERINVERTED = true;
+        public static final boolean TOPROLLERMOTOR2INVERTED = true;
 
         public static final int TOPROLLER_SMARTCURRENTLIMIT = 80;
 
@@ -210,11 +213,11 @@ public final class Constants {
         public static final boolean SHOOTER_INVERTED = false;
         public static final int SHOOTEROUTPUTCURRENT_PERIOD = 20;
 
-        public static final double TOPROLLER_KP = 0.0025;
+        public static final double TOPROLLER_KP = 0.00;
         public static final double TOPROLLER_KI = 0;
-        public static final double TOPROLLER_KD = 0.03;
-        public static final double TOPROLLER_KS = 0.0630628;
-        public static final double TOPROLLER_KV = 0.00178204;
+        public static final double TOPROLLER_KD = 0.0;
+        public static final double TOPROLLER_KS = 0.0630628/2;
+        public static final double TOPROLLER_KV = 0.00178204/2;
         public static final double TOPROLLER_KA = 0;
 
         public static final int BOTTOMROLLER_ID = 16;
@@ -226,11 +229,11 @@ public final class Constants {
 
         public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 80;
 
-        public static final double BOTTOMROLLER_KP = 0.0025;
+        public static final double BOTTOMROLLER_KP = 0.00;
         public static final double BOTTOMROLLER_KI = 0;
-        public static final double BOTTOMROLLER_KD = 0.03;
-        public static final double BOTTOMROLLER_KS = 0.0657847;
-        public static final double BOTTOMROLLER_KV = 0.00179472;
+        public static final double BOTTOMROLLER_KD = 0.0;
+        public static final double BOTTOMROLLER_KS = 0.0657847/2;
+        public static final double BOTTOMROLLER_KV = 0.00179472/2;
         public static final double BOTTOMROLLER_KA = 0;
 
         public static final double TOPROLLER_IDLE_SPEED = 0;
@@ -270,7 +273,7 @@ public final class Constants {
         public static final Transform2d SHOOTERTRANSFORM = new Transform2d(SHOOTERLOCATION.toTranslation2d(),new Rotation2d(1,0));
         public static final Rotation2d SHOOTER_EXIT_ANGLE = Rotation2d.fromDegrees(90-32.8);
 
-        public static final int N_NEWTONLINERIZATIONS = 500;
+        public static final int N_NEWTONLINERIZATIONS = 20;
 
     }
     public static final class IntakeConstants{
@@ -350,28 +353,24 @@ public final class Constants {
         
         public static final Translation3d BLUEHUB = new Translation3d(0,0,0); 
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
-        private static final Map<String, Pose2d> BLUE_MAP = Map.ofEntries(
-            Map.entry("Hub", new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)))
+        private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
+            Map.entry("Hub", new Translation3d(0, 0,0))
             
         );
         
         // Iterates through every element in the pose map and mirrors them for the red alliance
-        private static final Map<String, Pose2d> RED_MAP =
+        private static final Map<String, Translation3d> RED_MAP =
             BLUE_MAP.entrySet().stream().collect(Collectors.toMap(
                 entry -> entry.getKey(),
-                entry -> new Pose2d(
-                    new Translation2d(
+                entry -> 
+                    new Translation3d(
                         FIELD_LENGTH - entry.getValue().getX(),
-                        FIELD_WIDTH - entry.getValue().getY()
-                    ),
-                    new Rotation2d(
-                        -entry.getValue().getRotation().getCos(),
-                        -entry.getValue().getRotation().getSin()
+                        FIELD_WIDTH - entry.getValue().getY(),
+                        entry.getValue().getZ()
                     )
-                )
-            ));
+                ));
         
-        public static final Map<Alliance, Map<String, Pose2d>> POSE_MAP = Map.of(
+        public static final Map<Alliance, Map<String, Translation3d>> POSE_MAP = Map.of(
             Alliance.Blue, BLUE_MAP,
             Alliance.Red, RED_MAP
         );
