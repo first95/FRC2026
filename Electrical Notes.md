@@ -9,23 +9,23 @@ Front of the robot is _______
 | Breaker# |Amps | CAN ID  | Description    |
 |---------:|-----:|----:|:--------------------------------------|
 |          |      |     |*Drive Base motors*                    |
-|        |  30A |  2  | Back Right Steering motor (Spark MAX) |
-|        |  40A |  3  | Back Right Drive motor (Spark FLEX)   |
-|        |  30A |  4  | Back Left Steering motor (Spark MAX)|
-|        |  40A |  5  | Back Left Drive motor (Spark FLEX)  |
+|        |  30A |  2  | Back Right Steering motor (Spark MAX)   |
+|        |  40A |  3  | Back Right Drive motor (Spark FLEX)     |
+|        |  30A |  4  | Back Left Steering motor (Spark MAX)    |
+|        |  40A |  5  | Back Left Drive motor (Spark FLEX)      |
 |        |  30A |  6  | Front Right Steering motor (Spark MAX)  |
 |        |  40A |  7  | Front Right Drive motor (Spark FLEX)    |
-|        |  30A |  8  | Front Left Steering motor (Spark MAX) |
-|        |  40A |  9  | Front Left Drive motor (Spark FLEX)   |
+|        |  30A |  8  | Front Left Steering motor (Spark MAX)   |
+|        |  40A |  9  | Front Left Drive motor (Spark FLEX)     |
 |          |      |     |*Non-drive motors*                     |
-|        |  40A | 10  | L4 Shoulder (Spark MAX)               |
-|        |  40A | 11  | L1 (utility) arm intake motor             |
-|        |  40A | 12  | L1 (utility) arm shoulder        |
-|        |  40A | 13  | Climber winch motor                   |
+|        |  40A | 12  | Left Lower Launcher motor               |
+|        |  40A | 14  | Indexer roller motor                    |
+|        |  40A | 15  | Upper Launcher motor                    |
+|        |  40A | 16  | Right Lower Launcher motor              |
 |          |      |     |*Non-motor breakers*                   |
-|         |  10A |     | VRM for both Limelight 3G's           |
-|         |  10A |     | VRM for Pigeon and Radio PoE injector |
-|         |  10A |     | Direct wire to Radio 12v input        |
+|         |  10A |     | VRM for both Limelight 3G's            |
+|         |  10A |     | VRM for Pigeon and Radio PoE injector  |
+|         |  10A |     | Direct wire to Radio 12v input         |
 
 ## Sorted by Breaker #
 NOT UPDATED YET
