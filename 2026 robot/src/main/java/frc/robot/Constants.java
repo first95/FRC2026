@@ -63,7 +63,7 @@ public final class Constants {
 
         public static final int SWERVE_MODULE_CURRENT_LIMIT = 50;
 
-        public static final double HEADING_TOLERANCE = Math.toRadians(0.1);
+        public static final double HEADING_TOLERANCE = Math.toRadians(3);
 
         // Motor and encoder inversions
         public static final boolean ABSOLUTE_ENCODER_INVERT = true;
@@ -90,7 +90,7 @@ public final class Constants {
         };
 
         // IMU Mounting. CCW Positive
-        public static final double IMU_MOUNT_YAW = 0;
+        public static final double IMU_MOUNT_YAW = 180;
         public static final double IMU_MOUNT_PITCH = 0;
         public static final double IMU_MOUNT_ROLL = 0;
 
@@ -200,7 +200,6 @@ public final class Constants {
     }
     public static final class ShooterConstants{
         public static final int TOPROLLER_ID = 15;
-        public static final int TOPROLLERMOTOR2_ID = 20;
 
         public static final boolean TOPROLLERINVERTED = true;
         public static final boolean TOPROLLERMOTOR2INVERTED = true;
@@ -213,28 +212,35 @@ public final class Constants {
         public static final boolean SHOOTER_INVERTED = false;
         public static final int SHOOTEROUTPUTCURRENT_PERIOD = 20;
 
-        public static final double TOPROLLER_KP = 0.00;
+        public static final double TOPROLLER_KP = 0.00005;
         public static final double TOPROLLER_KI = 0;
         public static final double TOPROLLER_KD = 0.0;
-        public static final double TOPROLLER_KS = 0.0630628/2;
-        public static final double TOPROLLER_KV = 0.00178204/2;
+        public static final double TOPROLLER_KS = 0.0340016;
+        public static final double TOPROLLER_KV = 0.00180762;
         public static final double TOPROLLER_KA = 0;
 
-        public static final int BOTTOMROLLER_ID = 16;
-        public static final int BOTTOMROLLERMOTOR2_ID = 12;
+        public static final int BOTTOMROLLER_ID = 12;
+        public static final int BOTTOMROLLERMOTOR2_ID = 16;
 
 
-        public static final boolean BOTTOMROLLER2INVERTED = true;
-        public static final boolean BOTTOMROLLERINVERTED = false;
+        public static final boolean BOTTOMROLLER2INVERTED = false;
+        public static final boolean BOTTOMROLLERINVERTED = true;
 
         public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 80;
 
-        public static final double BOTTOMROLLER_KP = 0.00;
+        public static final double BOTTOMROLLER_KP = 0.0002;
         public static final double BOTTOMROLLER_KI = 0;
         public static final double BOTTOMROLLER_KD = 0.0;
-        public static final double BOTTOMROLLER_KS = 0.0657847/2;
-        public static final double BOTTOMROLLER_KV = 0.00179472/2;
+        public static final double BOTTOMROLLER_KS = -0.00740034;
+        public static final double BOTTOMROLLER_KV = 0.00181521;
         public static final double BOTTOMROLLER_KA = 0;
+
+        public static final double BOTTOMROLLER2_KP = 0.0002;
+        public static final double BOTTOMROLLER2_KI = 0;
+        public static final double BOTTOMROLLER2_KD = 0.0;
+        public static final double BOTTOMROLLER2_KS = -0.00740034;
+        public static final double BOTTOMROLLER2_KV = 0.00181521;
+        public static final double BOTTOMROLLER2_KA = 0;
 
         public static final double TOPROLLER_IDLE_SPEED = 0;
         public static final double BOTTOMROLLER_IDLE_SPEED = 0;
@@ -242,9 +248,15 @@ public final class Constants {
         public static final double TOPROLLER_JUGGLING_SPEED = 0;
         public static final double BOTTOMROLLER_JUGGLING_SPEED = 0;
 
-        public static final double INDEXINGSPEED = 0;
+        public static final double INDEXINGSPEED = 2800;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
+
+        public static final double INDEXER_KP = 0.000001;
+        public static final double INDEXER_KI = 0;
+        public static final double INDEXER_KD = 0.0;
+        public static final double INDEXER_KS = 0.087708;
+        public static final double INDEXER_KV = 0.00209302;
 
         public static final double INDEXER_PREPINDEXER_CURRENT_THRESHOLD = 0;
 
@@ -252,7 +264,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 0.1;
+        public static final double SHOOTERTOLERANCE = 20;
 
         public static final int INDEXER_ID = 14;
 
@@ -262,13 +274,13 @@ public final class Constants {
 
         public static final int INDEXER_FAULTS_PERIOD_MS = 20;
         public static final int INDEXER_POSITION_PERIOD = 60000;
-        public static final int INDEXER_VELOCITY_PERIOD = 5900;
+        public static final int INDEXER_VELOCITY_PERIOD = 20;
         public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
 
         public static final Translation3d SHOOTERLOCATION = new Translation3d(
-            -0.685800/2 + 0.205674,
+            0.1778,
             0,
-            0
+            0.5588
         );
         public static final Transform2d SHOOTERTRANSFORM = new Transform2d(SHOOTERLOCATION.toTranslation2d(),new Rotation2d(1,0));
         public static final Rotation2d SHOOTER_EXIT_ANGLE = Rotation2d.fromDegrees(90-32.8);
@@ -351,7 +363,7 @@ public final class Constants {
 
         public static final double DRIVE_POSITIONAL_TOLERANCE = 0.05; // m
         
-        public static final Translation3d BLUEHUB = new Translation3d(0,0,0); 
+        public static final Translation3d BLUEHUB = new Translation3d(2.0828,0,0); 
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
             Map.entry("Hub", new Translation3d(0, 0,0))

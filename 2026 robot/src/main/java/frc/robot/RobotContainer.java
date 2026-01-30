@@ -79,10 +79,10 @@ public class RobotContainer {
   private final SwerveBase drivebase = new SwerveBase();
   //private final TeleopDrive openRobotRel, closedRobotRel, openFieldRel, closedFieldRel;
   private final AbsoluteDrive absoluteDrive;
-  //private final FuelHandlerCommand fuelhandler;
+  private final FuelHandlerCommand fuelhandler;
 
   private final Shooter shooter = new Shooter();
-  //private final Intake intake = new Intake();
+  private final Intake intake = null;
 
   private final CommandJoystick driveController = new CommandJoystick(OperatorConstants.driveControllerPort);
   private final CommandJoystick headingController = new CommandJoystick(OperatorConstants.headingControllerPort);
@@ -159,17 +159,17 @@ public class RobotContainer {
 
         drivebase.setDefaultCommand(absoluteDrive);
 
-    // fuelhandler = new FuelHandlerCommand(
-    //   () -> headingController.getHID().getRawButton(1), //intake Button
-    //   () -> driveController.getHID().getRawButton(1), //shoot Button
-    //   () -> headingController.getHID().getRawButton(2), //aimButton
-    //   shooter, 
-    //   intake, 
-    //   absoluteDrive, 
-    //   drivebase);
+    fuelhandler = new FuelHandlerCommand(
+      () -> driveController.getHID().getRawButton(1), //intake Button
+      () -> driveController.getHID().getRawButton(2), //shoot Button
+      () -> headingController.getHID().getRawButton(2), //aimButton
+      shooter, 
+      intake, 
+      absoluteDrive, 
+      drivebase);
     
-    // shooter.setDefaultCommand(fuelhandler);
-    // intake.setDefaultCommand(fuelhandler);
+    shooter.setDefaultCommand(fuelhandler);
+    //intake.setDefaultCommand(fuelhandler);
 
     // Configure the trigger bindings
     configureBindings();
