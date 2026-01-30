@@ -287,6 +287,9 @@ public final class Constants {
 
         public static final int N_NEWTONLINERIZATIONS = 20;
 
+        public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 232.88136;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 12.19898;
+
     }
     public static final class IntakeConstants{
         public static final int MOTOR1_ID = 40;

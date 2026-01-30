@@ -188,7 +188,7 @@ public class Shooter extends SubsystemBase {
     bottomRollerSetPoint = bottomRollerRPM;
   }
   public void setShooterExitVelocity(double velocity){
-    double rpm = velocity* 232.88136 - 12.19898;
+    double rpm = velocity * ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONSLOPE  - ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONINTERCEPT;
     //use an interpolation to find what rpms will give the desired velocity
     setShooterSpeeds(rpm,rpm);
   }
