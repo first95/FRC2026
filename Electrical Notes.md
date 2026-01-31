@@ -10,14 +10,14 @@ Front of the robot is the launching direction and Intake side
 |---------:|-----:|----:|:--------------------------------------|
 |          |      |  1  | Power Distribution Hub                |
 |          |      |     |*Drive Base motors*                    |
-|        |  30A |  3  | Back Right Drive motor                  |
-|        |  40A |  4  | Back Right Steering motor               |
-|        |  30A |  5  | Back Left Drive motor                   |
-|        |  40A |  6  | Back Left Steering motor                |
-|        |  30A |  7  | Front Left Drive motor                  |
-|        |  40A |  8  | Front Left Steering motor               |
-|        |  30A |  9  | Front Right Drive motor                 |
-|        |  40A | 10  | Front Right Steering motor              |
+|     6    |  40A |  2  | Back Right Steering motor               |
+|     7    |  30A |  3  | Back Right Drive motor                  |
+|     0    |  40A |  4  | Back Left Steering motor                |
+|    18    |  30A |  5  | Back Left Drive motor                   |
+|    19    |  40A |  6  | Front Left Steering motor               |
+|    17    |  30A |  7  | Front Left Drive motor                  |
+|     8    |  40A |  8  | Front Right Steering motor              |
+|     9    |  30A |  9  | Front Right Drive motor                 |
 |          |      |     |*Non-drive motors*                     |
 |        |  40A | 12  | Left Lower Launcher motor               |
 |        |  40A | 14  | Indexer roller motor                    |
