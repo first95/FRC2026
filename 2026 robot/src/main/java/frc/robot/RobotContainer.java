@@ -161,7 +161,7 @@ public class RobotContainer {
 
     fuelhandler = new FuelHandlerCommand(
       () -> driveController.getHID().getRawButton(1), //intake Button
-      () -> driveController.getHID().getRawButton(2), //shoot Button
+      () -> headingController.getHID().getRawButton(1), //shoot Button
       () -> headingController.getHID().getRawButton(2), //aimButton
       shooter, 
       intake, 
@@ -265,6 +265,8 @@ public class RobotContainer {
     operatorController.start().onTrue(new InstantCommand(drivebase::clearOdometrySeed).ignoringDisable(true));
     driveController.button(8).onTrue(new InstantCommand(drivebase::clearOdometrySeed).ignoringDisable(true));
     operatorController.button(9).onTrue(new InstantCommand(() -> setBrakes(false)).ignoringDisable(true));
+
+    driveController.button(4).whileTrue(new AlignToPose(new Pose2d(), drivebase));
 
     // operatorController.button(5).whileTrue(
     //   new AlignToPose("Reef", drivebase)//align to scoring position

@@ -83,7 +83,7 @@ public class FuelHandlerCommand extends Command {
   }
 
 
-
+;
   public void initialize() {
     currentState = State.IDLE;
   }
@@ -91,16 +91,16 @@ public class FuelHandlerCommand extends Command {
 
   public void execute() {
 
-    SmartDashboard.putNumber("shooterExitVelocity", findMovingShootingVelocity(swerve, Constants.Auton.BLUEHUB) );
-    SmartDashboard.putNumber("stationaryExitVelocity",findStationaryShootingVelocity(swerve, Constants.Auton.BLUEHUB));
+    SmartDashboard.putNumber("shooterExitVelocity", findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"))) ;
+    SmartDashboard.putNumber("stationaryExitVelocity",findStationaryShootingVelocity(swerve,Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")));
     intakeButton = intakeButtonSupplier.getAsBoolean();
     aimButton = aimButtonSupplier.getAsBoolean();
     shootButton = shootButtonSupplier.getAsBoolean();
 
     currentRobotHeading = swerve.getPose().getRotation();
 
-    shootingVelocity = findMovingShootingVelocity(swerve, Constants.Auton.BLUEHUB);
-    shootingHeading = findMovingShootingHeading(swerve, Constants.Auton.BLUEHUB, shootingVelocity);
+    shootingVelocity = findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub"));
+    shootingHeading = findMovingShootingHeading(swerve, Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub"), shootingVelocity);
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
 
@@ -177,7 +177,7 @@ public class FuelHandlerCommand extends Command {
 
         //intake.setSpeed(IntakeConstants.INTAKINGSPEED);
 
-        if ( Math.abs(currentRobotHeading.getRadians()- shootingHeading.getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
+        if ( shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.getRadians()- shootingHeading.getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
           currentState = State.SHOOTING;
         }
         if (!aimButton && ! shootButton){
@@ -192,7 +192,7 @@ public class FuelHandlerCommand extends Command {
 
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
 
-        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.getRadians() - shootingHeading.getRadians()) <= Drivebase.HEADING_TOLERANCE){
+        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.getRadians() - shootingHeading.getRadians()) > Drivebase.HEADING_TOLERANCE){
           currentState = State.AIMING;
         }
 
@@ -216,7 +216,7 @@ public class FuelHandlerCommand extends Command {
     ChassisSpeeds swerveVelocity = swerve.getFieldVelocity();
     
     Rotation2d robotToTargetHeading = findStationaryshootingHeading(swerve, target);
-    double trvx = robotToTargetHeading.getCos()*swerveVelocity.vxMetersPerSecond + robotToTargetHeading.getSin()*swerveVelocity.vyMetersPerSecond;
+    double trvx = -1*(robotToTargetHeading.getCos()*swerveVelocity.vxMetersPerSecond + robotToTargetHeading.getSin()*swerveVelocity.vyMetersPerSecond);
     double trvy = robotToTargetHeading.getSin()*swerveVelocity.vxMetersPerSecond - robotToTargetHeading.getCos()*swerveVelocity.vyMetersPerSecond;
 
     Pose2d shooterPose = swerve.getPose().plus(ShooterConstants.SHOOTERTRANSFORM);
@@ -254,7 +254,7 @@ public class FuelHandlerCommand extends Command {
     ChassisSpeeds swerveVelocity = swerve.getFieldVelocity();
 
     Rotation2d robotToTargetHeading = findStationaryshootingHeading(swerve, target);
-    double trvx = robotToTargetHeading.getCos()*swerveVelocity.vxMetersPerSecond + robotToTargetHeading.getSin()*swerveVelocity.vyMetersPerSecond;
+    double trvx = -1*(robotToTargetHeading.getCos()*swerveVelocity.vxMetersPerSecond + robotToTargetHeading.getSin()*swerveVelocity.vyMetersPerSecond);
     double trvy = robotToTargetHeading.getSin()*swerveVelocity.vxMetersPerSecond - robotToTargetHeading.getCos()*swerveVelocity.vyMetersPerSecond;
 
 

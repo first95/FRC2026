@@ -158,7 +158,7 @@ public class Shooter extends SubsystemBase {
    
     setShooterSpeeds(400,400);
 
-  
+    
   }
 
 
@@ -188,9 +188,10 @@ public class Shooter extends SubsystemBase {
     bottomRollerSetPoint = bottomRollerRPM;
   }
   public void setShooterExitVelocity(double velocity){
-    double rpm = velocity * ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONSLOPE  - ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONINTERCEPT;
+    double rpm = velocity * ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONSLOPE  + ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONINTERCEPT;
     //use an interpolation to find what rpms will give the desired velocity
-    setShooterSpeeds(rpm,rpm);
+    //setShooterSpeeds(rpm,rpm);
+    setShooterSpeeds(rpm, rpm);
   }
   public boolean shooterAtSpeed(){
     return Math.abs(topRollerSetPoint - topRollerEncoder.getVelocity()) <= ShooterConstants.SHOOTERTOLERANCE &&
@@ -280,6 +281,9 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("topRoller1ControlEffort", topRollerMotor1.getAppliedOutput());
     SmartDashboard.putNumber("bottomRoller1ControlEffort", bottomRollerMotor1.getAppliedOutput());
     SmartDashboard.putNumber("bottomRoller2ControlEffort", bottomRollerMotor2.getAppliedOutput());
+
+    SmartDashboard.putNumber("shooterTargetRPM", topRollerSetPoint);
+    SmartDashboard.putBoolean("shooteAtSpped", shooterAtSpeed());
   }
 
   @Override

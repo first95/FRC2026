@@ -264,7 +264,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 20;
+        public static final double SHOOTERTOLERANCE = 60;
 
         public static final int INDEXER_ID = 14;
 
@@ -287,8 +287,8 @@ public final class Constants {
 
         public static final int N_NEWTONLINERIZATIONS = 20;
 
-        public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 232.88136;
-        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 12.19898;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 229.36766;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 320.85451;
 
     }
     public static final class IntakeConstants{
@@ -369,7 +369,7 @@ public final class Constants {
         public static final Translation3d BLUEHUB = new Translation3d(2.0828,0,0); 
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
-            Map.entry("Hub", new Translation3d(0, 0,0))
+            Map.entry("Hub", new Translation3d(2.0828, 0,0))
             
         );
         
