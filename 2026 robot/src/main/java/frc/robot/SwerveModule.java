@@ -34,10 +34,10 @@ public class SwerveModule {
     private final double angleOffset;
     private final SparkMax angleMotor;
     private final SparkMaxConfig angleMotorConfig;
-    private final SparkMax driveMotor;
-    private final SparkMaxConfig driveMotorConfig;
-    // private final SparkFlex driveMotor;
-    // private final SparkFlexConfig driveMotorConfig;
+    // private final SparkMax driveMotor;
+    // private final SparkMaxConfig driveMotorConfig;
+    private final SparkFlex driveMotor;
+    private final SparkFlexConfig driveMotorConfig;
     private final SparkAbsoluteEncoder absoluteEncoder;
     private final RelativeEncoder driveEncoder;
     private final SparkClosedLoopController angleController, driveController;
@@ -88,8 +88,8 @@ public class SwerveModule {
             
             
         // Config drive motor/controller
-        driveMotor = new SparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
-        driveMotorConfig = new SparkMaxConfig();
+        driveMotor = new SparkFlex(moduleConstants.driveMotorID, MotorType.kBrushless);
+        driveMotorConfig = new SparkFlexConfig();
         driveEncoder = driveMotor.getEncoder();
         driveController = driveMotor.getClosedLoopController();
             

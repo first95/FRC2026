@@ -165,7 +165,7 @@ public final class Constants {
         // Module specific constants'
         public static final class Mod0 {
             public static final int DRIVE_MOTOR_ID = 7;
-            public static final int ANGLE_MOTOR_ID = 8;
+            public static final int ANGLE_MOTOR_ID = 6;
             public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(0, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, FRONT_LEFT_X, FRONT_LEFT_Y);
@@ -173,7 +173,7 @@ public final class Constants {
 
         public static final class Mod1 {
             public static final int DRIVE_MOTOR_ID = 9;
-            public static final int ANGLE_MOTOR_ID = 10;
+            public static final int ANGLE_MOTOR_ID = 8;
             public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(1, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, FRONT_RIGHT_X, FRONT_RIGHT_Y);
@@ -181,7 +181,7 @@ public final class Constants {
 
         public static final class Mod2 {
             public static final int DRIVE_MOTOR_ID = 5;
-            public static final int ANGLE_MOTOR_ID = 6;
+            public static final int ANGLE_MOTOR_ID = 4;
             public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(2, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, BACK_LEFT_X, BACK_LEFT_Y);
@@ -189,7 +189,7 @@ public final class Constants {
 
         public static final class Mod3 {
             public static final int DRIVE_MOTOR_ID = 3;
-            public static final int ANGLE_MOTOR_ID = 4;
+            public static final int ANGLE_MOTOR_ID = 2;
             public static final double ANGLE_OFFSET = 0;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(3, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, BACK_RIGHT_X, BACK_RIGHT_Y);
