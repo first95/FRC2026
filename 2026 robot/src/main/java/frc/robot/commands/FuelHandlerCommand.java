@@ -101,6 +101,8 @@ public class FuelHandlerCommand extends Command {
 
     shootingVelocity = findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub"));
     shootingHeading = findMovingShootingHeading(swerve, Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub"), shootingVelocity);
+    SmartDashboard.putNumber("shootingHeading", shootingHeading.getRadians());
+    SmartDashboard.putBoolean("isOnTarget",   Math.abs(currentRobotHeading.minus(shootingHeading).getRadians())<= Constants.Drivebase.HEADING_TOLERANCE);
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
 
@@ -177,7 +179,7 @@ public class FuelHandlerCommand extends Command {
 
         //intake.setSpeed(IntakeConstants.INTAKINGSPEED);
 
-        if ( shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.getRadians()- shootingHeading.getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
+        if ( shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
           currentState = State.SHOOTING;
         }
         if (!aimButton && ! shootButton){
@@ -192,7 +194,7 @@ public class FuelHandlerCommand extends Command {
 
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
 
-        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.getRadians() - shootingHeading.getRadians()) > Drivebase.HEADING_TOLERANCE){
+        if(!shooter.shooterAtSpeed() ||  Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
           currentState = State.AIMING;
         }
 
