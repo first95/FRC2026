@@ -278,7 +278,7 @@ public final class Constants {
         public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
 
         public static final Translation3d SHOOTERLOCATION = new Translation3d(
-            0.1778,
+            -0.1778,
             0,
             0.5588
         );
@@ -369,7 +369,9 @@ public final class Constants {
         public static final Translation3d BLUEHUB = new Translation3d(2.0828,0,0); 
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
-            Map.entry("Hub", new Translation3d(2.0828, 0,0))
+            Map.entry("Hub", new Translation3d(2.0828, 0,0)),
+            Map.entry("passingTarget2", new Translation3d(4.629707,4.034631/2,1)),
+            Map.entry("passingTarget1", new Translation3d(4.629707,FIELD_WIDTH- 4.034631/2,1))
             
         );
         

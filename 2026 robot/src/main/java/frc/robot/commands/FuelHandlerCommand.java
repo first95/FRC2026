@@ -54,6 +54,8 @@ public class FuelHandlerCommand extends Command {
   private double 
   shootingVelocity;
 
+  private Translation3d target;
+
   private enum State{
     IDLE, INTAKING, CLEARSHOOTER, PREPINDEXER, AIMING, SHOOTING
   }
@@ -99,8 +101,9 @@ public class FuelHandlerCommand extends Command {
 
     currentRobotHeading = swerve.getPose().getRotation();
 
-    shootingVelocity = findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub"));
-    shootingHeading = findMovingShootingHeading(swerve, Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub"), shootingVelocity);
+    target = targetChooser(swerve);
+    shootingVelocity = findMovingShootingVelocity(swerve, target);
+    shootingHeading = findMovingShootingHeading(swerve, target, shootingVelocity);
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
 
@@ -286,7 +289,7 @@ public class FuelHandlerCommand extends Command {
     double trvx = robotToTargetHeading.getCos()*swerveVelocity.vxMetersPerSecond + robotToTargetHeading.getSin()*swerveVelocity.vyMetersPerSecond;
     double trvy = robotToTargetHeading.getSin()*swerveVelocity.vxMetersPerSecond - robotToTargetHeading.getCos()*swerveVelocity.vyMetersPerSecond;
 
-    Rotation2d heading = findStationaryshootingHeading(swerve, target).plus(Rotation2d.fromRadians(Math.PI/2 - Math.acos(-1 * trvy/ShooterConstants.SHOOTER_EXIT_ANGLE.getCos()/shootingVelocity)));
+    Rotation2d heading = findStationaryshootingHeading(swerve, target).minus(Rotation2d.fromRadians(Math.PI/2 - Math.acos(-1 * trvy/ShooterConstants.SHOOTER_EXIT_ANGLE.getCos()/shootingVelocity)));
 
     return swerve.getAlliance() ==  Alliance.Blue ? heading : heading.rotateBy(Rotation2d.fromDegrees(180));
   }
@@ -310,13 +313,48 @@ public class FuelHandlerCommand extends Command {
 
     Pose2d shooterPose = robotPose.plus(ShooterConstants.SHOOTERTRANSFORM);
 
-    Rotation2d heading = Rotation2d.fromRadians(Math.atan2(shooterPose.getY() - target.getY(),shooterPose.getX() - target.getX())).rotateBy(Rotation2d.fromDegrees(0));
+    Rotation2d heading = Rotation2d.fromRadians(Math.atan2(shooterPose.getY() - target.getY(),shooterPose.getX() - target.getX())).rotateBy(Rotation2d.fromDegrees(180));
 
     return heading;
     //swerve.getAlliance() ==  Alliance.Red ? heading : heading.rotateBy(Rotation2d.fromDegrees(180));
-
-    
   }
+  private Translation3d targetChooser(SwerveBase swerve){
+    Translation3d target = Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub");;
+    double swerveX = swerve.getPose().getX();
+    double swerveY = swerve.getPose().getY();
+    if(swerve.getAlliance() == Alliance.Blue){
+      if( swerveX > Constants.Auton.POSE_MAP.get(Alliance.Blue).get("passingTarget1").getX()){
+        if(swerveY > Constants.FIELD_WIDTH/2){
+           target = Constants.Auton.POSE_MAP.get(Alliance.Blue).get("passingTarget1");
+        }
+        else{
+          target = Constants.Auton.POSE_MAP.get(Alliance.Blue).get("passingTarget2");
+        }
+      }
+      else{
+        target = Constants.Auton.POSE_MAP.get(Alliance.Blue).get("Hub");
+      }
+    }
+    else if(swerve.getAlliance() == Alliance.Red){
+      if(swerveX < Constants.Auton.POSE_MAP.get(Alliance.Red).get("passingTarget1").getX()){
+        if(swerveY < Constants.FIELD_WIDTH/2){
+           target = Constants.Auton.POSE_MAP.get(Alliance.Red).get("passingTarget1");
+        }
+        else{
+          target = Constants.Auton.POSE_MAP.get(Alliance.Red).get("passingTarget2");
+        }
+
+      }
+      else{
+         target = Constants.Auton.POSE_MAP.get(Alliance.Red).get("Hub");
+      }
+    }
+
+
+    return target;
+
+  }
+  
 
 
   // Called once the command ends
