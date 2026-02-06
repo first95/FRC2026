@@ -19,6 +19,8 @@ Front of the robot is the launching direction and Intake side
 |     8    |  40A |  8  | Front Right Steering motor              |
 |     9    |  30A |  9  | Front Right Drive motor                 |
 |          |      |     |*Non-drive motors*                     |
+|        |      | 10  | Right flappy-doodle motor               |
+|        |      | 11  | Left flappy-doodle motor               |
 |        |  40A | 12  | Left Lower Launcher motor               |
 |        |  40A | 14  | Loader motor                            |
 |        |  40A | 15  | Upper Launcher motor                    |
