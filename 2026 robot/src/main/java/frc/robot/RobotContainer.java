@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.Auton;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.Drivebase;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -14,6 +15,7 @@ import frc.robot.commands.FuelHandlerCommand;
 import frc.robot.commands.autocommands.AlignToPose;
 import frc.robot.commands.drivebase.AbsoluteDrive;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 //import frc.robot.commands.drivebase.TeleopDrive;
@@ -83,6 +85,7 @@ public class RobotContainer {
 
   private final Shooter shooter = new Shooter();
   private final Intake intake = null;
+  private final Climber climber = new Climber();
 
   private final CommandJoystick driveController = new CommandJoystick(OperatorConstants.driveControllerPort);
   private final CommandJoystick headingController = new CommandJoystick(OperatorConstants.headingControllerPort);
@@ -268,27 +271,9 @@ public class RobotContainer {
 
     driveController.button(4).whileTrue(new AlignToPose(new Pose2d(), drivebase));
 
-    // operatorController.button(5).whileTrue(
-    //   new AlignToPose("Reef", drivebase)//align to scoring position
-    //   .andThen(new InstantCommand(() -> operatorController.setRumble(RumbleType.kBothRumble,1)))//when aligned vibrate the controller
-    // )
-    // .onFalse(new InstantCommand(() -> operatorController.setRumble(RumbleType.kBothRumble, 0)));
-    //   L1arm.incrementArmVoltage(0.01);   
-    // }  
-
-    // if (operatorController.b().getAsBoolean() == true){
-    //   L1arm.incrementArmVoltage(-0.01);
-    // }
-    // operatorController.a().whileTrue(new InstantCommand(() -> L1arm.incrementArmVoltage(0.001)));
-    // operatorController.b().whileTrue(new InstantCommand(() -> L1arm.incrementArmVoltage(-0.001)));
-    // operatorController.a().whileTrue(l4arm.sysIdDynShoulder(SysIdRoutine.Direction.kForward));
-    // operatorController.b().whileTrue(l4arm.sysIdDynShoulder(SysIdRoutine.Direction.kReverse));
-    // operatorController.x().whileTrue(l4arm.sysIdQuasiShoulder(SysIdRoutine.Direction.kForward));
-    // operatorController.y().whileTrue(l4arm.sysIdQuasiShoulder(SysIdRoutine.Direction.kReverse));
-    /*driveController.button(2).whileTrue(new AutoAmp(drivebase)).onFalse(new InstantCommand(() -> {
-      SmartDashboard.putBoolean(Auton.AUTO_AMP_SCORE_KEY, false);
-      SmartDashboard.putBoolean(Auton.AUTO_AMP_ALIGN_KEY, falSse);
-    }));*/
+    operatorController.povDown().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED * -1));
+    operatorController.povUp().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED));
+    operatorController.povCenter().onTrue(climber.runClimber(0));
   }
 
   /**

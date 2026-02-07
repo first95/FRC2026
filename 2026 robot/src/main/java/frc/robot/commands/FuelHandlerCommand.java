@@ -195,6 +195,8 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
+        //intake.setAgitatorSpeed(IntakeConstants.AGITATINGSPEED);
+
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
 
         if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.getRadians() - shootingHeading.getRadians()) > Drivebase.HEADING_TOLERANCE){

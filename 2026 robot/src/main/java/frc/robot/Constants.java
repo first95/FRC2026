@@ -316,6 +316,18 @@ public final class Constants {
         public static final double INTAKINGSPEED = 0;
         public static final double AGITATINGSPEED = 0;
     }
+
+    public static final class ClimberConstants{
+        public static final int MOTOR1_ID = 300;
+
+        public static final boolean INVERTED = false;
+
+        public static final int SMARTCURRENTLIMIT = 30;
+
+        public static final double CLIMBINGSPEED = 0;
+
+
+    }
     public static final class Vision {
         public static final int DEBUG_FLAG = 0b10;
 
