@@ -299,15 +299,22 @@ public final class Constants {
         public static final int SMARTCURRENTLIMIT = 30;
 
         public static final int FAULTSPERIOD = 20;
-        public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
+        public static final int OUTPUT_CURRENT_PERIOD = 20;
 
         public static final int MOTOR2_ID = 25;
 
         public static final boolean MOTOR2_INVERTED = true;
 
+        public static final int AGITATOR1_ID = 10;
+
+        public static final boolean AGITATORINVERTED = false;
+
+        public static final int AGITATOR_SMARTCURRENTLIMIT = 30;
+
+        public static final int AGITATOR2_ID = 11;
+
         public static final double INTAKINGSPEED = 0;
-
-
+        public static final double AGITATINGSPEED = 0;
     }
     public static final class Vision {
         public static final int DEBUG_FLAG = 0b10;

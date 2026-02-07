@@ -7,8 +7,10 @@ package frc.robot.subsystems;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,8 +18,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
-  public final SparkFlex motor1, motor2;
-  public final SparkFlexConfig motor1Config,motor2Config;
+  private final SparkFlex motor1, motor2;
+  private final SparkFlexConfig motor1Config, motor2Config;
+
+  private final SparkMax agitator1, agitator2;
+  private final SparkMaxConfig agitator1Config ,agitator2Config;
+
   public Intake() {
     motor1 = new SparkFlex(IntakeConstants.MOTOR1_ID, MotorType.kBrushless);
     motor1Config = new SparkFlexConfig();
@@ -29,7 +35,7 @@ public class Intake extends SubsystemBase {
     
     motor1Config.signals
       .faultsPeriodMs(IntakeConstants.FAULTSPERIOD)
-      .outputCurrentPeriodMs(IntakeConstants.INDEXER_OUTPUT_CURRENT_PERIOD);
+      .outputCurrentPeriodMs(IntakeConstants.OUTPUT_CURRENT_PERIOD);
 
     motor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -43,10 +49,42 @@ public class Intake extends SubsystemBase {
 
     motor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+    agitator1 = new SparkMax(IntakeConstants.AGITATOR1_ID, MotorType.kBrushless);
+    agitator1Config = new SparkMaxConfig();
+
+    agitator1Config
+      .inverted(IntakeConstants.AGITATORINVERTED)
+      .idleMode(IdleMode.kCoast)
+      .smartCurrentLimit(IntakeConstants.AGITATOR_SMARTCURRENTLIMIT);
+
+    agitator1Config.signals
+      .faultsPeriodMs(IntakeConstants.FAULTSPERIOD)
+      .outputCurrentPeriodMs(IntakeConstants.OUTPUT_CURRENT_PERIOD);
+
+    agitator1.configure(agitator1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    agitator2 = new SparkMax(IntakeConstants.AGITATOR2_ID, MotorType.kBrushless);
+    agitator2Config = new SparkMaxConfig();
+
+    agitator2Config
+      .follow(agitator1,true)
+      .idleMode(IdleMode.kCoast)
+      .smartCurrentLimit(IntakeConstants.AGITATOR_SMARTCURRENTLIMIT);
+
+    agitator2Config.signals
+      .faultsPeriodMs(IntakeConstants.FAULTSPERIOD)
+      .outputCurrentPeriodMs(IntakeConstants.OUTPUT_CURRENT_PERIOD);
+
+    agitator2.configure(agitator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
   }
 
   public void setSpeed(double speed){
     motor1.set(speed);
+  }
+
+  public void setAgitatorSpeed(double speed){
+    agitator1.set(speed);
   }
 
   @Override
