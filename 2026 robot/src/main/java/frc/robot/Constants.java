@@ -296,7 +296,7 @@ public final class Constants {
 
         public static final boolean MOTOR1_INVERTED = false;
 
-        public static final int SMARTCURRENTLIMIT = 30;
+        public static final int SMARTCURRENTLIMIT = 40;
 
         public static final int FAULTSPERIOD = 20;
         public static final int OUTPUT_CURRENT_PERIOD = 20;
@@ -305,13 +305,13 @@ public final class Constants {
 
         public static final boolean MOTOR2_INVERTED = true;
 
-        public static final int AGITATOR1_ID = 104;
+        public static final int AGITATOR1_ID = 10;
 
-        public static final boolean AGITATORINVERTED = false;
+        public static final boolean AGITATORINVERTED = true;
 
-        public static final int AGITATOR_SMARTCURRENTLIMIT = 30;
+        public static final int AGITATOR_SMARTCURRENTLIMIT = 20;
 
-        public static final int AGITATOR2_ID = 105;
+        public static final int AGITATOR2_ID = 11;
 
         public static final double INTAKINGSPEED = 0;
         public static final double AGITATINGSPEED = 0;
@@ -319,6 +319,8 @@ public final class Constants {
 
     public static final class ClimberConstants{
         public static final int MOTOR1_ID = 300;
+
+        public static final int MOTOR2_ID = 301;
 
         public static final boolean INVERTED = false;
 

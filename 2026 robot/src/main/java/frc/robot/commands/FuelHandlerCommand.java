@@ -110,11 +110,14 @@ public class FuelHandlerCommand extends Command {
     switch(currentState){
 
       case IDLE: 
-        shooter.setIndexerSpeed(0);
-        shooter.setShooterExitVelocity(0);
+        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
+        shooter.setShooterSpeeds(1000, 1000);
+        //shooter.setIndexerSpeed(0);
+        //shooter.setShooterExitVelocity(0);
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
-        intake.setSpeed(0.1);
+        intake.setSpeed(0.5);
+        intake.setAgitatorSpeed(0.2);
 
         if (intakeButton){
           currentState = State.INTAKING;

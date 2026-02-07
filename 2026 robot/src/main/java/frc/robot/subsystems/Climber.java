@@ -31,7 +31,7 @@ public class Climber extends SubsystemBase {
 
     motor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    motor2 = new SparkMax(ClimberConstants.MOTOR1_ID, MotorType.kBrushless);
+    motor2 = new SparkMax(ClimberConstants.MOTOR2_ID, MotorType.kBrushless);
     motor2Config = new SparkMaxConfig();
 
     motor2Config
