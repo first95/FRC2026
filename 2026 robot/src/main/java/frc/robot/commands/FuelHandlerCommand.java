@@ -81,7 +81,7 @@ public class FuelHandlerCommand extends Command {
     this.swerve = swerve;
     
     addRequirements(shooter);
-    //addRequirements(intake);
+    addRequirements(intake);
   }
 
 
@@ -114,6 +114,7 @@ public class FuelHandlerCommand extends Command {
         shooter.setShooterExitVelocity(0);
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
+        intake.setSpeed(0.1);
 
         if (intakeButton){
           currentState = State.INTAKING;

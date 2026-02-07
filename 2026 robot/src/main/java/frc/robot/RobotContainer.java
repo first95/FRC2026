@@ -84,7 +84,7 @@ public class RobotContainer {
   private final FuelHandlerCommand fuelhandler;
 
   private final Shooter shooter = new Shooter();
-  private final Intake intake = null;
+  private final Intake intake = new Intake();
   private final Climber climber = new Climber();
 
   private final CommandJoystick driveController = new CommandJoystick(OperatorConstants.driveControllerPort);
@@ -172,7 +172,7 @@ public class RobotContainer {
       drivebase);
     
     shooter.setDefaultCommand(fuelhandler);
-    //intake.setDefaultCommand(fuelhandler);
+    intake.setDefaultCommand(fuelhandler);
 
     // Configure the trigger bindings
     configureBindings();
