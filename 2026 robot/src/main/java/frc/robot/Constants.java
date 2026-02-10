@@ -248,7 +248,7 @@ public final class Constants {
         public static final double TOPROLLER_JUGGLING_SPEED = 0;
         public static final double BOTTOMROLLER_JUGGLING_SPEED = 0;
 
-        public static final double INDEXINGSPEED = 2800;
+        public static final double INDEXINGSPEED = 6000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
@@ -270,7 +270,7 @@ public final class Constants {
 
         public static final boolean INDEXER_INVERTED = false;
 
-        public static final int INDEXER_SMARTCURRENTLIMIT = 30;
+        public static final int INDEXER_SMARTCURRENTLIMIT = 50;
 
         public static final int INDEXER_FAULTS_PERIOD_MS = 20;
         public static final int INDEXER_POSITION_PERIOD = 60000;
