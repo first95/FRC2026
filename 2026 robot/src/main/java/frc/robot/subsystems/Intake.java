@@ -68,7 +68,7 @@ public class Intake extends SubsystemBase {
     agitator2Config = new SparkMaxConfig();
 
     agitator2Config
-      .follow(agitator1,true)
+      .inverted(!IntakeConstants.AGITATORINVERTED)
       .idleMode(IdleMode.kCoast)
       .smartCurrentLimit(IntakeConstants.AGITATOR_SMARTCURRENTLIMIT);
 
@@ -84,8 +84,11 @@ public class Intake extends SubsystemBase {
     motor1.set(speed);
   }
 
-  public void setAgitatorSpeed(double speed){
+  public void setAgitator1Speed(double speed){
     agitator1.set(speed);
+  }
+  public void setAgitator2Speed(double speed){
+    agitator2.set(speed);
   }
 
   @Override

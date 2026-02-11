@@ -117,7 +117,8 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
         intake.setSpeed(0.5);
-        intake.setAgitatorSpeed(0.4);
+        intake.setAgitator1Speed(0.4);
+        intake.setAgitator2Speed(0.4);
 
         if (intakeButton){
           currentState = State.INTAKING;
