@@ -30,8 +30,8 @@ Front of the robot is the launching direction and Intake side
 |          |      |     |*Non-motor breakers*                   |
 |    15    |  10A |     | Direct wire to Radio 12v input        |
 |    16    |  10A |     | VRM for both Limelight 3G's           |
-|    20    |  10Af|     | RoboRIO                               |
-|    21    |  15Af|     | Pigeon                                |
+|    20    |  10Af|     | RoboRIO  (fuse, not breaker)          |
+|    21    |  15Af|     | Pigeon   (fuse, not breaker)          |
 
 
 ## Sorted by Breaker #
@@ -57,4 +57,6 @@ Front of the robot is the launching direction and Intake side
 |       17 |  40A |  7   | Front Left Drive motor               |
 |       18 |  30A |  5   | Back Left Drive motor                |
 |       19 |  40A |  6   | Front Left Steering motor            |
+|       20 |  10Af|      | RoboRIO (fuse, not breaker)          |
+|       21 |  15Af|      | Pigeon  (fuse, not breaker)          |
 
