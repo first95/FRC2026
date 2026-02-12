@@ -10,48 +10,53 @@ Front of the robot is the launching direction and Intake side
 |---------:|-----:|----:|:--------------------------------------|
 |          |      |  1  | Power Distribution Hub                |
 |          |      |     |*Drive Base motors*                    |
-|     6    |  40A |  2  | Back Right Steering motor               |
-|     7    |  30A |  3  | Back Right Drive motor                  |
-|     0    |  40A |  4  | Back Left Steering motor                |
-|    18    |  30A |  5  | Back Left Drive motor                   |
-|    19    |  40A |  6  | Front Left Steering motor               |
-|    17    |  30A |  7  | Front Left Drive motor                  |
-|     8    |  40A |  8  | Front Right Steering motor              |
-|     9    |  30A |  9  | Front Right Drive motor                 |
+|     6    |  40A |  2  | Back Right Steering motor             |
+|     7    |  30A |  3  | Back Right Drive motor                |
+|     0    |  40A |  4  | Back Left Steering motor              |
+|    18    |  30A |  5  | Back Left Drive motor                 |
+|    19    |  40A |  6  | Front Left Steering motor             |
+|    17    |  30A |  7  | Front Left Drive motor                |
+|     8    |  40A |  8  | Front Right Steering motor            |
+|     9    |  40A |  9  | Front Right Drive motor               |
 |          |      |     |*Non-drive motors*                     |
-|        |      | 10  | Left flappy-doodle motor               |
-|        |      | 11  | Right flappy-doodle motor               |
-|        |  40A | 12  | Left Lower Launcher motor               |
-|        |  40A | 14  | Loader motor                            |
-|        |  40A | 15  | Upper Launcher motor                    |
-|        |  40A | 16  | Right Lower Launcher motor              |
+|     2    |  40A | 10  | Left blender motor                    |
+|    11    |  40A | 11  | Right blender motor                   |
+|     1    |  40A | 12  | Left Lower Launcher motor             |
+|     5    |  40A | 14  | Loader motor                          |
+|     4    |  40A | 15  | Upper Launcher motor                  |
+|     3    |  40A | 16  | Right Lower Launcher motor            |
+|    14    |  40A | 17  | left intake / flappy-doodle motor     |
+|    10    |  40A | 18  | right intake/flappy-doodle motor      |
 |          |      |     |*Non-motor breakers*                   |
-|         |  10A |     | VRM for both Limelight 3G's            |
-|         |  10A |     | VRM for Pigeon and Radio PoE injector  |
-|         |  10A |     | Direct wire to Radio 12v input         |
+|    15    |  10A |     | Direct wire to Radio 12v input        |
+|    16    |  10A |     | VRM for both Limelight 3G's           |
+|    20    |  10Af|     | RoboRIO  (fuse, not breaker)          |
+|    21    |  15Af|     | Pigeon   (fuse, not breaker)          |
+
 
 ## Sorted by Breaker #
-NOT UPDATED YET
 | Breaker# |Amps | CAN ID  | Description    |
 |---------:|-----:|----:|:--------------------------------------|
-|        0 |  40A |   4  | Back Left Steering motor    |
-|        1 |  40A |  12  | Left Lower Launcher motor   |
-|        2 |  40A |  10  | Left flappy-doodle motor             |
+|        0 |  40A |   4  | Back Left Steering motor             |
+|        1 |  40A |  12  | Left Lower Launcher motor            |
+|        2 |  40A |  10  | Left blender motor                   |
 |        3 |  40A |  16  | Right Lower Launcher motor           |
-|        4 |  40A |     |                                       |
-|        5 |  40A |     |  |
-|        6 |  40A |  2  | Back Right Steering motor             |
-|        7 |  40A |  3  | Back Right Drive motor                |
-|        8 |  40A |  8  | Front Right Steering motor            |
-|        9 |  40A |  9  | Front Right Drive motor               |
-|       11 |  30A |  4  | Front Right Steering motor (Spark MAX)|
-|       10 |  40A |  5  | Front Right Drive motor (Spark FLEX)  |
-|       12 |  40A | 11  |                                       |
-|       13 |  40A | 12  |                                       |
-|       14 |      |     |                                       |
-|       15 |      |     |                                       |
-|       16 |      |     |                                       |
-|       17 |  40A | 13  | Climber winch motor                   |
-|       18 |  30A |  2  | Front Left Steering motor (Spark MAX) |
-|       19 |  40A |  3  | Front Left Drive motor (Spark FLEX)   |
+|        4 |  40A |  15  | Upper Launcher motor                 |
+|        5 |  40A |  14  | Loader motor                         |
+|        6 |  40A |   2  | Back Right Steering motor            |
+|        7 |  40A |   3  | Back Right Drive motor               |
+|        8 |  40A |   8  | Front Right Steering motor           |
+|        9 |  40A |   9  | Front Right Drive motor              |
+|       10 |  40A |  18  | Right blender motor                  |
+|       11 |  40A |  11  | Left blender motor                   |
+|       12 |  40A |      | *no breaker/not wired                |
+|       13 |  40A |      | *no breaker/not wired                |
+|       14 |      |  17  | left intake / flappy-doodle motor    |
+|       15 | 10A  |      | Direct wire to Radio 12v input       |
+|       16 | 10A  |      | VRM for limelight cameras            |
+|       17 |  40A |  7   | Front Left Drive motor               |
+|       18 |  30A |  5   | Back Left Drive motor                |
+|       19 |  40A |  6   | Front Left Steering motor            |
+|       20 |  10Af|      | RoboRIO (fuse, not breaker)          |
+|       21 |  15Af|      | Pigeon  (fuse, not breaker)          |
 
