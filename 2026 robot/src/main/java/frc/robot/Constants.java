@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Unit;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -296,7 +297,7 @@ public final class Constants {
 
         public static final boolean MOTOR1_INVERTED = false;
 
-        public static final int SMARTCURRENTLIMIT = 40;
+        public static final int SMARTCURRENTLIMIT = 80;
 
         public static final int FAULTSPERIOD = 20;
         public static final int OUTPUT_CURRENT_PERIOD = 20;
@@ -313,8 +314,8 @@ public final class Constants {
 
         public static final int AGITATOR2_ID = 11;
 
-        public static final double INTAKINGSPEED = 0;
-        public static final double AGITATINGSPEED = 0;
+        public static final double INTAKINGSPEED = 0.3;
+        public static final double AGITATINGSPEED = 0.4;
     }
 
     public static final class ClimberConstants{
@@ -390,7 +391,8 @@ public final class Constants {
         public static final Translation3d BLUEHUB = new Translation3d(2.0828,0,0); 
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
-            Map.entry("Hub", new Translation3d(2.0828, 0,0)),
+            //Map.entry("Hub", new Translation3d(2.0828, 0,0)),
+            Map.entry("Hub", new Translation3d(Units.inchesToMeters(130),0,Units.inchesToMeters(70))),
             Map.entry("passingTarget2", new Translation3d(4.629707,4.034631/2,1)),
             Map.entry("passingTarget1", new Translation3d(4.629707,FIELD_WIDTH- 4.034631/2,1))
             
