@@ -35,7 +35,6 @@ Front of the robot is the launching direction and Intake side
 
 
 ## Sorted by Breaker #
-NOT UPDATED YET
 | Breaker# |Amps | CAN ID  | Description    |
 |---------:|-----:|----:|:--------------------------------------|
 |        0 |  40A |   4  | Back Left Steering motor             |
