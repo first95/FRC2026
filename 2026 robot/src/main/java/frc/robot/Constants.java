@@ -246,10 +246,10 @@ public final class Constants {
         public static final double TOPROLLER_IDLE_SPEED = 0;
         public static final double BOTTOMROLLER_IDLE_SPEED = 0;
 
-        public static final double TOPROLLER_JUGGLING_SPEED = 0;
-        public static final double BOTTOMROLLER_JUGGLING_SPEED = 0;
+        public static final double TOPROLLER_JUGGLING_SPEED = 400*2;
+        public static final double BOTTOMROLLER_JUGGLING_SPEED = 400;
 
-        public static final double INDEXINGSPEED = 6000;
+        public static final double INDEXINGSPEED = 4500;//6000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
@@ -265,13 +265,13 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 60;
+        public static final double SHOOTERTOLERANCE = 100;
 
         public static final int INDEXER_ID = 14;
 
         public static final boolean INDEXER_INVERTED = false;
 
-        public static final int INDEXER_SMARTCURRENTLIMIT = 50;
+        public static final int INDEXER_SMARTCURRENTLIMIT = 80;
 
         public static final int INDEXER_FAULTS_PERIOD_MS = 20;
         public static final int INDEXER_POSITION_PERIOD = 60000;
@@ -279,17 +279,17 @@ public final class Constants {
         public static final int INDEXER_OUTPUT_CURRENT_PERIOD = 20;
 
         public static final Translation3d SHOOTERLOCATION = new Translation3d(
-            -0.1778,
+            -0.1390345,
             0,
-            0.5588
+            0.508637
         );
         public static final Transform2d SHOOTERTRANSFORM = new Transform2d(SHOOTERLOCATION.toTranslation2d(),new Rotation2d(1,0));
         public static final Rotation2d SHOOTER_EXIT_ANGLE = Rotation2d.fromDegrees(90-32.8);
 
         public static final int N_NEWTONLINERIZATIONS = 20;
 
-        public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 229.36766;
-        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 320.85451;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 677.36514;
 
     }
     public static final class IntakeConstants{
@@ -310,11 +310,11 @@ public final class Constants {
 
         public static final boolean AGITATORINVERTED = true;
 
-        public static final int AGITATOR_SMARTCURRENTLIMIT = 20;
+        public static final int AGITATOR_SMARTCURRENTLIMIT = 40;
 
         public static final int AGITATOR2_ID = 11;
 
-        public static final double INTAKINGSPEED = 0.3;
+        public static final double INTAKINGSPEED = 0.6;
         public static final double AGITATINGSPEED = 0.4;
     }
 
@@ -335,7 +335,7 @@ public final class Constants {
         public static final int DEBUG_FLAG = 0b10;
 
         public static final int APRILTAG_PIPELINE_NUMBER = 0;
-        public static final String BOW_LIMELIGHT_NAME = "no";//"limelight-bow";
+        public static final String BOW_LIMELIGHT_NAME = "limelight-bow";
         public static final String STERN_LIMELIGHT_NAME = "limelight-stern";
 
         @SuppressWarnings("unused")
@@ -392,7 +392,7 @@ public final class Constants {
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
             //Map.entry("Hub", new Translation3d(2.0828, 0,0)),
-            Map.entry("Hub", new Translation3d(Units.inchesToMeters(130),0,Units.inchesToMeters(70))),
+            Map.entry("Hub", new Translation3d((4.011153+5.233016)/2,(4.563567+3.502097)/2,1.828804)),
             Map.entry("passingTarget2", new Translation3d(4.629707,4.034631/2,1)),
             Map.entry("passingTarget1", new Translation3d(4.629707,FIELD_WIDTH- 4.034631/2,1))
             

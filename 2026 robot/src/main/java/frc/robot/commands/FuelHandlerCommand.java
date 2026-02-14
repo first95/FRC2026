@@ -93,6 +93,7 @@ public class FuelHandlerCommand extends Command {
 
   public void execute() {
 
+    
     SmartDashboard.putNumber("shooterExitVelocity", findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"))) ;
     SmartDashboard.putNumber("stationaryExitVelocity",findStationaryShootingVelocity(swerve,Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")));
     intakeButton = intakeButtonSupplier.getAsBoolean();
@@ -104,17 +105,21 @@ public class FuelHandlerCommand extends Command {
     target = targetChooser(swerve);
     shootingVelocity = findMovingShootingVelocity(swerve, target);
     shootingHeading = findMovingShootingHeading(swerve, target, shootingVelocity);
+
+    SmartDashboard.putNumber("shootingHeading", shootingHeading.getRadians());
+    swerve.field.getObject("target").setPose(new Pose2d(target.toTranslation2d(),new Rotation2d()));
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
 
     switch(currentState){
 
       case IDLE: 
+
         //shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
         //shooter.setShooterSpeeds(2100, 2100);
         // shooter.setShooterSpeeds(1000, 1000);
-        shooter.setIndexerSpeed(0);
-        shooter.setShooterExitVelocity(0);
+        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
+        shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
         intake.setSpeed(0);
@@ -136,6 +141,8 @@ public class FuelHandlerCommand extends Command {
       case INTAKING:
         absdrive.setLocustDriving(true);
         intake.setSpeed(IntakeConstants.INTAKINGSPEED);
+        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
+        shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
         //shooter.setTopRollerRaw(ShooterConstants.TOPROLLER_JUGGLING_SPEED);
         //shooter.setBottomRollerRaw(ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
 
@@ -188,11 +195,13 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
-        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
-        intake.setAgitator1Speed(IntakeConstants.AGITATINGSPEED);
-        intake.setAgitator2Speed(IntakeConstants.AGITATINGSPEED);
+        intake.setAgitator1Speed(0);
+        intake.setAgitator2Speed(0);
+        intake.setSpeed(0);
 
-        if ( shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.getRadians()- shootingHeading.getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
+        
+
+        if ( shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
           currentState = State.SHOOTING;
         }
         if (!aimButton && ! shootButton){
@@ -205,15 +214,16 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
+        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
         intake.setAgitator1Speed(IntakeConstants.AGITATINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATINGSPEED);
-        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
+        
 
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
 
-        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.getRadians() - shootingHeading.getRadians()) > Drivebase.HEADING_TOLERANCE){
-          currentState = State.AIMING;
-        }
+        // if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
+        //   currentState = State.AIMING;
+        // }
 
         if(!shootButton){
           currentState = State.IDLE;

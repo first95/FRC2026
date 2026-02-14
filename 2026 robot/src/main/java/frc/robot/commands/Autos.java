@@ -63,7 +63,13 @@ public final class Autos {
   }
 
   
-  
+  public AutoRoutine ScorePreLoad(){
+    AutoRoutine routine = autoFactory.newRoutine("ScorePreLoad");
+    routine.active().onTrue(
+      new InstantCommand(() -> SmartDashboard.putBoolean("autoShoot", true))
+    );
+    return routine;
+  }
   public AutoRoutine ModularAuto(){
     AutoRoutine routine = autoFactory.newRoutine("ModularAuto");
     String[] posTargets = getPosTargets();
@@ -88,7 +94,6 @@ public final class Autos {
       routine.active().onTrue(
         Commands.sequence(
           //trajectories[0].resetOdometry(),
-          new AlignToPose(trajectories[0].getInitialPose().get().plus(new Transform2d(new Translation2d(0.4,0),new Rotation2d())), swerve),
           trajectories[0].cmd()
         )
       );
