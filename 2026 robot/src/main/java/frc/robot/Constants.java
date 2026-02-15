@@ -314,8 +314,22 @@ public final class Constants {
 
         public static final int AGITATOR2_ID = 11;
 
+        public static final double INTAKEIDLESPEED = 0;
+        public static final double INTAKEAIMINGSPEED = 0;
         public static final double INTAKINGSPEED = 0.6;
-        public static final double AGITATINGSPEED = 0.4;
+
+        public static final double AGITATOR1IDLESPEED = 0;
+        public static final double AGITATOR1AIMINGSPEED = 0;
+        public static final double AGITATOR1INTAKINGSPEED = 0;
+        public static final double AGITATOR1SHOOTINGSPEED = 0.4;
+
+        public static final double AGITATOR2IDLESPEED = 0;
+        public static final double AGITATOR2AIMINGSPEED = 0;
+        public static final double AGITATOR2INTAKINGSPEED = 0;
+        public static final double AGITATOR2SHOOTINGSPEED = 0.4;
+
+        
+       
     }
 
     public static final class ClimberConstants{
@@ -360,6 +374,8 @@ public final class Constants {
         // Plumbing via SmartDashboard
 
         public static final String AUTO_ENABLED_KEY = "autoEnabled";
+        public static final String AUTO_INTAKE_KEY = "autoIntake";
+        public static final String AUTO_SHOOT_KEY = "autoShoot";
 
 
         // Trapezoidal drive PID constants

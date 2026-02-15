@@ -57,7 +57,7 @@ public class FuelHandlerCommand extends Command {
   private Translation3d target;
 
   private enum State{
-    IDLE, INTAKING, CLEARSHOOTER, PREPINDEXER, AIMING, SHOOTING
+    IDLE, INTAKING, AIMING, SHOOTING
   }
 
   private State currentState;
@@ -96,9 +96,16 @@ public class FuelHandlerCommand extends Command {
     
     SmartDashboard.putNumber("shooterExitVelocity", findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"))) ;
     SmartDashboard.putNumber("stationaryExitVelocity",findStationaryShootingVelocity(swerve,Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")));
-    intakeButton = intakeButtonSupplier.getAsBoolean();
-    aimButton = aimButtonSupplier.getAsBoolean();
-    shootButton = shootButtonSupplier.getAsBoolean();
+    if (SmartDashboard.getBoolean("autoEnabled",false)){
+      intakeButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_INTAKE_KEY, false);
+      shootButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_SHOOT_KEY, false);
+    }
+    else{
+      intakeButton = intakeButtonSupplier.getAsBoolean();
+      aimButton = aimButtonSupplier.getAsBoolean();
+      shootButton = shootButtonSupplier.getAsBoolean();
+    }
+    
 
     currentRobotHeading = swerve.getPose().getRotation();
 
@@ -115,19 +122,16 @@ public class FuelHandlerCommand extends Command {
 
       case IDLE: 
 
-        //shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
-        //shooter.setShooterSpeeds(2100, 2100);
-        // shooter.setShooterSpeeds(1000, 1000);
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
         shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
+
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
-        intake.setSpeed(0);
-        intake.setAgitator1Speed(0);
-        intake.setAgitator2Speed(0);
-        // intake.setSpeed(0.3);
-        // intake.setAgitator1Speed(0.4);
-        // intake.setAgitator2Speed(0.2);
+
+        intake.setSpeed(IntakeConstants.INTAKEIDLESPEED);
+        intake.setAgitator1Speed(IntakeConstants.AGITATOR1IDLESPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2IDLESPEED);
+
 
         if (intakeButton){
           currentState = State.INTAKING;
@@ -139,47 +143,20 @@ public class FuelHandlerCommand extends Command {
       break;
 
       case INTAKING:
-        absdrive.setLocustDriving(true);
-        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
         shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
-        //shooter.setTopRollerRaw(ShooterConstants.TOPROLLER_JUGGLING_SPEED);
-        //shooter.setBottomRollerRaw(ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
+
+        absdrive.setLocustDriving(true);
+
+
+        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
+        intake.setAgitator1Speed(IntakeConstants.AGITATOR1INTAKINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2INTAKINGSPEED);
+
+        
 
         if(!intakeButton){
           currentState = State.IDLE;
-        }
-
-        if(shootButton || aimButton){
-          currentState = State.AIMING;
-        }
-      break;
-
-      case CLEARSHOOTER:
-        absdrive.setLocustDriving(false);
-        shooter.setIndexerSpeed(ShooterConstants.INDEXER_CLEARSHOOTERSPEED);
-        shooter.setTopRollerRaw(ShooterConstants.TOPROLLER_JUGGLING_SPEED);
-        shooter.setBottomRollerRaw(ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
-
-        if (shooter.getTopRollerCurrent() <= ShooterConstants.TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD && shooter.getBottomRollerCurrent() <= ShooterConstants.TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD){
-          currentState = State.IDLE;
-        } 
-
-        if (intakeButton){
-          currentState = State.INTAKING;
-        }
-      break;
-
-      case PREPINDEXER:
-        shooter.setIndexerSpeed(ShooterConstants.INDEXERPREPSPEED);
-        shooter.setShooterExitVelocity(0);
-
-        if(shooter.getIndexerCurrent() >= ShooterConstants.INDEXER_PREPINDEXER_CURRENT_THRESHOLD){
-          currentState = State.IDLE;
-        }
-
-        if(intakeButton){
-          currentState = State.INTAKING;
         }
 
         if(shootButton || aimButton){
@@ -195,9 +172,10 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
-        intake.setAgitator1Speed(0);
-        intake.setAgitator2Speed(0);
-        intake.setSpeed(0);
+        intake.setSpeed(IntakeConstants.INTAKEAIMINGSPEED);
+        intake.setAgitator1Speed(IntakeConstants.AGITATOR1AIMINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2AIMINGSPEED);
+        
 
         
 
@@ -211,15 +189,16 @@ public class FuelHandlerCommand extends Command {
 
       case SHOOTING:
         shooter.setShooterExitVelocity(shootingVelocity);
+        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
+
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
         intake.setSpeed(IntakeConstants.INTAKINGSPEED);
-        intake.setAgitator1Speed(IntakeConstants.AGITATINGSPEED);
-        intake.setAgitator2Speed(IntakeConstants.AGITATINGSPEED);
+        intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
         
 
-        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
 
         // if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
         //   currentState = State.AIMING;

@@ -66,7 +66,8 @@ public final class Autos {
   public AutoRoutine ScorePreLoad(){
     AutoRoutine routine = autoFactory.newRoutine("ScorePreLoad");
     routine.active().onTrue(
-      new InstantCommand(() -> SmartDashboard.putBoolean("autoShoot", true))
+
+      new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true))
     );
     return routine;
   }
@@ -94,12 +95,13 @@ public final class Autos {
       routine.active().onTrue(
         Commands.sequence(
           //trajectories[0].resetOdometry(),
+          new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.AUTO_ENABLED_KEY, true)),
           trajectories[0].cmd()
         )
       );
       //go through all trajectorys and run them one after another
       for(int n = 0; n < trajectories.length - 1; n++){
-        //if the position target is at the reef wait the scoring time
+        
         trajectories[n].done().onTrue(trajectories[n+1].cmd());
       }
       
