@@ -135,6 +135,7 @@ public final class Autos {
 
     routine.active().onTrue(
       Commands.sequence(
+        new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, false)),
         new AlignToPose(trajectory.getInitialPose().get(), swerve),
         trajectory.cmd(),
         new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true))
