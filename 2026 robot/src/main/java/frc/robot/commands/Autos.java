@@ -11,12 +11,17 @@ import frc.robot.subsystems.SwerveBase;
 
 import java.sql.Driver;
 import java.time.temporal.TemporalQuery;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+
+import javax.lang.model.element.Element;
 
 import com.pathplanner.lib.auto.CommandUtil;
 
 import choreo.trajectory.Trajectory;
+import choreo.trajectory.TrajectorySample;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
@@ -37,10 +42,12 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 
+
 public final class Autos {
   /** Example static factory for an autonomous command. */
   private final AutoFactory autoFactory;
   private final SwerveBase swerve;
+  private final FuelHandlerCommand fuelhandler;
   
   public static Command exampleAuto(ExampleSubsystem subsystem) {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
@@ -48,7 +55,7 @@ public final class Autos {
 
  
 
-  public Autos(SwerveBase swerve) {
+  public Autos(SwerveBase swerve, FuelHandlerCommand fuelhandler) {
     autoFactory = new AutoFactory(
       swerve::getPose,
       swerve::resetOdometry,
@@ -57,9 +64,10 @@ public final class Autos {
       swerve);
     
     this.swerve = swerve;
+    this.fuelhandler = fuelhandler;
     
-
-    
+    autoFactory.bind("Shoot", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)));
+    autoFactory.bind("stopShoot",  new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)));
   }
 
   
@@ -71,6 +79,52 @@ public final class Autos {
     );
     return routine;
   }
+
+  public AutoRoutine ScorePreLoadMoving(){
+    AutoRoutine routine = autoFactory.newRoutine("ScorePreLoadMoving");
+
+    AutoTrajectory Trajectory = routine.trajectory("ScorePreloadMoving");
+
+  
+    List<SwerveSample> movingTraj = new ArrayList<>();
+    
+    Trajectory.getRawTrajectory().samples().forEach(sample -> 
+    movingTraj.add(
+      new SwerveSample(
+        sample.getTimestamp(), 
+        sample.getPose().getX(), 
+        sample.getPose().getY(),
+        fuelhandler.findMovingShootingHeading(
+          sample.getPose(), 
+          sample.getChassisSpeeds(), 
+          fuelhandler.targetChooser(sample.getPose()), 
+          fuelhandler.findMovingShootingVelocity(sample.getPose(),sample.getChassisSpeeds(), fuelhandler.targetChooser(sample.getPose())))
+          .getRadians(), 
+        sample.getChassisSpeeds().vxMetersPerSecond,
+        sample.getChassisSpeeds().vyMetersPerSecond, 
+        0, 
+        0, 
+        0, 
+        0, 
+        null, 
+        null)));
+
+    AutoTrajectory traj = routine.trajectory(new Trajectory<SwerveSample>("traj",movingTraj,null,Trajectory.getRawTrajectory().events()));
+
+
+    routine.active().onTrue(
+      Commands.sequence(
+          traj.resetOdometry(),
+          new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true)),
+          traj.cmd()
+          
+        )
+     
+    );
+
+    return routine;
+
+  }
   public AutoRoutine ModularAuto(){
     AutoRoutine routine = autoFactory.newRoutine("ModularAuto");
     String[] posTargets = getPosTargets();
@@ -78,31 +132,50 @@ public final class Autos {
     Pose2d[] fullTrajectory = {};    
     if (posTargets != null && posTargets.length >= 2){
       AutoTrajectory[] trajectories = new AutoTrajectory[posTargets.length - 1];
-      
 
 
       //load trajectorys based on posTargets
       for(int n = 0; n < trajectories.length; n++){
-        trajectories[n] = routine.trajectory(posTargets[n] + " - " + posTargets[n+1]);
+        trajectories[n] = routine.trajectory(posTargets[n].substring(1) + "x" + posTargets[n+1].substring(1));
         
         Pose2d[] trajectoryPose2dList = trajectories[n].getRawTrajectory().getPoses();
         fullTrajectory = Arrays.copyOf(fullTrajectory, fullTrajectory.length + trajectoryPose2dList.length );
         System.arraycopy(trajectoryPose2dList, 0, fullTrajectory, fullTrajectory.length - trajectoryPose2dList.length , trajectoryPose2dList.length);
       } 
       
+      if (posTargets[0].charAt(0) == 'M'){
+
+        AutoTrajectory traj = routine.trajectory(new Trajectory<SwerveSample>("launchOnTheFlyTraj" + posTargets[0] + "x" + posTargets[1] ,getLaunchOnFlyTraj(trajectories[0]),null,trajectories[0].getRawTrajectory().events()));
+        trajectories[0] = traj;
+
+      }
       
       //When the routine starts run the first trajectory
       routine.active().onTrue(
         Commands.sequence(
           //trajectories[0].resetOdometry(),
-          new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.AUTO_ENABLED_KEY, true)),
+          //posTargets[0].charAt(0) == 'S' ? new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)).andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME)).andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false))): new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)),
           trajectories[0].cmd()
         )
       );
       //go through all trajectorys and run them one after another
       for(int n = 0; n < trajectories.length - 1; n++){
         
-        trajectories[n].done().onTrue(trajectories[n+1].cmd());
+        if(posTargets[n+1].charAt(0) == 'S'){
+
+          trajectories[n].done().onTrue(
+            new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME)
+            .andThen(trajectories[n+1].cmd())
+          );
+
+        }
+        else if (posTargets[n+1].charAt(0) == 'M'){
+
+          AutoTrajectory trajo = routine.trajectory(new Trajectory<SwerveSample>("launchOnTheFlyTraj" + posTargets[n+1] + "x" + posTargets[n+2],getLaunchOnFlyTraj(trajectories[n+1]),null,trajectories[n+1].getRawTrajectory().events()));
+          trajectories[n+1] = trajo;
+          trajectories[n].done().onTrue(trajectories[n+1].cmd());
+        }
+        //trajectories[n].done().onTrue(trajectories[n+1].cmd());
       }
       
       swerve.field.getObject("autoTrajectory").setPoses(fullTrajectory);
@@ -137,7 +210,32 @@ public final class Autos {
     }
     
     
-    
   }
- 
+  private List<SwerveSample> getLaunchOnFlyTraj(AutoTrajectory ogTraj){
+    List<SwerveSample> movingTraj = new ArrayList<>();
+    
+    ogTraj.getRawTrajectory().samples().forEach(sample -> 
+      movingTraj.add(
+        new SwerveSample(
+        sample.getTimestamp(), 
+        sample.getPose().getX(), 
+        sample.getPose().getY(),
+        fuelhandler.findMovingShootingHeading(
+        sample.getPose(), 
+        sample.getChassisSpeeds(), 
+        fuelhandler.targetChooser(sample.getPose()), 
+        fuelhandler.findMovingShootingVelocity(sample.getPose(),sample.getChassisSpeeds(), fuelhandler.targetChooser(sample.getPose())))
+        .getRadians(), 
+        sample.getChassisSpeeds().vxMetersPerSecond,
+        sample.getChassisSpeeds().vyMetersPerSecond, 
+        0, 
+        0, 
+        0, 
+        0, 
+        null, 
+        null)));
+    
+    return movingTraj;
+
+  }
 }

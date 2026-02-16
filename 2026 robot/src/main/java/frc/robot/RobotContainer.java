@@ -187,9 +187,11 @@ public class RobotContainer {
 
     
     autoChooser = new AutoChooser();
-    autos = new Autos(drivebase);
+    autos = new Autos(drivebase, fuelhandler);
 
     autoChooser.addRoutine("ModularAuto",autos :: ModularAuto);
+    autoChooser.addRoutine("ScorepreLoad", autos :: ScorePreLoad);
+    autoChooser.addRoutine("ScorepreLoadMoving", autos :: ScorePreLoadMoving);
 
     autoChooser.select("ModularAuto");
     //autoChooser.addRoutine("Example Routine", this::exampleRoutine);

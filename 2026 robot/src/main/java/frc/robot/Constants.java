@@ -291,6 +291,10 @@ public final class Constants {
         public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
         public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 677.36514;
 
+        public static final double MINRANGE = 0;
+
+        public static final double MAXRANGE = Units.inchesToMeters(170);
+
     }
     public static final class IntakeConstants{
         public static final int MOTOR1_ID = 17;
@@ -377,6 +381,9 @@ public final class Constants {
         public static final String AUTO_INTAKE_KEY = "autoIntake";
         public static final String AUTO_SHOOT_KEY = "autoShoot";
 
+        public static final String TARGET_HEADING_KEY = "targetHeading";
+
+        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 3;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
