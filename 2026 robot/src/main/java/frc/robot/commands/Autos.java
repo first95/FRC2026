@@ -68,6 +68,8 @@ public final class Autos {
     
     autoFactory.bind("Shoot", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)));
     autoFactory.bind("stopShoot",  new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)));
+    autoFactory.bind("Intake", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)));
+    autoFactory.bind("stopIntake",new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)));
   }
 
   
@@ -114,7 +116,7 @@ public final class Autos {
 
     routine.active().onTrue(
       Commands.sequence(
-          traj.resetOdometry(),
+          new AlignToPose(traj.getInitialPose().get(), swerve),
           new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true)),
           traj.cmd()
           
@@ -124,6 +126,22 @@ public final class Autos {
 
     return routine;
 
+  }
+
+  public AutoRoutine loadAndLaunch(){
+    AutoRoutine routine = autoFactory.newRoutine("loadAndLaunch");
+
+    AutoTrajectory trajectory = routine.trajectory("loadAndLaunch");
+
+    routine.active().onTrue(
+      Commands.sequence(
+        new AlignToPose(trajectory.getInitialPose().get(), swerve),
+        trajectory.cmd(),
+        new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true))
+      )
+    );
+
+    return routine;
   }
   public AutoRoutine ModularAuto(){
     AutoRoutine routine = autoFactory.newRoutine("ModularAuto");
