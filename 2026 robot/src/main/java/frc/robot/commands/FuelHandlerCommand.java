@@ -147,7 +147,7 @@ public class FuelHandlerCommand extends Command {
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
         shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
 
-        absdrive.setLocustDriving(true);
+        absdrive.setLocustDriving(false);
 
 
         intake.setSpeed(IntakeConstants.INTAKINGSPEED);
