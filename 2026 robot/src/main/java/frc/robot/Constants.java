@@ -151,8 +151,8 @@ public final class Constants {
 
         // Drive feedforward gains
         public static final double KS = 0.12392; // Volts
-        public static final double KV = 2.2533; // Volt-seconds per meter (max voltage divided by max speed)
-        public static final double KA = 1.223;///0.26159; // Volt-seconds^2 per meter (max voltage/ divided by max accel)
+        public static final double KV = 2.0891; // Volt-seconds per meter (max voltage divided by max speed)
+        public static final double KA = 0.26159;///0.26159; // Volt-seconds^2 per meter (max voltage/ divided by max accel)
         public static final double KG = (KA / KV);
 
         // Encoder conversion values. Drive converts motor rotations to linear wheel
