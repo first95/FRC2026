@@ -155,7 +155,10 @@ public final class Autos {
 
       //load trajectorys based on posTargets
       for(int n = 0; n < trajectories.length; n++){
+        
         trajectories[n] = routine.trajectory(posTargets[n].substring(1) + "x" + posTargets[n+1].substring(1));
+       
+        
         
         Pose2d[] trajectoryPose2dList = trajectories[n].getRawTrajectory().getPoses();
         fullTrajectory = Arrays.copyOf(fullTrajectory, fullTrajectory.length + trajectoryPose2dList.length );
@@ -172,18 +175,20 @@ public final class Autos {
       //When the routine starts run the first trajectory
       routine.active().onTrue(
         Commands.sequence(
-          //trajectories[0].resetOdometry(),
-          //posTargets[0].charAt(0) == 'S' ? new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)).andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME)).andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false))): new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)),
+          trajectories[0].resetOdometry(),
+          posTargets[0].charAt(0) == 'S' ? new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)).andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME)).andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false))): new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)),
           trajectories[0].cmd()
         )
       );
       //go through all trajectorys and run them one after another
-      for(int n = 0; n < trajectories.length - 1; n++){
+      for(int n = 0; n < trajectories.length; n++){
         
         if(posTargets[n+1].charAt(0) == 'S'){
 
           trajectories[n].done().onTrue(
-            new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME)
+            new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true))
+            .andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
+            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
             .andThen(trajectories[n+1].cmd())
           );
 
@@ -194,6 +199,18 @@ public final class Autos {
           trajectories[n+1] = trajo;
           trajectories[n].done().onTrue(trajectories[n+1].cmd());
         }
+        else if(posTargets[n+1].charAt(0) == 'C'){
+          trajectories[n].done().onTrue(
+            new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_KEY, true))
+            .andThen(new AlignToPose(new Pose2d(Auton.POSE_MAP.get(swerve.getAlliance()).get("climb").toTranslation2d(), Rotation2d.fromDegrees(Auton.POSE_MAP.get(swerve.getAlliance()).get("climb").getZ()).rotateBy(swerve.getAlliance() == Alliance.Blue ? new Rotation2d(1,0): new Rotation2d(-1,0))), swerve))
+            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_KEY, true)))
+          );
+
+        }
+        else{
+          trajectories[n].done().onTrue(trajectories[n+1].cmd());
+        }
+        
         //trajectories[n].done().onTrue(trajectories[n+1].cmd());
       }
       
