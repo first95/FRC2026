@@ -265,7 +265,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 100;
+        public static final double SHOOTERTOLERANCE = 400;
 
         public static final int INDEXER_ID = 14;
 
@@ -337,15 +337,15 @@ public final class Constants {
     }
 
     public static final class ClimberConstants{
-        public static final int MOTOR1_ID = 300;
+        public static final int MOTOR1_ID = 19;
 
-        public static final int MOTOR2_ID = 301;
+        public static final int MOTOR2_ID = 20;
 
-        public static final boolean INVERTED = false;
+        public static final boolean INVERTED = true;
 
-        public static final int SMARTCURRENTLIMIT = 30;
+        public static final int SMARTCURRENTLIMIT = 80;
 
-        public static final double CLIMBINGSPEED = 0;
+        public static final double CLIMBINGSPEED = 0.2;
 
 
     }
