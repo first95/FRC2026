@@ -27,8 +27,8 @@ Front of the robot is the launching direction and Intake side
 |     3    |  40A | 16  | Right Lower Launcher motor            |
 |    14    |  40A | 17  | left intake / flappy-doodle motor     |
 |    10    |  40A | 18  | right intake/flappy-doodle motor      |
-|          |  40A | 19  | right climber motor                   |
-|          |  40A | 20  | left climber motor                    |
+|    13    |  40A | 19  | right climber winch motor             |
+|    12    |  40A | 20  | left climber winch motor              |
 |          |      |     |*Non-motor breakers*                   |
 |    15    |  10A |     | Direct wire to Radio 12v input        |
 |    16    |  10A |     | VRM for both Limelight 3G's           |
@@ -51,9 +51,9 @@ Front of the robot is the launching direction and Intake side
 |        9 |  40A |   9  | Front Right Drive motor              |
 |       10 |  40A |  18  | Right blender motor                  |
 |       11 |  40A |  11  | Left blender motor                   |
-|       12 |  40A |      | *no breaker/not wired                |
-|       13 |  40A |      | *no breaker/not wired                |
-|       14 |      |  17  | left intake / flappy-doodle motor    |
+|       12 |  40A |  20  | left climber winch motor             |
+|       13 |  40A |  19  | right climber winch motor            |
+|       14 |  40A |  17  | left intake / flappy-doodle motor    |
 |       15 | 10A  |      | Direct wire to Radio 12v input       |
 |       16 | 10A  |      | VRM for limelight cameras            |
 |       17 |  40A |  7   | Front Left Drive motor               |
