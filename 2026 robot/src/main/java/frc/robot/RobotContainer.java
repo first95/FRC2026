@@ -85,7 +85,7 @@ public class RobotContainer {
 
   private final Shooter shooter = new Shooter();
   private final Intake intake = new Intake();
-  //private final Climber climber = new Climber();
+  private final Climber climber = new Climber();
 
   private final CommandJoystick driveController = new CommandJoystick(OperatorConstants.driveControllerPort);
   private final CommandJoystick headingController = new CommandJoystick(OperatorConstants.headingControllerPort);
@@ -274,9 +274,9 @@ public class RobotContainer {
 
     driveController.button(4).whileTrue(new AlignToPose(new Pose2d(), drivebase));
 
-    // operatorController.povDown().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED * -1));
-    // operatorController.povUp().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED));
-    // operatorController.povCenter().onTrue(climber.runClimber(0));
+    operatorController.povDown().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED * -1));
+    operatorController.povUp().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED));
+    operatorController.povCenter().onTrue(climber.runClimber(0));
   }
 
   /**

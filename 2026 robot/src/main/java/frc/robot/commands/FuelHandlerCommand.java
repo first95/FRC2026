@@ -113,6 +113,7 @@ public class FuelHandlerCommand extends Command {
     target = targetChooser(swerve);
     shootingVelocity = findMovingShootingVelocity(swerve, target);
     shootingHeading = findMovingShootingHeading(swerve, target, shootingVelocity);
+    //shootingHeading = findStationaryshootingHeading(swerve,target);
 
     SmartDashboard.putNumber("shootingHeading", shootingHeading.getRadians());
     swerve.field.getObject("target").setPose(new Pose2d(target.toTranslation2d(),new Rotation2d()));
@@ -147,7 +148,7 @@ public class FuelHandlerCommand extends Command {
         shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
         shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
 
-        absdrive.setLocustDriving(true);
+        absdrive.setLocustDriving(false);
 
 
         intake.setSpeed(IntakeConstants.INTAKINGSPEED);
@@ -201,9 +202,9 @@ public class FuelHandlerCommand extends Command {
         
 
 
-        // if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
-        //   currentState = State.AIMING;
-        // }
+        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
+          currentState = State.AIMING;
+        }
 
         if(!shootButton){
           currentState = State.IDLE;
@@ -236,7 +237,7 @@ public class FuelHandlerCommand extends Command {
     double B = 0;
     double C = Math.pow(trvx,2) + Math.pow(trvy,2) - Math.pow(1/ShooterConstants.SHOOTER_EXIT_ANGLE.getTan(), 2) * Constants.GRAVITY * (target.getZ() - ShooterConstants.SHOOTERLOCATION.getZ());
     double D = -2 * trvx * targetDistance;
-    double E = Math.pow(targetDistance,2) - Math.pow((target.getZ() - ShooterConstants.SHOOTERLOCATION.getZ()/ShooterConstants.SHOOTER_EXIT_ANGLE.getTan()),2);
+    double E = Math.pow(targetDistance,2) - Math.pow((target.getZ() - ShooterConstants.SHOOTERLOCATION.getZ())/ShooterConstants.SHOOTER_EXIT_ANGLE.getTan(),2);
     
     SmartDashboard.putNumber("TargetRelativeVX",trvx);
     

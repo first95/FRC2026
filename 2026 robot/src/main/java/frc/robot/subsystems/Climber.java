@@ -37,9 +37,10 @@ public class Climber extends SubsystemBase {
     motor2Config
       .follow(motor1,true)
       .idleMode(IdleMode.kBrake)
+
       .smartCurrentLimit(ClimberConstants.SMARTCURRENTLIMIT);
 
-    motor2.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    motor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public void setClimberSpeed(double speed){
