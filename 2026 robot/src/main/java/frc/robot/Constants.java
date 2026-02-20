@@ -320,7 +320,7 @@ public final class Constants {
 
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
-        public static final double INTAKINGSPEED = 0.6;
+        public static final double INTAKINGSPEED = 0.5;
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;

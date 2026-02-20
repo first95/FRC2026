@@ -124,8 +124,8 @@ public class FuelHandlerCommand extends Command {
 
       case IDLE: 
 
-        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
-        shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
+        shooter.setIndexerSpeed(0);
+        shooter.setShooterExitVelocity(0);
 
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
@@ -181,7 +181,7 @@ public class FuelHandlerCommand extends Command {
 
         
 
-        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
+        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
           currentState = State.SHOOTING;
         }
         if (!aimButton && ! shootButton){
@@ -202,7 +202,7 @@ public class FuelHandlerCommand extends Command {
         
 
 
-        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(currentRobotHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
+        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
           currentState = State.AIMING;
         }
 
