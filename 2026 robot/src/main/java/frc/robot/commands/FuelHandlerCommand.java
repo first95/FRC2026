@@ -111,6 +111,7 @@ public class FuelHandlerCommand extends Command {
     SmartDashboard.putNumber("shooterExitVelocity", findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"))) ;
     SmartDashboard.putNumber("stationaryExitVelocity",findStationaryShootingVelocity(swerve,Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")));
     
+
     autoHubOverideButton = autoHubOverideSupplier.getAsBoolean();
 
     if(autoHubOverideButton){
@@ -149,6 +150,7 @@ public class FuelHandlerCommand extends Command {
     swerve.field.getObject("target").setPose(new Pose2d(target.toTranslation2d(),new Rotation2d()));
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
+    SmartDashboard.putNumber("difference", Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()));
 
 
 
@@ -206,14 +208,14 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
-        intake.setSpeed(IntakeConstants.INTAKEAIMINGSPEED);
+        intake.setSpeed(intakeButton ? IntakeConstants.INTAKINGSPEED: IntakeConstants.INTAKEAIMINGSPEED);
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1AIMINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2AIMINGSPEED);
         
 
         
 
-        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
+        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
           if(target == Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")){
             if (hubActive && inRange){
               currentState = State.SHOOTING;
@@ -227,6 +229,7 @@ public class FuelHandlerCommand extends Command {
         if (!aimButton && ! shootButton){
           currentState = State.IDLE;
         }
+        
       break;
 
       case SHOOTING:
@@ -242,7 +245,7 @@ public class FuelHandlerCommand extends Command {
         
 
 
-        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()) > Drivebase.HEADING_TOLERANCE){
+        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) > Drivebase.HEADING_TOLERANCE){
           currentState = State.AIMING;
         }
         if(target == Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")){
