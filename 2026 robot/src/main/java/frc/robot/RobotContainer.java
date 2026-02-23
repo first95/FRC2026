@@ -164,9 +164,9 @@ public class RobotContainer {
 
     fuelhandler = new FuelHandlerCommand(
       () -> driveController.getHID().getRawButton(1), //intake Button
-      () -> driveController.getHID().getRawButton(5), //shoot Button
+      () -> headingController.getHID().getRawButton(1), //shoot Button
       () -> headingController.getHID().getRawButton(2), //aimButton
-      () -> driveController.getHID().getRawButton(5), //autoHubOverrideButton
+      () -> operatorController.getHID().getRawButton(5), //autoHubOverrideButton
       shooter, 
       intake, 
       absoluteDrive, 

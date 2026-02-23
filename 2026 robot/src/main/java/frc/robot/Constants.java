@@ -294,7 +294,7 @@ public final class Constants {
 
         public static final double RPMOFFSET_INCREMENT = 200; 
 
-        public static final double MINRANGE = 0;
+        public static final double MINRANGE = 2.62;
         public static final double MAXRANGE = Units.inchesToMeters(170);
 
     }
