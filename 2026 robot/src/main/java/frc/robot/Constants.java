@@ -49,7 +49,7 @@ public final class Constants {
 
   public static final double LOOP_CYCLE = 0.02; // 20m
 
-  public static final double ROBOT_MASS = 90;
+  public static final double ROBOT_MASS = 100;
   public static final double MANIPULATOR_MASS = 0;
   public static final double CHASSIS_MASS = ROBOT_MASS - MANIPULATOR_MASS;
   public static final double ARM_Y_POS = 0;
@@ -114,11 +114,11 @@ public final class Constants {
     public static final double ANGULAR_VELOCITY_LIMIT = 5;
 
         // Robot control gains
-        public static final double HEADING_KP = 3;
+        public static final double HEADING_KP = 5;
         public static final double HEADING_KI = 0;
-        public static final double HEADING_KD = 0;
+        public static final double HEADING_KD = 0.095;
 
-    public static final double HEADING_MIN_ANGULAR_CONTROL_EFFORT = 0.05; // rad/s— Prevent oscillation by cancelling rotational commands less than this
+    public static final double HEADING_MIN_ANGULAR_CONTROL_EFFORT = 0.005; // rad/s— Prevent oscillation by cancelling rotational commands less than this
 
         public static final Translation2d CENTEROFROTATION = new Translation2d(0,0);
         // Swerve base kinematics object
@@ -127,7 +127,7 @@ public final class Constants {
     public static final double SKEW_CORRECTION_FACTOR = 0;
 
         // Module PIDF gains
-        public static final double MODULE_KP = 0.02;
+        public static final double MODULE_KP = 0.06;
         public static final double MODULE_KI = 0.0;
         public static final double MODULE_KD = 0.0005;
         public static final double MODULE_IZ = 0;
@@ -136,7 +136,7 @@ public final class Constants {
         // (maxMotorSpeedRPM / gearRatio) * (minutesPerSecond))
         public static final double MODULE_KV = 12 / MAX_MODULE_ANGULAR_SPEED;
 
-        public static final double VELOCITY_KP = 0.03;
+        public static final double VELOCITY_KP = 0.07;
         public static final double VELOCITY_KI = 0.0; // Leave all of these zero to disable them
         public static final double VELOCITY_KD = 0;
         public static final double VELOCITY_IZ = 0;
@@ -291,8 +291,10 @@ public final class Constants {
         public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
         public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 677.36514;
 
-        public static final double MINRANGE = 0;
 
+        public static final double RPMOFFSET_INCREMENT = 200; 
+
+        public static final double MINRANGE = 0;
         public static final double MAXRANGE = Units.inchesToMeters(170);
 
     }
@@ -384,7 +386,15 @@ public final class Constants {
 
         public static final String TARGET_HEADING_KEY = "targetHeading";
 
-        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 3;
+        public static final double TRANSITION_ENDTIME = 130;
+        public static final double FIRSTSHIFT_ENDTIME = 105;
+        public static final double SECONDSHIFT_ENDTIME = 80;
+        public static final double THIRDSHIFT_ENDTIME = 55;
+        public static final double FORTHSHIFT_ENDTIME = 30;
+        
+
+        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
+        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
@@ -417,8 +427,9 @@ public final class Constants {
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
             //Map.entry("Hub", new Translation3d(2.0828, 0,0)),
             Map.entry("Hub", new Translation3d((4.011153+5.233016)/2,(4.563567+3.502097)/2,1.828804)),
-            Map.entry("passingTarget2", new Translation3d(4.629707,4.034631/2,1)),
-            Map.entry("passingTarget1", new Translation3d(4.629707,FIELD_WIDTH- 4.034631/2,1))
+            Map.entry("passingTarget2", new Translation3d(4.629707-1,4.034631/2,1)),
+            Map.entry("passingTarget1", new Translation3d(4.629707-1,FIELD_WIDTH- 4.034631/2,1)),
+            Map.entry("climb", new Translation3d())
             
         );
         
