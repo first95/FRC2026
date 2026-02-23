@@ -176,7 +176,7 @@ public final class Autos {
       //When the routine starts run the first trajectory
       routine.active().onTrue(
         Commands.sequence(
-          trajectories[0].resetOdometry(),
+          new AlignToPose(trajectories[0].getInitialPose().get(), swerve),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true)),
           posTargets[0].charAt(0) == 'S' ? new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)).andThen(new WaitCommand(Auton.AUTON_PRELOADSCORE_WAIT_TIME)).andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false))): new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
