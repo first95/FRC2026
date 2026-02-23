@@ -383,6 +383,7 @@ public final class Constants {
         public static final String AUTO_INTAKE_KEY = "autoIntake";
         public static final String AUTO_SHOOT_KEY = "autoShoot";
         public static final String AUTO_CLIMB_KEY = "autoClimb";
+        public static final String USE_AUTO_SHOOT_KEY = "useAutoShoot";
 
         public static final String TARGET_HEADING_KEY = "targetHeading";
 
