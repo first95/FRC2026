@@ -122,7 +122,7 @@ public class FuelHandlerCommand extends Command {
 
     if (SmartDashboard.getBoolean("autoEnabled",false)){
       intakeButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_INTAKE_KEY, false);
-      shootButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_SHOOT_KEY, false);
+      shootButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_SHOOT_KEY, false)&&SmartDashboard.getBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, false);
     }
     else{
       intakeButton = intakeButtonSupplier.getAsBoolean();
