@@ -166,7 +166,7 @@ public class RobotContainer {
       () -> driveController.getHID().getRawButton(1), //intake Button
       () -> headingController.getHID().getRawButton(1), //shoot Button
       () -> headingController.getHID().getRawButton(2), //aimButton
-      () -> operatorController.getHID().getRawButton(5), //autoHubOverrideButton
+      () -> operatorController.getHID().getRawButton(2), //autoHubOverrideButton
       shooter, 
       intake, 
       absoluteDrive, 
@@ -278,6 +278,9 @@ public class RobotContainer {
     operatorController.povDown().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED * -1));
     operatorController.povUp().onTrue(climber.runClimber(ClimberConstants.CLIMBINGSPEED));
     operatorController.povCenter().onTrue(climber.runClimber(0));
+
+    operatorController.leftBumper().onTrue(fuelhandler.decreaseShootingRPMOffsetCommand());
+    operatorController.rightBumper().onTrue(fuelhandler.increaseShootingRPMOffsetCommand());
   }
 
   /**

@@ -281,7 +281,9 @@ public final class Autos {
         0, 
         null, 
         null)));
-    
+    SwerveSample finalSample = movingTraj.get(movingTraj.size() - 1);
+  
+    movingTraj.set(movingTraj.size()-1,new SwerveSample(finalSample.getTimestamp(), finalSample.getPose().getX(), finalSample.getPose().getY(), finalSample.getPose().getRotation().getRadians(), 0, 0, 0, 0, 0, 0, null, null));
     return movingTraj;
 
   }

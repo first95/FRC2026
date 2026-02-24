@@ -265,7 +265,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 400;
+        public static final double SHOOTERTOLERANCE = 200;
 
         public static final int INDEXER_ID = 14;
 
