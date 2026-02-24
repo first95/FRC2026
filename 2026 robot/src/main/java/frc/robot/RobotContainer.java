@@ -167,6 +167,7 @@ public class RobotContainer {
       () -> headingController.getHID().getRawButton(1), //shoot Button
       () -> headingController.getHID().getRawButton(2), //aimButton
       () -> operatorController.getHID().getRawButton(2), //autoHubOverrideButton
+      () -> operatorController.getHID().getAButton(), //ejectButton
       shooter, 
       intake, 
       absoluteDrive, 

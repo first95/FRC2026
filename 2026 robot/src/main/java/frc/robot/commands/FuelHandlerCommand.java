@@ -46,13 +46,15 @@ public class FuelHandlerCommand extends Command {
     intakeButtonSupplier, 
     shootButtonSupplier,
     aimButtonSupplier,
-    autoHubOverideSupplier;
+    autoHubOverideSupplier,
+    ejectButtonSupplier;
   
   private boolean
     intakeButton,
     shootButton,
     aimButton,
     autoHubOverideButton,
+    ejectButton,
     autoHubOveride = false,
     hubActive,
     inRange;
@@ -64,7 +66,9 @@ public class FuelHandlerCommand extends Command {
   private double 
   shootingVelocity,
   shootingRPMOffset,
-  timeOfFlightToHub;
+  timeOfFlightToHub,
+  intakeSpeed,
+  indexingSpeed;
 
   private Translation3d target;
 
@@ -79,6 +83,7 @@ public class FuelHandlerCommand extends Command {
     BooleanSupplier shootButtonSupplier,
     BooleanSupplier aimButtonSupplier,
     BooleanSupplier autoHubOverideSupplier,
+    BooleanSupplier ejectButtonSupplier,
     Shooter shooter,
     Intake intake,
     AbsoluteDrive absdrive,
@@ -88,6 +93,7 @@ public class FuelHandlerCommand extends Command {
     this.shootButtonSupplier = shootButtonSupplier;
     this.aimButtonSupplier = aimButtonSupplier;
     this.autoHubOverideSupplier = autoHubOverideSupplier;
+    this.ejectButtonSupplier = ejectButtonSupplier;
 
     this.shooter = shooter;
     this.intake = intake;
@@ -129,6 +135,19 @@ public class FuelHandlerCommand extends Command {
       aimButton = aimButtonSupplier.getAsBoolean();
       shootButton = shootButtonSupplier.getAsBoolean();
     }
+
+    ejectButton = ejectButtonSupplier.getAsBoolean();
+
+    if(ejectButton){
+      intake.setSpeed(IntakeConstants.EJECTSPEED);
+      shooter.setIndexerPID(ShooterConstants.INDEXER_EJECT_SPEED);
+    }
+    else{
+      intake.setSpeed(intakeSpeed);
+      shooter.setIndexerPID(indexingSpeed);
+    }
+    
+    
     
     
     currentRobotHeading = swerve.getPose().getRotation();
@@ -158,13 +177,13 @@ public class FuelHandlerCommand extends Command {
 
       case IDLE: 
 
-        shooter.setIndexerSpeed(0);
+        indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
         shooter.setShooterExitVelocity(0);
 
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
 
-        intake.setSpeed(IntakeConstants.INTAKEIDLESPEED);
+        intakeSpeed = IntakeConstants.INTAKEIDLESPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1IDLESPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2IDLESPEED);
 
@@ -179,13 +198,13 @@ public class FuelHandlerCommand extends Command {
       break;
 
       case INTAKING:
-        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
+        indexingSpeed = ShooterConstants.INDEXINGSPEED;
         shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
 
         absdrive.setLocustDriving(false);
 
 
-        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
+        intakeSpeed = IntakeConstants.INTAKINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1INTAKINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2INTAKINGSPEED);
 
@@ -202,13 +221,13 @@ public class FuelHandlerCommand extends Command {
 
       case AIMING:
         shooter.setShooterExitVelocity(shootingVelocity);
-        shooter.setIndexerSpeed(0);
+        indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
 
         absdrive.setLocustDriving(false);
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
-        intake.setSpeed(intakeButton ? IntakeConstants.INTAKINGSPEED: IntakeConstants.INTAKEAIMINGSPEED);
+        intakeSpeed = intakeButton ? IntakeConstants.INTAKINGSPEED: IntakeConstants.INTAKEAIMINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1AIMINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2AIMINGSPEED);
         
@@ -234,12 +253,12 @@ public class FuelHandlerCommand extends Command {
 
       case SHOOTING:
         shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset);
-        shooter.setIndexerPID(ShooterConstants.INDEXINGSPEED);
+        indexingSpeed = ShooterConstants.INDEXINGSPEED;
 
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         //absdrive.setHeading(shootingHeading);
 
-        intake.setSpeed(IntakeConstants.INTAKINGSPEED);
+        intakeSpeed = IntakeConstants.INTAKINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
         

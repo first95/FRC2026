@@ -249,7 +249,9 @@ public final class Constants {
         public static final double TOPROLLER_JUGGLING_SPEED = 400*2;
         public static final double BOTTOMROLLER_JUGGLING_SPEED = 400;
 
-        public static final double INDEXINGSPEED = 4500;//6000;
+        public static final double INDEXER_IDLE_SPEED = 0;
+        public static final double INDEXER_EJECT_SPEED = 0;
+        public static final double INDEXINGSPEED = 6000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
@@ -323,6 +325,7 @@ public final class Constants {
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
         public static final double INTAKINGSPEED = 0.5;
+        public static final double EJECTSPEED = -1;
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
