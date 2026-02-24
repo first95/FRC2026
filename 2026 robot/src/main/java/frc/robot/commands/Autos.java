@@ -191,6 +191,7 @@ public final class Autos {
           trajectories[n].done().onTrue(
             new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,true))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
+            .andThen(new AlignToPose(trajectories[n].getFinalPose().get(), swerve))
             .andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
             .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))
