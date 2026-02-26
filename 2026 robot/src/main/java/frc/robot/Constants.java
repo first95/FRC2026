@@ -250,7 +250,7 @@ public final class Constants {
         public static final double BOTTOMROLLER_JUGGLING_SPEED = 400;
 
         public static final double INDEXER_IDLE_SPEED = 0;
-        public static final double INDEXER_EJECT_SPEED = 0;
+        public static final double INDEXER_EJECT_SPEED = -6000;
         public static final double INDEXINGSPEED = 6000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
