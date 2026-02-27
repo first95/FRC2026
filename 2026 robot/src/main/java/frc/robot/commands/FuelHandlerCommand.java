@@ -220,7 +220,7 @@ public class FuelHandlerCommand extends Command {
       break;
 
       case AIMING:
-        shooter.setShooterExitVelocity(shootingVelocity);
+        shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset);
         indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
 
         absdrive.setLocustDriving(false);
@@ -234,7 +234,7 @@ public class FuelHandlerCommand extends Command {
 
         
 
-        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
+        if (shooter.shooterAtSpeed() && shootButton){
           if(target == Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")){
             if (hubActive && inRange){
               currentState = State.SHOOTING;
@@ -256,7 +256,7 @@ public class FuelHandlerCommand extends Command {
         indexingSpeed = ShooterConstants.INDEXINGSPEED;
 
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
-        //absdrive.setHeading(shootingHeading);
+        absdrive.setHeading(shootingHeading);
 
         intakeSpeed = IntakeConstants.INTAKINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
