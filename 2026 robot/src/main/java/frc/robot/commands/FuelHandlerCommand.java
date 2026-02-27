@@ -169,14 +169,13 @@ public class FuelHandlerCommand extends Command {
     swerve.field.getObject("target").setPose(new Pose2d(target.toTranslation2d(),new Rotation2d()));
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
-    SmartDashboard.putNumber("difference", Math.abs(currentRobotHeading.minus(shootingHeading).getRadians()));
-
-
+    
 
     switch(currentState){
 
       case IDLE: 
 
+        SmartDashboard.putString("State","Idle");
         indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
         shooter.setShooterExitVelocity(0);
 
@@ -220,12 +219,14 @@ public class FuelHandlerCommand extends Command {
       break;
 
       case AIMING:
+        SmartDashboard.putString("State","Aiming");
         shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset);
         indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
 
         absdrive.setLocustDriving(false);
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
+        //absdrive.setHeading(Rotation2d.fromDegrees(180));
 
         intakeSpeed = intakeButton ? IntakeConstants.INTAKINGSPEED: IntakeConstants.INTAKEAIMINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1AIMINGSPEED);
@@ -245,13 +246,14 @@ public class FuelHandlerCommand extends Command {
           }
             
         }
-        if (!aimButton && ! shootButton){
+        if (!aimButton && !shootButton){
           currentState = State.IDLE;
         }
         
       break;
 
       case SHOOTING:
+        SmartDashboard.putString("State","Shooting");
         shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset);
         indexingSpeed = ShooterConstants.INDEXINGSPEED;
 

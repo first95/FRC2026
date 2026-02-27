@@ -268,7 +268,7 @@ public final class Constants {
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
         public static final double SHOOTERTOLERANCE = 400;
-        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(3);
+        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(4);
 
         public static final int INDEXER_ID = 14;
 
@@ -400,7 +400,7 @@ public final class Constants {
         
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
-        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 10;
+        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
