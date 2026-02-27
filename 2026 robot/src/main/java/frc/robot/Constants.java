@@ -64,7 +64,7 @@ public final class Constants {
 
         public static final int SWERVE_MODULE_CURRENT_LIMIT = 50;
 
-        public static final double HEADING_TOLERANCE = Math.toRadians(3);
+        public static final double HEADING_TOLERANCE = Math.toRadians(1);
 
         // Motor and encoder inversions
         public static final boolean ABSOLUTE_ENCODER_INVERT = true;
@@ -268,6 +268,7 @@ public final class Constants {
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
         public static final double SHOOTERTOLERANCE = 400;
+        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(3);
 
         public static final int INDEXER_ID = 14;
 
@@ -298,6 +299,7 @@ public final class Constants {
 
         public static final double MINRANGE = 0;
         public static final double MAXRANGE = Units.inchesToMeters(170);
+
 
     }
     public static final class IntakeConstants{
