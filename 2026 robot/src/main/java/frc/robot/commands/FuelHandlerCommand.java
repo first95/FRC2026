@@ -234,7 +234,7 @@ public class FuelHandlerCommand extends Command {
 
         
 
-        if (shooter.shooterAtSpeed() && shootButton){
+        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) <= Drivebase.HEADING_TOLERANCE && shootButton){
           if(target == Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")){
             if (hubActive && inRange){
               currentState = State.SHOOTING;
