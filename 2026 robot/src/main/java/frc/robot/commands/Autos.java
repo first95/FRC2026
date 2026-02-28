@@ -9,6 +9,8 @@ import frc.robot.commands.autocommands.AlignToPose;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveBase;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import java.sql.Driver;
 import java.time.temporal.TemporalQuery;
 import java.util.ArrayList;
@@ -172,29 +174,25 @@ public final class Autos {
         System.arraycopy(trajectoryPose2dList, 0, fullTrajectory, fullTrajectory.length - trajectoryPose2dList.length , trajectoryPose2dList.length);
       } 
       
-      if (posTargets[0].charAt(0) == 'M'){
-
-        AutoTrajectory traj = routine.trajectory(new Trajectory<SwerveSample>("launchOnTheFlyTraj" + posTargets[0] + "x" + posTargets[1] ,getLaunchOnFlyTraj(trajectories[0]),null,trajectories[0].getRawTrajectory().events()));
-        trajectories[0] = traj;
-
-      }
-      
+     
       //When the routine starts run the first trajectory
       routine.active().onTrue(
         Commands.sequence(
           //new AlignToPose(trajectories[0].getInitialPose().get(), swerve),
           new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,true)),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)),
-          new WaitCommand(Auton.STARTING_INTAKE_WAIT),
-          new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)),
-          new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)),
+          //new WaitCommand(Auton.STARTING_INTAKE_WAIT),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true)),
           posTargets[0].charAt(0) == 'S' ? 
-            new AlignToPose(new Pose2d(swerve.getPose().getX(),swerve.getPose().getY(),fuelhandler.findStationaryShootingHeading(swerve,fuelhandler.targetChooser(swerve))), swerve)  
+            new AlignToPose(new Pose2d(trajectories[0].getInitialPose().get().getX(),trajectories[0].getInitialPose().get().getY(),fuelhandler.findStationaryShootingHeading(swerve,fuelhandler.targetChooser(swerve)).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve)  
+            .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
+            .andThen(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
             .andThen(new WaitCommand(Auton.AUTON_PRELOADSCORE_WAIT_TIME))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
-          : new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)),
+          : new AlignToPose(trajectories[0].getInitialPose().get(), swerve)
+          .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
+          .andThen(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false))),
             new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
           trajectories[0].cmd()
         )
@@ -206,7 +204,7 @@ public final class Autos {
 
           trajectories[n].done().onTrue(
             new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,true))
-            .andThen(new AlignToPose(new Pose2d(trajectories[n].getFinalPose().get().getX(),trajectories[n].getFinalPose().get().getY(),fuelhandler.findStationaryShootingHeading(trajectories[n].getFinalPose().get(), swerve.getAlliance(), fuelhandler.targetChooser(trajectories[n].getFinalPose().get(),swerve.getAlliance()))), swerve))
+            .andThen(new AlignToPose(new Pose2d(trajectories[n].getFinalPose().get().getX(),trajectories[n].getFinalPose().get().getY(),fuelhandler.findStationaryShootingHeading(trajectories[n].getFinalPose().get(), swerve.getAlliance(), fuelhandler.targetChooser(trajectories[n].getFinalPose().get(),swerve.getAlliance())).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
             .andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
@@ -216,9 +214,12 @@ public final class Autos {
 
         }
         else if (posTargets[n+1].charAt(0) == 'M'){
+          if(!trajectories[n+1].getRawTrajectory().getEvents("Shoot").isEmpty()){
+            AutoTrajectory trajo = routine.trajectory(new Trajectory<SwerveSample>("launchOnTheFlyTraj" + posTargets[n+1] + "x" + posTargets[n+2],getLaunchOnFlyTraj(trajectories[n+1],trajectories[n+1].getRawTrajectory().getEvents("Shoot").get(0).timestamp,trajectories[n+1].getRawTrajectory().getEvents("stopShoot").get(0).timestamp),null,trajectories[n+1].getRawTrajectory().events()));
+            trajectories[n+1] = trajo;
+          }
           
-          AutoTrajectory trajo = routine.trajectory(new Trajectory<SwerveSample>("launchOnTheFlyTraj" + posTargets[n+1] + "x" + posTargets[n+2],getLaunchOnFlyTraj(trajectories[n+1]),null,trajectories[n+1].getRawTrajectory().events()));
-          trajectories[n+1] = trajo;
+          
           trajectories[n].done().onTrue(
             new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,true))
             .andThen(trajectories[n+1].cmd()
@@ -274,11 +275,12 @@ public final class Autos {
     
     
   }
-  private List<SwerveSample> getLaunchOnFlyTraj(AutoTrajectory ogTraj){
+  private List<SwerveSample> getLaunchOnFlyTraj(AutoTrajectory ogTraj,double shootStart,double shootEnd){
     List<SwerveSample> movingTraj = new ArrayList<>();
     
     ogTraj.getRawTrajectory().samples().forEach(sample -> 
       movingTraj.add(
+        sample.getTimestamp()<shootEnd && sample.getTimestamp()>shootStart?
         new SwerveSample(
         sample.getTimestamp(), 
         sample.getPose().getX(), 
@@ -293,6 +295,20 @@ public final class Autos {
         sample.getChassisSpeeds().vxMetersPerSecond,
         sample.getChassisSpeeds().vyMetersPerSecond, 
         0, 
+        0, 
+        0, 
+        0, 
+        null, 
+        null)
+        :
+        new SwerveSample(
+        sample.getTimestamp(), 
+        sample.getPose().getX(), 
+        sample.getPose().getY(),
+        sample.getPose().getRotation().getRadians(), 
+        sample.getChassisSpeeds().vxMetersPerSecond,
+        sample.getChassisSpeeds().vyMetersPerSecond, 
+        sample.getChassisSpeeds().omegaRadiansPerSecond, 
         0, 
         0, 
         0, 
