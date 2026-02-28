@@ -183,6 +183,11 @@ public final class Autos {
       routine.active().onTrue(
         Commands.sequence(
           //new AlignToPose(trajectories[0].getInitialPose().get(), swerve),
+          new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,true)),
+          new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)),
+          new WaitCommand(Auton.STARTING_INTAKE_WAIT),
+          new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)),
+          new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true)),
           posTargets[0].charAt(0) == 'S' ? 
             new AlignToPose(new Pose2d(swerve.getPose().getX(),swerve.getPose().getY(),fuelhandler.findStationaryShootingHeading(swerve,fuelhandler.targetChooser(swerve))), swerve)  

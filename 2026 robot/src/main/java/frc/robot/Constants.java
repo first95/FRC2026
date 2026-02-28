@@ -114,7 +114,7 @@ public final class Constants {
     public static final double ANGULAR_VELOCITY_LIMIT = 5;
 
         // Robot control gains
-        public static final double HEADING_KP = 5;
+        public static final double HEADING_KP = 6;
         public static final double HEADING_KI = 0;
         public static final double HEADING_KD = 0.095;
 
@@ -191,7 +191,7 @@ public final class Constants {
         public static final class Mod3 {
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ANGLE_MOTOR_ID = 2;
-            public static final double ANGLE_OFFSET = 360-120.5;
+            public static final double ANGLE_OFFSET = 180-24.96;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(3, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, BACK_RIGHT_X, BACK_RIGHT_Y);
         }
@@ -216,7 +216,7 @@ public final class Constants {
         public static final double TOPROLLER_KP = 0.00005;
         public static final double TOPROLLER_KI = 0;
         public static final double TOPROLLER_KD = 0.0;
-        public static final double TOPROLLER_KS = 0.0340016;
+        public static final double TOPROLLER_KS = 0.03;//0.0340016;
         public static final double TOPROLLER_KV = 0.00180762;
         public static final double TOPROLLER_KA = 0;
 
@@ -229,17 +229,17 @@ public final class Constants {
 
         public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 80;
 
-        public static final double BOTTOMROLLER_KP = 0.0002;
+        public static final double BOTTOMROLLER_KP = 0.0003;
         public static final double BOTTOMROLLER_KI = 0;
         public static final double BOTTOMROLLER_KD = 0.0;
-        public static final double BOTTOMROLLER_KS = -0.00740034;
+        public static final double BOTTOMROLLER_KS = -0.01;//-0.00740034;
         public static final double BOTTOMROLLER_KV = 0.00181521;
         public static final double BOTTOMROLLER_KA = 0;
 
-        public static final double BOTTOMROLLER2_KP = 0.0002;
+        public static final double BOTTOMROLLER2_KP = 0.0003;
         public static final double BOTTOMROLLER2_KI = 0;
         public static final double BOTTOMROLLER2_KD = 0.0;
-        public static final double BOTTOMROLLER2_KS = -0.00740034;
+        public static final double BOTTOMROLLER2_KS = -0.01;//-0.00740034;
         public static final double BOTTOMROLLER2_KV = 0.00181521;
         public static final double BOTTOMROLLER2_KA = 0;
 
@@ -251,7 +251,7 @@ public final class Constants {
 
         public static final double INDEXER_IDLE_SPEED = 0;
         public static final double INDEXER_EJECT_SPEED = -6000;
-        public static final double INDEXINGSPEED = 6000;
+        public static final double INDEXINGSPEED = 5000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
@@ -267,7 +267,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 400;
+        public static final double SHOOTERTOLERANCE = 100;
         public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(4);
 
         public static final int INDEXER_ID = 14;
@@ -292,12 +292,12 @@ public final class Constants {
         public static final int N_NEWTONLINERIZATIONS = 20;
 
         public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
-        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 677.36514;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 617.36514;
 
 
-        public static final double RPMOFFSET_INCREMENT = 200; 
+        public static final double RPMOFFSET_INCREMENT = 20; 
 
-        public static final double MINRANGE = 0;
+        public static final double MINRANGE = 2.62;
         public static final double MAXRANGE = Units.inchesToMeters(170);
 
 
@@ -389,6 +389,7 @@ public final class Constants {
         public static final String AUTO_SHOOT_KEY = "autoShoot";
         public static final String AUTO_CLIMB_KEY = "autoClimb";
         public static final String USE_AUTO_SHOOT_KEY = "useAutoShoot";
+        public static final String AUTO_AIMKEY = "autoAim";
 
         public static final String TARGET_HEADING_KEY = "targetHeading";
 
@@ -401,6 +402,7 @@ public final class Constants {
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
+        public static final double STARTING_INTAKE_WAIT = 0.5;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s

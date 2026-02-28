@@ -128,6 +128,7 @@ public class FuelHandlerCommand extends Command {
 
     if (SmartDashboard.getBoolean("autoEnabled",false)){
       intakeButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_INTAKE_KEY, false);
+      aimButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_AIMKEY, false);
       shootButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_SHOOT_KEY, false)&&SmartDashboard.getBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, false);
     }
     else{
@@ -165,7 +166,7 @@ public class FuelHandlerCommand extends Command {
 
     SmartDashboard.putBoolean("shouldLaunch", canLaunch(swerve, timeOfFlightToHub));
 
-    SmartDashboard.putNumber("shootingHeading", shootingHeading.getRadians());
+    SmartDashboard.putNumber("shootingHeading", shootingHeading.getRadians() + Math.PI);
     swerve.field.getObject("target").setPose(new Pose2d(target.toTranslation2d(),new Rotation2d()));
     //shootingHeading = findStationaryshootingHeading(swerve,  Constants.Auton.BLUEHUB);
 
