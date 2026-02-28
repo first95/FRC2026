@@ -181,6 +181,7 @@ public final class Autos {
           //new AlignToPose(trajectories[0].getInitialPose().get(), swerve),
           new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,true)),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)),
+          new WaitCommand(Auton.STARTING_INTAKE_WAIT),
           //new WaitCommand(Auton.STARTING_INTAKE_WAIT),
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true)),
           posTargets[0].charAt(0) == 'S' ? 
@@ -190,10 +191,12 @@ public final class Autos {
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
             .andThen(new WaitCommand(Auton.AUTON_PRELOADSCORE_WAIT_TIME))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
-          : new AlignToPose(trajectories[0].getInitialPose().get(), swerve)
+          : (new AlignToPose(trajectories[0].getInitialPose().get(), swerve)
           .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
-          .andThen(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false))),
+          .andThen(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false))))
+          ,
             new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
+            
           trajectories[0].cmd()
         )
       );

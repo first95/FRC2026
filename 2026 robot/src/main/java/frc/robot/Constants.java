@@ -115,10 +115,10 @@ public final class Constants {
 
         // Robot control gains
         public static final double HEADING_KP = 6;
-        public static final double HEADING_KI = 0;
+        public static final double HEADING_KI = 0.1;
         public static final double HEADING_KD = 0.095;
 
-    public static final double HEADING_MIN_ANGULAR_CONTROL_EFFORT = 0.005; // rad/s— Prevent oscillation by cancelling rotational commands less than this
+    public static final double HEADING_MIN_ANGULAR_CONTROL_EFFORT = 0.0005; // rad/s— Prevent oscillation by cancelling rotational commands less than this
 
         public static final Translation2d CENTEROFROTATION = new Translation2d(0,0);
         // Swerve base kinematics object
@@ -251,7 +251,7 @@ public final class Constants {
 
         public static final double INDEXER_IDLE_SPEED = 0;
         public static final double INDEXER_EJECT_SPEED = -6000;
-        public static final double INDEXINGSPEED = 5000;
+        public static final double INDEXINGSPEED = 3000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
@@ -267,7 +267,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 100;
+        public static final double SHOOTERTOLERANCE = 400;
         public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(4);
 
         public static final int INDEXER_ID = 14;
@@ -292,7 +292,7 @@ public final class Constants {
         public static final int N_NEWTONLINERIZATIONS = 20;
 
         public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
-        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 617.36514;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 667.36514;
 
 
         public static final double RPMOFFSET_INCREMENT = 20; 
@@ -305,6 +305,12 @@ public final class Constants {
     public static final class IntakeConstants{
         public static final int MOTOR1_ID = 17;
 
+        public static final double KP = 0.00001;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KS = -2.62194;
+        public static final double KV = 0.00261407;
+        public static final double KA = 0;
         public static final boolean MOTOR1_INVERTED = false;
 
         public static final int SMARTCURRENTLIMIT = 80;
@@ -326,18 +332,19 @@ public final class Constants {
 
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
-        public static final double INTAKINGSPEED = 0.3;
+        public static final double SHOOTINGSPEED = 2500;
+        public static final double INTAKINGSPEED = 4500;
         public static final double EJECTSPEED = -1;
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
         public static final double AGITATOR1INTAKINGSPEED = 0;
-        public static final double AGITATOR1SHOOTINGSPEED = 0.6;
+        public static final double AGITATOR1SHOOTINGSPEED = 0.8;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
         public static final double AGITATOR2INTAKINGSPEED = 0;
-        public static final double AGITATOR2SHOOTINGSPEED = 0.6;
+        public static final double AGITATOR2SHOOTINGSPEED = 0.8;
 
         
        
@@ -352,7 +359,7 @@ public final class Constants {
 
         public static final int SMARTCURRENTLIMIT = 80;
 
-        public static final double CLIMBINGSPEED = 0.2;
+        public static final double CLIMBINGSPEED = 0.5;
 
 
     }
@@ -402,7 +409,7 @@ public final class Constants {
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
-        public static final double STARTING_INTAKE_WAIT = 0.5;
+        public static final double STARTING_INTAKE_WAIT = 0.1;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
@@ -423,12 +430,12 @@ public final class Constants {
         public static final double HUMANLOAD_WAIT_TIME = 0.8;
         public static final double HANDOFF_WAIT_TIME = 2;
 
-        public static final double AUTO_ALIGN_TIMEOUT_TIMEOUT = 0.8;
-        public static final double ALIGN_TO_POSE_KP = 3;
+        public static final double AUTO_ALIGN_TIMEOUT_TIMEOUT = 1;
+        public static final double ALIGN_TO_POSE_KP = 4;
         public static final double ALIGN_TO_POSE_KI = 0;
         public static final double ALIGN_TO_POSE_KD = 0;
 
-        public static final double DRIVE_POSITIONAL_TOLERANCE = 0.05; // m
+        public static final double DRIVE_POSITIONAL_TOLERANCE = 0.01; // m
         
         public static final Translation3d BLUEHUB = new Translation3d(2.0828,0,0); 
         public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());

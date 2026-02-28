@@ -140,11 +140,11 @@ public class FuelHandlerCommand extends Command {
     ejectButton = ejectButtonSupplier.getAsBoolean();
 
     if(ejectButton){
-      intake.setSpeed(IntakeConstants.EJECTSPEED);
+      intake.setRawSpeed(IntakeConstants.EJECTSPEED);
       shooter.setIndexerPID(ShooterConstants.INDEXER_EJECT_SPEED);
     }
     else{
-      intake.setSpeed(intakeSpeed);
+      intake.setRPM(intakeSpeed);
       shooter.setIndexerPID(indexingSpeed);
     }
     
@@ -261,7 +261,7 @@ public class FuelHandlerCommand extends Command {
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
         absdrive.setHeading(shootingHeading);
 
-        intakeSpeed = IntakeConstants.INTAKINGSPEED;
+        intakeSpeed = IntakeConstants.SHOOTINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
         

@@ -147,8 +147,8 @@ public class Shooter extends SubsystemBase {
       .outputCurrentPeriodMs(ShooterConstants.INDEXER_OUTPUT_CURRENT_PERIOD);
      indexerConfig.closedLoop
       .pid(ShooterConstants.INDEXER_KP
-        ,ShooterConstants.INDEXER_KP
-        ,ShooterConstants.INDEXER_KP)
+        ,ShooterConstants.INDEXER_KI
+        ,ShooterConstants.INDEXER_KD)
       .outputRange(0, 1);
     
     indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
