@@ -115,7 +115,7 @@ public final class Constants {
 
         // Robot control gains
         public static final double HEADING_KP = 6;
-        public static final double HEADING_KI = 0.1;
+        public static final double HEADING_KI = 0;
         public static final double HEADING_KD = 0.095;
 
     public static final double HEADING_MIN_ANGULAR_CONTROL_EFFORT = 0.0005; // rad/s— Prevent oscillation by cancelling rotational commands less than this
