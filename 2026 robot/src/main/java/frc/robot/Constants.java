@@ -333,7 +333,7 @@ public final class Constants {
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
         public static final double SHOOTINGSPEED = 2500;
-        public static final double INTAKINGSPEED = 3500;
+        public static final double INTAKINGSPEED = 4500;
         public static final double EJECTRAWSPEED = -1;
 
         public static final double AGITATOR1IDLESPEED = 0;
