@@ -140,7 +140,7 @@ public class FuelHandlerCommand extends Command {
     ejectButton = ejectButtonSupplier.getAsBoolean();
 
     if(ejectButton){
-      intake.setRawSpeed(IntakeConstants.EJECTSPEED);
+      intake.setRawSpeed(IntakeConstants.EJECTRAWSPEED);
       shooter.setIndexerPID(ShooterConstants.INDEXER_EJECT_SPEED);
     }
     else{
