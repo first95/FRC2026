@@ -333,7 +333,7 @@ public final class Constants {
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
         public static final double SHOOTINGSPEED = 2500;
-        public static final double INTAKINGSPEED = 4500;
+        public static final double INTAKINGSPEED = 3500;
         public static final double EJECTSPEED = -1;
 
         public static final double AGITATOR1IDLESPEED = 0;
@@ -422,13 +422,10 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints ANGULAR_CONSTRAINTS = new TrapezoidProfile.Constraints(
             ANGULAR_VELOCITY_LIMIT, ANGULAR_ACCELERATION_LIMIT);
         
-        public static final double FOLLOW_TRAJECTORY_KP = 3;
+        public static final double FOLLOW_TRAJECTORY_KP = 4;
         public static final double FOLLOW_TRAJECTORY_KI = 0;
         public static final double FOLLOW_TRAJECTORY_KD = 0;
 
-        public static final double SCORING_WAIT_TIME = 0.40;
-        public static final double HUMANLOAD_WAIT_TIME = 0.8;
-        public static final double HANDOFF_WAIT_TIME = 2;
 
         public static final double AUTO_ALIGN_TIMEOUT_TIMEOUT = 1;
         public static final double ALIGN_TO_POSE_KP = 4;
