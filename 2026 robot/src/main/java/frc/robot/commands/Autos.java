@@ -79,11 +79,12 @@ public final class Autos {
     AutoRoutine routine = autoFactory.newRoutine("ScorePreLoad");
     routine.active().onTrue(
       Commands.sequence(
-      new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, true))
+      new AlignToPose(new Pose2d(), swerve)
+      ,new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, true))
       ,(new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true)))
-      ,(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
-      ,(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
-      ,(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))
+      // ,(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
+      // ,(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
+      // ,(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))
       //,(new AlignToPose(new Pose2d(0,0,Rotation2d.fromDegrees(180)), swerve))
       )
     );
@@ -183,20 +184,11 @@ public final class Autos {
           new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)),
           new WaitCommand(Auton.STARTING_INTAKE_WAIT),
           //new WaitCommand(Auton.STARTING_INTAKE_WAIT),
-          new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true)),
-          posTargets[0].charAt(0) == 'S' ? 
-            new AlignToPose(new Pose2d(trajectories[0].getInitialPose().get().getX(),trajectories[0].getInitialPose().get().getY(),fuelhandler.findStationaryShootingHeading(swerve,fuelhandler.targetChooser(swerve)).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve)  
-            .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
-            .andThen(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)))
-            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
-            .andThen(new WaitCommand(Auton.AUTON_PRELOADSCORE_WAIT_TIME))
-            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
-          : (new AlignToPose(trajectories[0].getInitialPose().get(), swerve)
-          .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
-          .andThen(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false))))
-          ,
-            new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
-            
+          new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true))
+          .andThen(posTargets[0].charAt(0) == 'S' ? (stationaryShotRoutine(trajectories[0].getInitialPose().get(),Auton.AUTON_PRELOADSCORE_WAIT_TIME)): (new AlignToPose(trajectories[0].getInitialPose().get(), swerve)))
+          ,(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
+          ,(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false)))
+          ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
           trajectories[0].cmd()
         )
       );
@@ -206,12 +198,7 @@ public final class Autos {
         if(posTargets[n+1].charAt(0) == 'S'){
 
           trajectories[n].done().onTrue(
-            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,true))
-            .andThen(new AlignToPose(new Pose2d(trajectories[n].getFinalPose().get().getX(),trajectories[n].getFinalPose().get().getY(),fuelhandler.findStationaryShootingHeading(trajectories[n].getFinalPose().get(), swerve.getAlliance(), fuelhandler.targetChooser(trajectories[n].getFinalPose().get(),swerve.getAlliance())).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve))
-            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
-            .andThen(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
-            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
-            .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))
+            stationaryShotRoutine(trajectories[n+1].getInitialPose().get(),Auton.AUTON_STATIONARY_SCORING_WAIT_TIME)
             .andThen(trajectories[n+1].cmd())
           );
 
@@ -232,12 +219,19 @@ public final class Autos {
           trajectories[n].done().onTrue(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)).andThen(trajectories[n+1].cmd()));
         }
 
-        if(posTargets[n+2].charAt(0) == 'C'){
+        if(posTargets[posTargets.length-1].charAt(0) == 'C'){
           
-          trajectories[n+1].done().onTrue(
+          trajectories[trajectories.length-1].done().onTrue(
             new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_KEY, true))
             .andThen(new AlignToPose(new Pose2d(Auton.POSE_MAP.get(swerve.getAlliance()).get("climb").toTranslation2d(), Rotation2d.fromDegrees(Auton.POSE_MAP.get(swerve.getAlliance()).get("climb").getZ()).rotateBy(swerve.getAlliance() == Alliance.Blue ? new Rotation2d(1,0): new Rotation2d(-1,0))), swerve))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_KEY, true)))
+          );
+
+        }
+        else if(posTargets[posTargets.length-1].charAt(0) == 'S'){
+          
+          trajectories[trajectories.length-1].done().onTrue(
+            stationaryShotRoutine(trajectories[trajectories.length-1].getFinalPose().get())
           );
 
         }
@@ -250,6 +244,20 @@ public final class Autos {
     }
     
     return routine;  
+  }
+  private Command stationaryShotRoutine(Pose2d pose){
+    return stationaryShotRoutine(pose, 0, false);
+  }
+  private Command stationaryShotRoutine(Pose2d pose, double waitTime){
+    return stationaryShotRoutine(pose, waitTime, true);
+  }
+  private Command stationaryShotRoutine(Pose2d pose, double waitTime, boolean end){
+    return new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,true))
+            .andThen(new AlignToPose(new Pose2d(pose.getX(),pose.getY(),fuelhandler.findStationaryShootingHeading(pose, swerve.getAlliance(), fuelhandler.targetChooser(pose,swerve.getAlliance())).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve))
+            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
+            .andThen(!end?new InstantCommand():((new WaitCommand(waitTime))
+            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
+            .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))));
   }
   private String[] getPosTargets(){
     String currentModularAuto = SmartDashboard.getString("currentModularAuto", "");

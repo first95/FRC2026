@@ -45,16 +45,20 @@ public class FuelHandlerCommand extends Command {
   private BooleanSupplier 
     intakeButtonSupplier, 
     shootButtonSupplier,
+    manualShootButtonSupplier,
     aimButtonSupplier,
     autoHubOverideSupplier,
-    ejectButtonSupplier;
+    ejectButtonSupplier,
+    injectButtonSupplier;
   
   private boolean
     intakeButton,
     shootButton,
+    manualShootButton,
     aimButton,
     autoHubOverideButton,
     ejectButton,
+    injectButton,
     autoHubOveride = false,
     hubActive,
     inRange;
@@ -73,7 +77,7 @@ public class FuelHandlerCommand extends Command {
   private Translation3d target;
 
   private enum State{
-    IDLE, INTAKING, AIMING, SHOOTING
+    IDLE, INTAKING, AIMING, SHOOTING,MANUALSHOOT
   }
 
   private State currentState;
@@ -81,9 +85,11 @@ public class FuelHandlerCommand extends Command {
   public FuelHandlerCommand(
     BooleanSupplier intakeButtonSupplier,
     BooleanSupplier shootButtonSupplier,
+    BooleanSupplier manualShootButtonSupplier,
     BooleanSupplier aimButtonSupplier,
     BooleanSupplier autoHubOverideSupplier,
     BooleanSupplier ejectButtonSupplier,
+    BooleanSupplier injectButtonSupplier,
     Shooter shooter,
     Intake intake,
     AbsoluteDrive absdrive,
@@ -91,9 +97,11 @@ public class FuelHandlerCommand extends Command {
 
     this.intakeButtonSupplier = intakeButtonSupplier;
     this.shootButtonSupplier = shootButtonSupplier;
+    this.manualShootButtonSupplier = manualShootButtonSupplier;
     this.aimButtonSupplier = aimButtonSupplier;
     this.autoHubOverideSupplier = autoHubOverideSupplier;
     this.ejectButtonSupplier = ejectButtonSupplier;
+    this.injectButtonSupplier = injectButtonSupplier;
 
     this.shooter = shooter;
     this.intake = intake;
@@ -130,22 +138,34 @@ public class FuelHandlerCommand extends Command {
       intakeButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_INTAKE_KEY, false);
       aimButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_AIMKEY, false);
       shootButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_SHOOT_KEY, false)&&SmartDashboard.getBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, false);
+      
     }
     else{
       intakeButton = intakeButtonSupplier.getAsBoolean();
       aimButton = aimButtonSupplier.getAsBoolean();
       shootButton = shootButtonSupplier.getAsBoolean();
+      
     }
 
+    manualShootButton = manualShootButtonSupplier.getAsBoolean();
     ejectButton = ejectButtonSupplier.getAsBoolean();
+    injectButton = injectButtonSupplier.getAsBoolean();
 
     if(ejectButton){
       intake.setRawSpeed(IntakeConstants.EJECTRAWSPEED);
       shooter.setIndexerPID(ShooterConstants.INDEXER_EJECT_SPEED);
     }
+    else if(injectButton){
+      intake.setRawSpeed(IntakeConstants.INJECTRAWSPEED);
+      shooter.setIndexerPID(ShooterConstants.INDEXER_INJECT_SPEED);
+    }
     else{
       intake.setRPM(intakeSpeed);
       shooter.setIndexerPID(indexingSpeed);
+    }
+
+    if(manualShootButton){
+      currentState = State.MANUALSHOOT;
     }
     
     
@@ -200,6 +220,8 @@ public class FuelHandlerCommand extends Command {
       case INTAKING:
         indexingSpeed = ShooterConstants.INDEXINGSPEED;
         shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
+
+      
 
         absdrive.setLocustDriving(false);
 
@@ -282,6 +304,26 @@ public class FuelHandlerCommand extends Command {
           currentState = State.IDLE;
         }
       break;
+
+      case MANUALSHOOT:
+        shooter.setShooterExitVelocity(ShooterConstants.MANUALSHOOTSPEED,shootingRPMOffset);
+        intakeSpeed = IntakeConstants.SHOOTINGSPEED;
+        intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
+
+        if(shooter.shooterAtSpeed()){
+          indexingSpeed = ShooterConstants.INDEXINGSPEED;
+        }
+        
+
+        if(shootButton){
+          currentState = State.AIMING;
+        }
+        if(!manualShootButton){
+          currentState = State.IDLE;
+        }
+
+
 
 
 

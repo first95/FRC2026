@@ -249,8 +249,11 @@ public final class Constants {
         public static final double TOPROLLER_JUGGLING_SPEED = 400*2;
         public static final double BOTTOMROLLER_JUGGLING_SPEED = 400;
 
+        public static final double MANUALSHOOTSPEED = 2;
+
         public static final double INDEXER_IDLE_SPEED = 0;
         public static final double INDEXER_EJECT_SPEED = -6000;
+        public static final double INDEXER_INJECT_SPEED = 6000;
         public static final double INDEXINGSPEED = 3000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
@@ -333,17 +336,18 @@ public final class Constants {
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
         public static final double SHOOTINGSPEED = 2500;
-        public static final double INTAKINGSPEED = 4500;
+        public static final double INTAKINGSPEED = 2500;
         public static final double EJECTRAWSPEED = -1;
+        public static final double INJECTRAWSPEED = 1;
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
-        public static final double AGITATOR1INTAKINGSPEED = 0;
+        public static final double AGITATOR1INTAKINGSPEED = 0.8;
         public static final double AGITATOR1SHOOTINGSPEED = 0.8;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
-        public static final double AGITATOR2INTAKINGSPEED = 0;
+        public static final double AGITATOR2INTAKINGSPEED = 0.8;
         public static final double AGITATOR2SHOOTINGSPEED = 0.8;
 
         
@@ -409,7 +413,7 @@ public final class Constants {
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
-        public static final double STARTING_INTAKE_WAIT = 0.1;
+        public static final double STARTING_INTAKE_WAIT = 0.3;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
@@ -434,8 +438,6 @@ public final class Constants {
 
         public static final double DRIVE_POSITIONAL_TOLERANCE = 0.01; // m
         
-        public static final Translation3d BLUEHUB = new Translation3d(2.0828,0,0); 
-        public static final Translation3d REDHUB = new Translation3d(FIELD_LENGTH - BLUEHUB.getX(), FIELD_WIDTH - BLUEHUB.getY(), BLUEHUB.getZ());
         private static final Map<String, Translation3d> BLUE_MAP = Map.ofEntries(
             //Map.entry("Hub", new Translation3d(2.0828, 0,0)),
             Map.entry("Hub", new Translation3d((4.011153+5.233016)/2,(4.563567+3.502097)/2,1.828804)),
