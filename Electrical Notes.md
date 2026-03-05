@@ -11,9 +11,9 @@ Front of the robot is the launching direction and Intake side
 |     6    |  40A |  2  | Back Right Steering motor             |
 |     7    |  40A |  3  | Back Right Drive motor                |
 |     0    |  40A |  4  | Back Left Steering motor              |
-|    18    |  30A |  5  | Back Left Drive motor                 |
+|    18    |  40A |  5  | Back Left Drive motor                 |
 |    19    |  40A |  6  | Front Left Steering motor             |
-|    17    |  30A |  7  | Front Left Drive motor                |
+|    17    |  40A |  7  | Front Left Drive motor                |
 |     8    |  40A |  8  | Front Right Steering motor            |
 |     9    |  40A |  9  | Front Right Drive motor               |
 |          |      |     |*Non-drive motors*                     |
@@ -52,8 +52,8 @@ Front of the robot is the launching direction and Intake side
 |       12 |  40A |  20  | left climber winch motor             |
 |       13 |  40A |  19  | right climber winch motor            |
 |       14 |  40A |  17  | left intake / flappy-doodle motor    |
-|       15 | 10A  |      | Direct wire to Radio 12v input       |
-|       16 | 10A  |      | VRM for limelight cameras            |
+|       15 |  10A |      | Direct wire to Radio 12v input       |
+|       16 |  10A |      | VRM for limelight cameras            |
 |       17 |  40A |  7   | Front Left Drive motor               |
 |       18 |  40A |  5   | Back Left Drive motor                |
 |       19 |  40A |  6   | Front Left Steering motor            |
