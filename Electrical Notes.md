@@ -1,7 +1,5 @@
 # Team 95 2026 season electrical notes
 
-# Copied from last year's as a template - Edit as robot is built!
-
 Front of the robot is the launching direction and Intake side
 
 ## Sorted by CAN ID
