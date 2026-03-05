@@ -11,7 +11,7 @@ Front of the robot is the launching direction and Intake side
 |          |      |  1  | Power Distribution Hub                |
 |          |      |     |*Drive Base motors*                    |
 |     6    |  40A |  2  | Back Right Steering motor             |
-|     7    |  30A |  3  | Back Right Drive motor                |
+|     7    |  40A |  3  | Back Right Drive motor                |
 |     0    |  40A |  4  | Back Left Steering motor              |
 |    18    |  30A |  5  | Back Left Drive motor                 |
 |    19    |  40A |  6  | Front Left Steering motor             |
@@ -57,7 +57,7 @@ Front of the robot is the launching direction and Intake side
 |       15 | 10A  |      | Direct wire to Radio 12v input       |
 |       16 | 10A  |      | VRM for limelight cameras            |
 |       17 |  40A |  7   | Front Left Drive motor               |
-|       18 |  30A |  5   | Back Left Drive motor                |
+|       18 |  40A |  5   | Back Left Drive motor                |
 |       19 |  40A |  6   | Front Left Steering motor            |
 |       20 |  10Af|      | RoboRIO (fuse, not breaker)          |
 |       21 |  15Af| 30   | Pigeon  (fuse, not breaker)          |
