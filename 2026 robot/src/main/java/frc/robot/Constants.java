@@ -271,7 +271,7 @@ public final class Constants {
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
         public static final double SHOOTERTOLERANCE = 400;
-        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(4);
+        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(2);
 
         public static final int INDEXER_ID = 14;
 
@@ -336,18 +336,18 @@ public final class Constants {
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
         public static final double SHOOTINGSPEED = 2500;
-        public static final double INTAKINGSPEED = 2500;
+        public static final double INTAKINGSPEED = 5000;
         public static final double EJECTRAWSPEED = -1;
         public static final double INJECTRAWSPEED = 1;
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
-        public static final double AGITATOR1INTAKINGSPEED = 0.8;
+        public static final double AGITATOR1INTAKINGSPEED = 0;
         public static final double AGITATOR1SHOOTINGSPEED = 0.8;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
-        public static final double AGITATOR2INTAKINGSPEED = 0.8;
+        public static final double AGITATOR2INTAKINGSPEED = 0;
         public static final double AGITATOR2SHOOTINGSPEED = 0.8;
 
         
@@ -413,7 +413,7 @@ public final class Constants {
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
-        public static final double STARTING_INTAKE_WAIT = 0.3;
+        public static final double STARTING_INTAKE_WAIT = 0.4;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s

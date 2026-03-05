@@ -218,8 +218,8 @@ public class FuelHandlerCommand extends Command {
       break;
 
       case INTAKING:
-        indexingSpeed = ShooterConstants.INDEXINGSPEED;
-        shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
+        //indexingSpeed = ShooterConstants.INDEXINGSPEED;
+        //shooter.setShooterSpeeds(ShooterConstants.TOPROLLER_JUGGLING_SPEED, ShooterConstants.BOTTOMROLLER_JUGGLING_SPEED);
 
       
 

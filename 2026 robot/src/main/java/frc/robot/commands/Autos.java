@@ -253,8 +253,8 @@ public final class Autos {
   }
   private Command stationaryShotRoutine(Pose2d pose, double waitTime, boolean end){
     return new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,true))
-            .andThen(new AlignToPose(new Pose2d(pose.getX(),pose.getY(),fuelhandler.findStationaryShootingHeading(pose, swerve.getAlliance(), fuelhandler.targetChooser(pose,swerve.getAlliance())).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)))
+            .andThen(new AlignToPose(new Pose2d(pose.getX(),pose.getY(),fuelhandler.findStationaryShootingHeading(pose, swerve.getAlliance(), fuelhandler.targetChooser(pose,swerve.getAlliance())).rotateBy(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue ? 0: 180))), swerve))
             .andThen(!end?new InstantCommand():((new WaitCommand(waitTime))
             .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)))
             .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))));
