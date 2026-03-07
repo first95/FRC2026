@@ -342,12 +342,12 @@ public final class Constants {
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
-        public static final double AGITATOR1INTAKINGSPEED = 0;
+        public static final double AGITATOR1INTAKINGSPEED = 0.8;
         public static final double AGITATOR1SHOOTINGSPEED = 0.8;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
-        public static final double AGITATOR2INTAKINGSPEED = 0;
+        public static final double AGITATOR2INTAKINGSPEED = 0.8;
         public static final double AGITATOR2SHOOTINGSPEED = 0.8;
 
         
@@ -412,8 +412,8 @@ public final class Constants {
         
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
-        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 1;
-        public static final double STARTING_INTAKE_WAIT = 0.4;
+        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.6;
+        public static final double STARTING_INTAKE_WAIT = 0.2;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
