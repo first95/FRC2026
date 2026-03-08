@@ -411,7 +411,7 @@ public final class Constants {
         public static final double FORTHSHIFT_ENDTIME = 30;
         
 
-        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 5;
+        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 3;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.6;
         public static final double STARTING_INTAKE_WAIT = 0.2;
 
