@@ -79,7 +79,9 @@ public final class Autos {
     AutoRoutine routine = autoFactory.newRoutine("ScorePreLoad");
     routine.active().onTrue(
       Commands.sequence(
-      new AlignToPose(new Pose2d(), swerve)
+      new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true))
+      ,new WaitCommand(Auton.STARTING_INTAKE_WAIT)
+      ,(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false)))
       ,new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, true))
       ,(new InstantCommand(() -> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true)))
       // ,(new WaitCommand(Auton.AUTON_STATIONARY_SCORING_WAIT_TIME))
@@ -180,14 +182,12 @@ public final class Autos {
       routine.active().onTrue(
         Commands.sequence(
           //new AlignToPose(trajectories[0].getInitialPose().get(), swerve),
-          new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,true)),
-          new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)),
-          new WaitCommand(Auton.STARTING_INTAKE_WAIT),
+          new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true))
+          ,new WaitCommand(Auton.STARTING_INTAKE_WAIT)
           //new WaitCommand(Auton.STARTING_INTAKE_WAIT),
-          new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true))
-          .andThen(posTargets[0].charAt(0) == 'S' ? (stationaryShotRoutine(trajectories[0].getInitialPose().get(),Auton.AUTON_PRELOADSCORE_WAIT_TIME)): (new AlignToPose(trajectories[0].getInitialPose().get(), swerve)))
-          ,(new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_AIMKEY,false)))
           ,(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false)))
+          ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true))
+          .andThen(posTargets[0].charAt(0) == 'S' ? (stationaryShotRoutine(trajectories[0].getInitialPose().get(),Auton.AUTON_PRELOADSCORE_WAIT_TIME)): (new AlignToPose(trajectories[0].getInitialPose().get(), swerve)))
           ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
           trajectories[0].cmd()
         )

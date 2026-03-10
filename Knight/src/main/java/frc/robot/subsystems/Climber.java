@@ -47,10 +47,14 @@ public class Climber extends SubsystemBase {
   public void setClimberSpeed(double speed){
     motor1.set(speed);
   }
+  public void setClimberPosition(double position){
+
+  }
 
   public Command runClimber(double speed){
     return new InstantCommand(() -> setClimberSpeed(speed));
   }
+
 
   
 
