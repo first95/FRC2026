@@ -140,22 +140,27 @@ public final class Autos {
 
   }
 
-  public AutoRoutine loadAndLaunch(){
-    AutoRoutine routine = autoFactory.newRoutine("loadAndLaunch");
 
-    AutoTrajectory trajectory = routine.trajectory("loadAndLaunch");
-
-    routine.active().onTrue(
-      Commands.sequence(
-        new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, false)),
-        new AlignToPose(trajectory.getInitialPose().get(), swerve),
-        trajectory.cmd(),
-        new InstantCommand(()-> SmartDashboard.putBoolean(Constants.Auton.AUTO_SHOOT_KEY, true))
-      )
-    );
-
-    return routine;
+  public AutoRoutine leftSideMidFieldAuto(){
+    SmartDashboard.putString("currentModularAuto", "SS0,LM1,SS0,LM0,SS0,");
+    return ModularAuto();
   }
+
+  public AutoRoutine leftSideMidSweepingAuto(){
+     SmartDashboard.putString("currentModularAuto", "SS0,LM2,SS0,LM0,SS0,");
+    return ModularAuto();
+  }
+
+  public AutoRoutine rightSideMidFieldAuto(){
+    SmartDashboard.putString("currentModularAuto", "SS1,LM3,SS1,LM4,SS1,");
+    return ModularAuto();
+  }
+
+  public AutoRoutine rightSideMidSweepingAuto(){
+     SmartDashboard.putString("currentModularAuto", "SS1,LM3,SS1,LM4,SS1,");
+    return ModularAuto();
+  }
+
   public AutoRoutine ModularAuto(){
     AutoRoutine routine = autoFactory.newRoutine("ModularAuto");
     String[] posTargets = getPosTargets();

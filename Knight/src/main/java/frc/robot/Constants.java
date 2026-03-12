@@ -329,14 +329,14 @@ public final class Constants {
 
         public static final boolean AGITATORINVERTED = true;
 
-        public static final int AGITATOR_SMARTCURRENTLIMIT = 40;
+        public static final int AGITATOR_SMARTCURRENTLIMIT = 30;
 
         public static final int AGITATOR2_ID = 11;
 
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
-        public static final double SHOOTINGSPEED = 5000;// 2500;
-        public static final double INTAKINGSPEED = 4000;
+        public static final double SHOOTINGSPEED = 3500;// 2500;
+        public static final double INTAKINGSPEED = 3500;
         public static final double EJECTRAWSPEED = -1;
         public static final double INJECTRAWSPEED = 1;
 
@@ -363,7 +363,7 @@ public final class Constants {
 
         public static final int SMARTCURRENTLIMIT = 80;
 
-        public static final double CLIMBINGSPEED = 0.5;
+        public static final double CLIMBINGSPEED = 1;
 
 
     }
