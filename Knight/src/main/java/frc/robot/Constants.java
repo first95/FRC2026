@@ -335,8 +335,8 @@ public final class Constants {
 
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
-        public static final double SHOOTINGSPEED = 3500;// 2500;
-        public static final double INTAKINGSPEED = 3500;
+        public static final double SHOOTINGSPEED = 4000;// 2500;
+        public static final double INTAKINGSPEED = 4000;
         public static final double EJECTRAWSPEED = -1;
         public static final double INJECTRAWSPEED = 1;
 
@@ -411,7 +411,7 @@ public final class Constants {
         public static final double FORTHSHIFT_ENDTIME = 30;
         
 
-        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 3;
+        public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 2.5;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.6;
         public static final double STARTING_INTAKE_WAIT = 0.2;
 
