@@ -165,10 +165,10 @@ public class RobotContainer {
     fuelhandler = new FuelHandlerCommand(
       () -> driveController.getHID().getRawButton(1), //intake Button
       () -> headingController.getHID().getRawButton(1), //shoot Button
-      () -> operatorController.getHID().getBButton(), // manualshoot Button
+      () -> operatorController.getHID().getAButton(), // manualshoot Button
       () -> headingController.getHID().getRawButton(2), //aimButton
       () -> operatorController.getHID().getLeftStickButton(), //autoHubOverrideButton
-      () -> operatorController.getHID().getAButton(), //ejectButton
+      () -> operatorController.getHID().getBButton(), //ejectButton
       () -> operatorController.getHID().getYButton(), //injectButton
       shooter, 
       intake, 
@@ -284,6 +284,7 @@ public class RobotContainer {
 
     operatorController.leftBumper().onTrue(fuelhandler.decreaseShootingRPMOffsetCommand());
     operatorController.rightBumper().onTrue(fuelhandler.increaseShootingRPMOffsetCommand());
+    operatorController.x().onTrue(fuelhandler.resetShootingRPMOffsetCommand());
   }
 
   /**

@@ -708,11 +708,17 @@ public class FuelHandlerCommand extends Command {
   private void changeShootingRPMOffset(double amount){
       shootingRPMOffset += amount;
     } 
+  private void setShootingRPMoffset(double amount){
+      shootingRPMOffset = 0;
+  }
   public Command increaseShootingRPMOffsetCommand(){
     return new InstantCommand(() -> changeShootingRPMOffset(ShooterConstants.RPMOFFSET_INCREMENT));
   }
   public Command decreaseShootingRPMOffsetCommand(){
       return new InstantCommand(() -> changeShootingRPMOffset(-ShooterConstants.RPMOFFSET_INCREMENT));
+  }
+  public Command resetShootingRPMOffsetCommand(){
+    return new InstantCommand(() -> setShootingRPMoffset(0));
   }
   
 
