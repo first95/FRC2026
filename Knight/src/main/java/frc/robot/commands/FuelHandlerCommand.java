@@ -59,7 +59,7 @@ public class FuelHandlerCommand extends Command {
     autoHubOverideButton,
     ejectButton,
     injectButton,
-    autoHubOveride = false,
+    autoHubOveride = true,
     hubActive,
     inRange;
   
@@ -289,10 +289,11 @@ public class FuelHandlerCommand extends Command {
         
 
 
-        if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) > ShooterConstants.SHOOTING_HEADING_TOLERANCE){
-          currentState = State.AIMING;
-        }
+        
         if(target == Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")){
+          // if(!shooter.shooterAtSpeed() || Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) > ShooterConstants.SHOOTING_HEADING_TOLERANCE){
+          // currentState = State.AIMING;
+          // }
           if (!hubActive || !inRange){
             currentState = State.AIMING;
           } 
@@ -311,9 +312,9 @@ public class FuelHandlerCommand extends Command {
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
 
-        if(shooter.shooterAtSpeed()){
+        // if(shooter.shooterAtSpeed()){
           indexingSpeed = ShooterConstants.INDEXINGSPEED;
-        }
+        //}
         
 
         if(shootButton){
