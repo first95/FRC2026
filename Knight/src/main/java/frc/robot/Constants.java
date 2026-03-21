@@ -270,7 +270,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 400;
+        public static final double SHOOTERTOLERANCE = 100;
         public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(2);
 
         public static final int INDEXER_ID = 14;
@@ -295,7 +295,7 @@ public final class Constants {
         public static final int N_NEWTONLINERIZATIONS = 20;
 
         public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
-        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 667.36514;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 467.36514;
 
 
         public static final double RPMOFFSET_INCREMENT = 20; 

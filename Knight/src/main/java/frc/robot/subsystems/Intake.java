@@ -28,8 +28,8 @@ public class Intake extends SubsystemBase {
   private final SimpleMotorFeedforward intakeFeedForward;
   private final SparkClosedLoopController intakePID;
 
-  private final SparkFlex agitator1; //, agitator2;
-  private final SparkFlexConfig agitator1Config; // ,agitator2Config;
+  private final SparkMax agitator1, agitator2;
+  private final SparkMaxConfig agitator1Config ,agitator2Config;
 
   public Intake() {
     motor1 = new SparkFlex(IntakeConstants.MOTOR1_ID, MotorType.kBrushless);
@@ -63,8 +63,8 @@ public class Intake extends SubsystemBase {
 
     motor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    agitator1 = new SparkFlex(IntakeConstants.AGITATOR1_ID, MotorType.kBrushless);
-    agitator1Config = new SparkFlexConfig();
+    agitator1 = new SparkMax(IntakeConstants.AGITATOR1_ID, MotorType.kBrushless);
+    agitator1Config = new SparkMaxConfig();
 
     agitator1Config
       .inverted(IntakeConstants.AGITATORINVERTED)
@@ -77,19 +77,19 @@ public class Intake extends SubsystemBase {
 
     agitator1.configure(agitator1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    // agitator2 = new SparkMax(IntakeConstants.AGITATOR2_ID, MotorType.kBrushless);
-    // agitator2Config = new SparkMaxConfig();
+    agitator2 = new SparkMax(IntakeConstants.AGITATOR2_ID, MotorType.kBrushless);
+    agitator2Config = new SparkMaxConfig();
 
-    // agitator2Config
-    //   .inverted(!IntakeConstants.AGITATORINVERTED)
-    //   .idleMode(IdleMode.kCoast)
-    //   .smartCurrentLimit(IntakeConstants.AGITATOR_SMARTCURRENTLIMIT);
+    agitator2Config
+      .inverted(!IntakeConstants.AGITATORINVERTED)
+      .idleMode(IdleMode.kCoast)
+      .smartCurrentLimit(IntakeConstants.AGITATOR_SMARTCURRENTLIMIT);
 
-    // agitator2Config.signals
-    //   .faultsPeriodMs(IntakeConstants.FAULTSPERIOD)
-    //   .outputCurrentPeriodMs(IntakeConstants.OUTPUT_CURRENT_PERIOD);
+    agitator2Config.signals
+      .faultsPeriodMs(IntakeConstants.FAULTSPERIOD)
+      .outputCurrentPeriodMs(IntakeConstants.OUTPUT_CURRENT_PERIOD);
 
-    // agitator2.configure(agitator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    agitator2.configure(agitator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
@@ -107,9 +107,9 @@ public class Intake extends SubsystemBase {
   public void setAgitator1Speed(double speed){
     agitator1.set(speed);
   }
-  // public void setAgitator2Speed(double speed){
-  //   agitator2.set(speed);
-  // }
+  public void setAgitator2Speed(double speed){
+    agitator2.set(speed);
+  }
 
   @Override
   public void periodic() {

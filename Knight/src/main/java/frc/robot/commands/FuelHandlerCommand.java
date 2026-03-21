@@ -121,7 +121,7 @@ public class FuelHandlerCommand extends Command {
 
   public void execute() {
 
-    
+    SmartDashboard.putNumber("shooterRPMOffset", shootingRPMOffset);
     SmartDashboard.putNumber("shooterExitVelocity", findMovingShootingVelocity(swerve, Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"))) ;
     SmartDashboard.putNumber("stationaryExitVelocity",findStationaryShootingVelocity(swerve,Constants.Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")));
     
@@ -205,7 +205,7 @@ public class FuelHandlerCommand extends Command {
 
         intakeSpeed = IntakeConstants.INTAKEIDLESPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1IDLESPEED);
-        // intake.setAgitator2Speed(IntakeConstants.AGITATOR2IDLESPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2IDLESPEED);
 
 
         if (intakeButton){
@@ -228,7 +228,7 @@ public class FuelHandlerCommand extends Command {
 
         intakeSpeed = IntakeConstants.INTAKINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1INTAKINGSPEED);
-        // intake.setAgitator2Speed(IntakeConstants.AGITATOR2INTAKINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2INTAKINGSPEED);
 
         
 
@@ -253,7 +253,7 @@ public class FuelHandlerCommand extends Command {
 
         intakeSpeed = intakeButton ? IntakeConstants.INTAKINGSPEED: IntakeConstants.INTAKEAIMINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1AIMINGSPEED);
-        // intake.setAgitator2Speed(IntakeConstants.AGITATOR2AIMINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2AIMINGSPEED);
         
 
         
@@ -285,7 +285,7 @@ public class FuelHandlerCommand extends Command {
 
         intakeSpeed = IntakeConstants.SHOOTINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
-        // intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
         
 
 
@@ -310,7 +310,7 @@ public class FuelHandlerCommand extends Command {
         shooter.setShooterExitVelocity(ShooterConstants.MANUALSHOOTSPEED,shootingRPMOffset);
         intakeSpeed = IntakeConstants.SHOOTINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
-        // intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
+        intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
 
         // if(shooter.shooterAtSpeed()){
           indexingSpeed = ShooterConstants.INDEXINGSPEED;
