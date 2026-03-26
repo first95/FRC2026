@@ -158,7 +158,7 @@ public class RobotContainer {
         () -> -headingController.getX(),
         () -> -headingController.getY(),
         false,
-        () -> driveController.getHID().getRawButton(3));
+        () -> driveController.getHID().getRawButton(2));
 
         drivebase.setDefaultCommand(absoluteDrive);
 

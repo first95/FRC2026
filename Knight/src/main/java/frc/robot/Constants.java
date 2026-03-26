@@ -191,7 +191,7 @@ public final class Constants {
         public static final class Mod3 {
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ANGLE_MOTOR_ID = 2;
-            public static final double ANGLE_OFFSET = 180-24.96;
+            public static final double ANGLE_OFFSET = 360-242.71;
             public static final SwerveModuleConstants CONSTANTS = new SwerveModuleConstants(3, DRIVE_MOTOR_ID,
                     ANGLE_MOTOR_ID, ANGLE_OFFSET, BACK_RIGHT_X, BACK_RIGHT_Y);
         }
@@ -254,7 +254,7 @@ public final class Constants {
         public static final double INDEXER_IDLE_SPEED = 0;
         public static final double INDEXER_EJECT_SPEED = -6000;
         public static final double INDEXER_INJECT_SPEED = 6000;
-        public static final double INDEXINGSPEED = 3000;
+        public static final double INDEXINGSPEED = 6000;
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
@@ -270,7 +270,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 100;
+        public static final double SHOOTERTOLERANCE = 50;
         public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(2);
 
         public static final int INDEXER_ID = 14;
@@ -335,20 +335,20 @@ public final class Constants {
 
         public static final double INTAKEIDLESPEED = 0;
         public static final double INTAKEAIMINGSPEED = 0;
-        public static final double SHOOTINGSPEED = 4000;// 2500;
-        public static final double INTAKINGSPEED = 4000;
+        public static final double SHOOTINGSPEED = 6000;// 2500;
+        public static final double INTAKINGSPEED = 6000;
         public static final double EJECTRAWSPEED = -1;
         public static final double INJECTRAWSPEED = 1;
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
         public static final double AGITATOR1INTAKINGSPEED = 0.8;
-        public static final double AGITATOR1SHOOTINGSPEED = 0.8;
+        public static final double AGITATOR1SHOOTINGSPEED = 0.6;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
         public static final double AGITATOR2INTAKINGSPEED = 0.8;
-        public static final double AGITATOR2SHOOTINGSPEED = 0.8;
+        public static final double AGITATOR2SHOOTINGSPEED = 0.6;
 
         
        

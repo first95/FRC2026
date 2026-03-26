@@ -198,7 +198,9 @@ public class FuelHandlerCommand extends Command {
 
         SmartDashboard.putString("State","Idle");
         indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
-        shooter.setShooterExitVelocity(0);
+        //shooter.setShooterExitVelocity(0);
+        shooter.setShooterExitVelocity(shootingVelocity);
+
 
         absdrive.setCenterOfRotation(Constants.Drivebase.CENTEROFROTATION);
         absdrive.setLocustDriving(false);
