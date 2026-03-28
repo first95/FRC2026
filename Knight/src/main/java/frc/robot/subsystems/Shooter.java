@@ -156,7 +156,7 @@ public class Shooter extends SubsystemBase {
 
     indexerFeedForward = new SimpleMotorFeedforward(ShooterConstants.INDEXER_KS, ShooterConstants.INDEXER_KV);
    
-    setShooterSpeeds(400,400);
+    //indexer.setVoltage(12);
 
     
   }
@@ -216,7 +216,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setIndexerSpeed(double speed){
-    indexer.set(speed);
+    //indexer.set(speed);
+    
   }
 
   public void setIndexerPID(double rpm){

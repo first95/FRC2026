@@ -258,11 +258,11 @@ public final class Constants {
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
-        public static final double INDEXER_KP = 0.000001;
+        public static final double INDEXER_KP = 0.0001;
         public static final double INDEXER_KI = 0;
         public static final double INDEXER_KD = 0.0;
-        public static final double INDEXER_KS = 0.087708;
-        public static final double INDEXER_KV = 0.00209302;
+        public static final double INDEXER_KS = 0.443023;//0.087708;
+        public static final double INDEXER_KV = 0.00230396;//0.00209302;
 
         public static final double INDEXER_PREPINDEXER_CURRENT_THRESHOLD = 0;
 
@@ -270,7 +270,7 @@ public final class Constants {
         public static final double TOPROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
-        public static final double SHOOTERTOLERANCE = 50;
+        public static final double SHOOTERTOLERANCE = 100;
         public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(2);
 
         public static final int INDEXER_ID = 14;
@@ -295,7 +295,7 @@ public final class Constants {
         public static final int N_NEWTONLINERIZATIONS = 20;
 
         public static final double VELOCITY_to_RPM_INTERPOLATIONSLOPE = 193.65429;
-        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 467.36514;
+        public static final double VELOCITY_to_RPM_INTERPOLATIONINTERCEPT = 487.36514;
 
 
         public static final double RPMOFFSET_INCREMENT = 20; 
