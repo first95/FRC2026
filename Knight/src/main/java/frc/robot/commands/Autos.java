@@ -142,7 +142,7 @@ public final class Autos {
 
 
   public AutoRoutine leftSideMidFieldAuto(){
-    SmartDashboard.putString("currentModularAuto", "SS0,LM1,SS0,LM0,SS0,");
+    SmartDashboard.putString("currentModularAuto", "SS0,SS0,LM0,SS0,");
     return ModularAuto();
   }
 
@@ -152,7 +152,7 @@ public final class Autos {
   }
 
   public AutoRoutine rightSideMidFieldAuto(){
-    SmartDashboard.putString("currentModularAuto", "SS1,LM3,SS1,LM4,SS1,");
+    SmartDashboard.putString("currentModularAuto", "SS1,SS1,LM4,SS1,");
     return ModularAuto();
   }
 

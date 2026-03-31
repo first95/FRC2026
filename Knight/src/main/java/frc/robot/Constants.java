@@ -412,7 +412,7 @@ public final class Constants {
         
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 2;
-        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.6;
+        public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.2;
         public static final double STARTING_INTAKE_WAIT = 0.2;
 
         // Trapezoidal drive PID constants

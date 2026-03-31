@@ -28,9 +28,9 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   private final SparkFlex topRollerMotor1, bottomRollerMotor1, bottomRollerMotor2; 
-  private final SparkMax indexer;
+  private final SparkFlex indexer;
   private final SparkFlexConfig topRollerMotor1Config, bottomRollerMotor1Config, bottomRollerMotor2Config;
-  private final SparkMaxConfig indexerConfig;
+  private final SparkFlexConfig indexerConfig;
   private final SparkClosedLoopController topRollerPID, bottomRollerPID, bottomRoller2PID,indexerPID;
   private SimpleMotorFeedforward topRollerfeedforward, bottomRollerfeedforward, bottomRoller2feedforward,indexerFeedForward;
   private final RelativeEncoder topRollerEncoder, bottomRollerEncoder;
@@ -131,8 +131,8 @@ public class Shooter extends SubsystemBase {
 
     setShooterSpeeds(topRollerSetPoint, bottomRollerSetPoint);
 
-    indexer = new SparkMax(ShooterConstants.INDEXER_ID, MotorType.kBrushless);
-    indexerConfig = new SparkMaxConfig();
+    indexer = new SparkFlex(ShooterConstants.INDEXER_ID, MotorType.kBrushless);
+    indexerConfig = new SparkFlexConfig();
     indexerPID = indexer.getClosedLoopController();
     
 
