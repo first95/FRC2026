@@ -64,7 +64,7 @@ public final class Constants {
 
         public static final int SWERVE_MODULE_CURRENT_LIMIT = 50;
 
-        public static final double HEADING_TOLERANCE = Math.toRadians(1);
+        public static final double HEADING_TOLERANCE = Math.toRadians(0.6);
 
         // Motor and encoder inversions
         public static final boolean ABSOLUTE_ENCODER_INVERT = true;
@@ -229,14 +229,14 @@ public final class Constants {
 
         public static final int BOTTOMROLLER_SMARTCURRENTLIMIT = 80;
 
-        public static final double BOTTOMROLLER_KP = 0.0003;
+        public static final double BOTTOMROLLER_KP = 0.0012;
         public static final double BOTTOMROLLER_KI = 0;
         public static final double BOTTOMROLLER_KD = 0.0;
         public static final double BOTTOMROLLER_KS = -0.01;//-0.00740034;
         public static final double BOTTOMROLLER_KV = 0.00181521;
         public static final double BOTTOMROLLER_KA = 0;
 
-        public static final double BOTTOMROLLER2_KP = 0.0003;
+        public static final double BOTTOMROLLER2_KP = 0.0012;
         public static final double BOTTOMROLLER2_KI = 0;
         public static final double BOTTOMROLLER2_KD = 0.0;
         public static final double BOTTOMROLLER2_KS = -0.01;//-0.00740034;
@@ -258,7 +258,7 @@ public final class Constants {
         public static final double INDEXER_CLEARSHOOTERSPEED = 0;
         public static final double INDEXERPREPSPEED = 0;
 
-        public static final double INDEXER_KP = 0.0001;
+        public static final double INDEXER_KP = 0.0005;
         public static final double INDEXER_KI = 0;
         public static final double INDEXER_KD = 0.0;
         public static final double INDEXER_KS = 0.443023;//0.087708;
@@ -271,7 +271,7 @@ public final class Constants {
         public static final double BOTTOMROLLER_CLEARSHOOTER_CURRENT_THRESHOLD = 0;
 
         public static final double SHOOTERTOLERANCE = 100;
-        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(2);
+        public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(3);
 
         public static final int INDEXER_ID = 14;
 
@@ -413,7 +413,7 @@ public final class Constants {
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 2;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.2;
-        public static final double STARTING_INTAKE_WAIT = 0.2;
+        public static final double STARTING_INTAKE_WAIT = 0.25;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
