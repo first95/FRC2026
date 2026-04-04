@@ -199,6 +199,8 @@ public class RobotContainer {
     autoChooser.addRoutine("ScorepreLoad", autos :: ScorePreLoad);
     autoChooser.addRoutine("leftSideMidFieldAuto", autos::leftSideMidFieldAuto);
     autoChooser.addRoutine("rightSideMidFieldAuto", autos::rightSideMidFieldAuto);
+    autoChooser.addRoutine("testAutoClimbnoDrive", autos::testClimbnoDrive);
+    autoChooser.addRoutine("testAutoClimbwithDrive", autos::testClimbwithDrive);
 
     autoChooser.select("ModularAuto");
     //autoChooser.addRoutine("Example Routine", this::exampleRoutine);
