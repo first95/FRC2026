@@ -272,6 +272,7 @@ public final class Constants {
 
         public static final double SHOOTERTOLERANCE = 100;
         public static final double SHOOTING_HEADING_TOLERANCE = Math.toRadians(3);
+        public static final double PASSING_HEADING_TOLERANCE = Math.toRadians(5);
 
         public static final int INDEXER_ID = 14;
 
@@ -299,6 +300,7 @@ public final class Constants {
 
 
         public static final double RPMOFFSET_INCREMENT = 20; 
+        public static final double REDSTARTINGRPMOFFSET = -60;
 
         public static final double MINRANGE = 2.62;
         public static final double MAXRANGE = Units.inchesToMeters(170);
@@ -342,12 +344,12 @@ public final class Constants {
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
-        public static final double AGITATOR1INTAKINGSPEED = 0.8;
+        public static final double AGITATOR1INTAKINGSPEED = 0;
         public static final double AGITATOR1SHOOTINGSPEED = 0.6;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
-        public static final double AGITATOR2INTAKINGSPEED = 0.8;
+        public static final double AGITATOR2INTAKINGSPEED = 0;
         public static final double AGITATOR2SHOOTINGSPEED = 0.6;
 
         

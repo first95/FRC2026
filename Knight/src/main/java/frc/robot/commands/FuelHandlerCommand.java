@@ -116,6 +116,7 @@ public class FuelHandlerCommand extends Command {
 ;
   public void initialize() {
     currentState = State.IDLE;
+    shootingRPMOffset = ShooterConstants.REDSTARTINGRPMOFFSET;
   }
 
 
@@ -157,7 +158,7 @@ public class FuelHandlerCommand extends Command {
     }
     else if(injectButton){
       intake.setRawSpeed(IntakeConstants.INJECTRAWSPEED);
-      shooter.setIndexerPID(ShooterConstants.INDEXER_INJECT_SPEED);
+      //shooter.setIndexerPID(ShooterConstants.INDEXER_INJECT_SPEED);
     }
     else{
       intake.setRPM(intakeSpeed);
@@ -260,17 +261,21 @@ public class FuelHandlerCommand extends Command {
 
         
 
-        if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) <= ShooterConstants.SHOOTING_HEADING_TOLERANCE && shootButton){
+        
           if(target == Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub")){
-            if (hubActive && inRange){
-              currentState = State.SHOOTING;
-            } 
+            if (shooter.shooterAtSpeed() && Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) <= ShooterConstants.SHOOTING_HEADING_TOLERANCE && shootButton){
+              if (hubActive && inRange){
+                currentState = State.SHOOTING;
+              } 
+            }
           }
           else{
-            currentState = State.SHOOTING;
+            if(Math.abs(currentRobotHeading.minus(shootingHeading).minus(Rotation2d.fromDegrees(swerve.getAlliance() == Alliance.Blue? 0:180)).getRadians()) <= ShooterConstants.PASSING_HEADING_TOLERANCE && shootButton){
+              currentState = State.SHOOTING;
+            }
           }
             
-        }
+        
         if (!aimButton && !shootButton){
           currentState = State.IDLE;
         }
