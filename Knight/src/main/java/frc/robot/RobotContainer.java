@@ -178,7 +178,6 @@ public class RobotContainer {
     
     shooter.setDefaultCommand(fuelhandler);
     intake.setDefaultCommand(fuelhandler);
-    climber.setDefaultCommand(fuelhandler);
 
     // Configure the trigger bindings
     configureBindings();

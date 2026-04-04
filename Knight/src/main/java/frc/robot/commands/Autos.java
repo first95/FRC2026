@@ -72,7 +72,7 @@ public final class Autos {
     autoFactory.bind("Shoot", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)));
     autoFactory.bind("stopShoot",  new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)));
     autoFactory.bind("Intake", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)));
-    autoFactory.bind("climberUp", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, true)));
+    //autoFactory.bind("climberUp", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, true)));
     autoFactory.bind("climberDown", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)));
     //autoFactory.bind("stopIntake",new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)));
   }

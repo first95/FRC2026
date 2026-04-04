@@ -345,12 +345,12 @@ public final class Constants {
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
         public static final double AGITATOR1INTAKINGSPEED = 0;
-        public static final double AGITATOR1SHOOTINGSPEED = 0.6;
+        public static final double AGITATOR1SHOOTINGSPEED = 1;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
         public static final double AGITATOR2INTAKINGSPEED = 0;
-        public static final double AGITATOR2SHOOTINGSPEED = 0.6;
+        public static final double AGITATOR2SHOOTINGSPEED = 1;
 
         
        
@@ -367,12 +367,12 @@ public final class Constants {
 
         public static final double CLIMBINGSPEED = 1;
 
-        public static final double POSTIONTOLLERANCE = 0.01;
+        public static final double POSTIONTOLLERANCE = 0.5;
 
         public static final double AUTOCURRENTTHRESHOLD = 30;
 
         public static final double CLIMBUPSETPOINT = 0;
-        public static final double CLIMBDOWNSETPOINT = 0;
+        public static final double CLIMBDOWNSETPOINT = -230;
 
 
     }
