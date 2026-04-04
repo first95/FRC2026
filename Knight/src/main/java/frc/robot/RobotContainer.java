@@ -172,11 +172,13 @@ public class RobotContainer {
       () -> operatorController.getHID().getYButton(), //injectButton
       shooter, 
       intake, 
+      climber,
       absoluteDrive, 
       drivebase);
     
     shooter.setDefaultCommand(fuelhandler);
     intake.setDefaultCommand(fuelhandler);
+    climber.setDefaultCommand(fuelhandler);
 
     // Configure the trigger bindings
     configureBindings();

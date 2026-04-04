@@ -47,13 +47,33 @@ public class Climber extends SubsystemBase {
   public void setClimberSpeed(double speed){
     motor1.set(speed);
   }
-  public void setClimberPosition(double position){
+  public double getClimberPosition(){
+    return motor1.getEncoder().getPosition();
+  }
+  public double getCurrent(){
+    return motor1.getOutputCurrent();
+  }
 
+  public void setClimberPostition(double position,double speed){
+    if(Math.abs(position - getClimberPosition()) >  ClimberConstants.POSTIONTOLLERANCE && getCurrent() < ClimberConstants.AUTOCURRENTTHRESHOLD){
+      if(getClimberPosition() < position){
+        setClimberSpeed(speed);
+      }
+      else if( getClimberPosition() > position){
+      
+        setClimberSpeed(-speed);
+      }
+    }
+    else{
+      setClimberSpeed(0);
+    }
   }
 
   public Command runClimber(double speed){
     return new InstantCommand(() -> setClimberSpeed(speed));
   }
+
+  
 
 
   
@@ -61,6 +81,7 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ClimberCurrent", motor1.getOutputCurrent());
+    SmartDashboard.putNumber("ClimberEncoder", motor1.getEncoder().getPosition());
     // This method will be called once per scheduler run
   }
 

@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants.Auton;
 import frc.robot.commands.autocommands.AlignToPose;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveBase;
 
@@ -71,6 +72,8 @@ public final class Autos {
     autoFactory.bind("Shoot", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, true)));
     autoFactory.bind("stopShoot",  new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_SHOOT_KEY, false)));
     autoFactory.bind("Intake", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true)));
+    autoFactory.bind("climberUp", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, true)));
+    autoFactory.bind("climberDown", new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)));
     //autoFactory.bind("stopIntake",new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)));
   }
 
@@ -139,6 +142,32 @@ public final class Autos {
     return routine;
 
   }
+
+  public AutoRoutine testClimbnoDrive(){
+    AutoRoutine routine = autoFactory.newRoutine("testClimbnoDrive");
+    routine.active().onTrue(
+      Commands.sequence(
+        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, true)),
+        new WaitCommand(3),
+        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, false)),
+        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)))
+        );
+    return routine;
+  }
+
+  public AutoRoutine testClimbwithDrive(){
+    AutoRoutine routine = autoFactory.newRoutine("testClimbwithDrive");
+    routine.active().onTrue(
+      Commands.sequence(
+        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, true)),
+        new WaitCommand(3),
+        new AlignToPose(routine.trajectory("S0xC0").getFinalPose().get(), swerve),
+        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, false)),
+        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)))
+        );
+    return routine;
+  }
+
 
 
   public AutoRoutine leftSideMidFieldAuto(){
@@ -227,9 +256,7 @@ public final class Autos {
         if(posTargets[posTargets.length-1].charAt(0) == 'C'){
           
           trajectories[trajectories.length-1].done().onTrue(
-            new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_KEY, true))
-            .andThen(new AlignToPose(new Pose2d(Auton.POSE_MAP.get(swerve.getAlliance()).get("climb").toTranslation2d(), Rotation2d.fromDegrees(Auton.POSE_MAP.get(swerve.getAlliance()).get("climb").getZ()).rotateBy(swerve.getAlliance() == Alliance.Blue ? new Rotation2d(1,0): new Rotation2d(-1,0))), swerve))
-            .andThen(new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_KEY, true)))
+            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true))
           );
 
         }

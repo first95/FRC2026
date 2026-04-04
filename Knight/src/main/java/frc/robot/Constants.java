@@ -367,6 +367,13 @@ public final class Constants {
 
         public static final double CLIMBINGSPEED = 1;
 
+        public static final double POSTIONTOLLERANCE = 0.01;
+
+        public static final double AUTOCURRENTTHRESHOLD = 30;
+
+        public static final double CLIMBUPSETPOINT = 0;
+        public static final double CLIMBDOWNSETPOINT = 0;
+
 
     }
     public static final class Vision {
@@ -403,6 +410,8 @@ public final class Constants {
         public static final String AUTO_CLIMB_KEY = "autoClimb";
         public static final String USE_AUTO_SHOOT_KEY = "useAutoShoot";
         public static final String AUTO_AIMKEY = "autoAim";
+        public static final String AUTO_CLIMB_UP_KEY = "autoClimbUp";
+        public static final String AUTO_CLIMB_DOWN_KEY = "autoClimbDown";
 
         public static final String TARGET_HEADING_KEY = "targetHeading";
 

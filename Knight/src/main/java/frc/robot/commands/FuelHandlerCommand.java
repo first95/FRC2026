@@ -6,10 +6,12 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.Constants.Auton;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.Drivebase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.drivebase.AbsoluteDrive;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveBase;
@@ -39,6 +41,7 @@ public class FuelHandlerCommand extends Command {
   
   private final Intake intake;
   private final Shooter shooter;
+  private final Climber climber;
   private final AbsoluteDrive absdrive;
   private final SwerveBase swerve;
 
@@ -92,6 +95,7 @@ public class FuelHandlerCommand extends Command {
     BooleanSupplier injectButtonSupplier,
     Shooter shooter,
     Intake intake,
+    Climber climber,
     AbsoluteDrive absdrive,
     SwerveBase swerve) {
 
@@ -105,6 +109,7 @@ public class FuelHandlerCommand extends Command {
 
     this.shooter = shooter;
     this.intake = intake;
+    this.climber = climber;
     this.absdrive = absdrive;
     this.swerve = swerve;
     
@@ -140,6 +145,15 @@ public class FuelHandlerCommand extends Command {
       aimButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_AIMKEY, false);
       shootButton = SmartDashboard.getBoolean(Constants.Auton.AUTO_SHOOT_KEY, false)&&SmartDashboard.getBoolean(Constants.Auton.USE_AUTO_SHOOT_KEY, false);
       
+      if(SmartDashboard.getBoolean(Auton.AUTO_CLIMB_UP_KEY,false)){
+        climber.setClimberPostition(ClimberConstants.CLIMBUPSETPOINT, 1);
+      }
+      if(SmartDashboard.getBoolean(Auton.AUTO_CLIMB_DOWN_KEY,false)){
+        climber.setClimberPostition(ClimberConstants.CLIMBDOWNSETPOINT, 0.3);
+      }
+      if(climber.getCurrent() > ClimberConstants.AUTOCURRENTTHRESHOLD){
+        climber.setClimberSpeed(0);
+      }
     }
     else{
       intakeButton = intakeButtonSupplier.getAsBoolean();
