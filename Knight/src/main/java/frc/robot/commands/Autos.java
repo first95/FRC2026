@@ -192,7 +192,8 @@ public final class Autos {
 
   public AutoRoutine ModularAuto(){
     AutoRoutine routine = autoFactory.newRoutine("ModularAuto");
-    String[] posTargets = getPosTargets();
+    String[] posTargets = getPosTargetsWithoutTrajVariation(getPosTargets());
+    String[] trajVaritation = getTrajVaritation(getPosTargets());
     
     Pose2d[] fullTrajectory = {};    
     if (posTargets != null && posTargets.length >= 2){
@@ -202,7 +203,7 @@ public final class Autos {
       //load trajectorys based on posTargets
       for(int n = 0; n < trajectories.length; n++){
         
-        trajectories[n] = routine.trajectory(posTargets[n].substring(1) + "x" + posTargets[n+1].substring(1));
+        trajectories[n] = routine.trajectory(posTargets[n].substring(1) + "x" + posTargets[n+1].substring(1)+trajVaritation[n]);
        
         
         
@@ -216,8 +217,10 @@ public final class Autos {
       routine.active().onTrue(
         Commands.sequence(
           //new AlignToPose(trajectories[0].getInitialPose().get(), swerve),
-          new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true))
+          new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_AIMKEY, true))
+          ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, true))
           ,new WaitCommand(Auton.STARTING_INTAKE_WAIT)
+          ,new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_AIMKEY, false))
           //new WaitCommand(Auton.STARTING_INTAKE_WAIT),
           //,(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false)))
           ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true))
@@ -256,7 +259,8 @@ public final class Autos {
         if(posTargets[posTargets.length-1].charAt(0) == 'C'){
           
           trajectories[trajectories.length-1].done().onTrue(
-            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true))
+            new AlignToPose(trajectories[trajectories.length-1].getFinalPose().get(), swerve).andThen(
+            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)))
           );
 
         }
@@ -317,6 +321,31 @@ public final class Autos {
     }
     
     
+  }
+  private String[] getPosTargetsWithoutTrajVariation(String[] posTargets){
+    String[] fixedposTargets = posTargets;
+     for(int pos = 0; pos < posTargets.length - 1; pos ++){
+        if(posTargets[pos].length() > 3){
+          fixedposTargets[pos] = posTargets[pos].substring(0,2);
+        }
+        else{
+          fixedposTargets[pos] = posTargets[pos];
+        }
+      }
+    SmartDashboard.putStringArray("posTargets",fixedposTargets);
+    return fixedposTargets;
+  }
+  private String[] getTrajVaritation(String[] posTargets){
+    String[] trajVariation = posTargets;
+    for(int pos = 0; pos < posTargets.length - 1; pos ++){
+        if(posTargets[pos].length() > 3){
+          trajVariation[pos] = String.valueOf(posTargets[pos].charAt(3));
+        }
+        else{
+          trajVariation[pos] = "";
+        }
+      }
+    return trajVariation;
   }
   private List<SwerveSample> getLaunchOnFlyTraj(AutoTrajectory ogTraj,double shootStart,double shootEnd){
     List<SwerveSample> movingTraj = new ArrayList<>();

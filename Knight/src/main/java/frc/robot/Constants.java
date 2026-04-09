@@ -344,12 +344,12 @@ public final class Constants {
 
         public static final double AGITATOR1IDLESPEED = 0;
         public static final double AGITATOR1AIMINGSPEED = 0;
-        public static final double AGITATOR1INTAKINGSPEED = 0;
+        public static final double AGITATOR1INTAKINGSPEED = 0.8;
         public static final double AGITATOR1SHOOTINGSPEED = 1;
 
         public static final double AGITATOR2IDLESPEED = 0;
         public static final double AGITATOR2AIMINGSPEED = 0;
-        public static final double AGITATOR2INTAKINGSPEED = 0;
+        public static final double AGITATOR2INTAKINGSPEED = 0.8;
         public static final double AGITATOR2SHOOTINGSPEED = 1;
 
         
