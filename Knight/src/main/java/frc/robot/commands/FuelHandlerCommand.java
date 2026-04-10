@@ -506,9 +506,15 @@ public class FuelHandlerCommand extends Command {
     double a = Math.pow(ShooterConstants.SHOOTER_EXIT_ANGLE.getCos(),2) * targetZ - targetDistance*ShooterConstants.SHOOTER_EXIT_ANGLE.getCos()*ShooterConstants.SHOOTER_EXIT_ANGLE.getSin();
     double b = 2*targetZ*ShooterConstants.SHOOTER_EXIT_ANGLE.getCos() * trvx - targetDistance * ShooterConstants.SHOOTER_EXIT_ANGLE.getSin()* trvx;
     double c = Math.pow(trvx,2) * targetZ + Math.pow(targetDistance,2)*Constants.GRAVITY/2;
-
-    return Math.sqrt( (- Constants.GRAVITY * Math.pow(fakeTargetDistance,2)) / 
+    if(Math.sqrt( (- Constants.GRAVITY * Math.pow(fakeTargetDistance,2)) / 
+    (2 * Math.pow(ShooterConstants.SHOOTER_EXIT_ANGLE.getCos(), 2) * (targetZ - fakeTargetDistance * ShooterConstants.SHOOTER_EXIT_ANGLE.getTan()))) > 0){
+      return Math.sqrt( (- Constants.GRAVITY * Math.pow(fakeTargetDistance,2)) / 
     (2 * Math.pow(ShooterConstants.SHOOTER_EXIT_ANGLE.getCos(), 2) * (targetZ - fakeTargetDistance * ShooterConstants.SHOOTER_EXIT_ANGLE.getTan())));
+    }
+    else{
+      return 0;
+    }
+    
     //return ((-b - Math.sqrt(Math.pow(b,2)-4*a*c))/2*a);
     // return Math.sqrt((-1 * Constants.GRAVITY* Math.pow(fakeTargetDistance, 2))/
     // (2 * Math.pow(ShooterConstants.SHOOTER_EXIT_ANGLE.getCos(),2) *  targetZ - 2 * Math.pow(ShooterConstants.SHOOTER_EXIT_ANGLE.getCos(),2) *fakeTargetDistance*ShooterConstants.SHOOTER_EXIT_ANGLE.getTan()));
