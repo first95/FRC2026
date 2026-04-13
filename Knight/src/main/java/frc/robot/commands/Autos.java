@@ -171,17 +171,17 @@ public final class Autos {
 
 
   public AutoRoutine leftSideMidFieldAuto(){
-    SmartDashboard.putString("currentModularAuto", "SS0,SS0,SS0x,");
+    SmartDashboard.putString("currentModularAuto", "SS0,LT0,SS0,LT0x,SS0,");
     return ModularAuto();
   }
 
   public AutoRoutine leftSideMidSweepingAuto(){
-     SmartDashboard.putString("currentModularAuto", "SS0,SS0,LM0,SS0,");
+     SmartDashboard.putString("currentModularAuto", "SS0,LT0,SS0,LT0x,SS0,");
     return ModularAuto();
   }
 
   public AutoRoutine rightSideMidFieldAuto(){
-    SmartDashboard.putString("currentModularAuto", "SS1,SS1,SS1x,");
+    SmartDashboard.putString("currentModularAuto", "SS1,LT1,SS1,LT1x,SS1,");
     return ModularAuto();
   }
 
@@ -203,7 +203,7 @@ public final class Autos {
       //load trajectorys based on posTargets
       for(int n = 0; n < trajectories.length; n++){
         
-        trajectories[n] = routine.trajectory(posTargets[n].substring(1) + "x" + posTargets[n+1].substring(1)+trajVaritation[n]);
+        trajectories[n] = routine.trajectory(posTargets[n].substring(1) + "x" + posTargets[n+1].substring(1)+trajVaritation[n+1]);
        
         
         
@@ -224,7 +224,7 @@ public final class Autos {
           //new WaitCommand(Auton.STARTING_INTAKE_WAIT),
           //,(new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY,false)))
           ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, true))
-          .andThen(posTargets[0].charAt(0) == 'S' ? (stationaryShotRoutine(trajectories[0].getInitialPose().get(),Auton.AUTON_PRELOADSCORE_WAIT_TIME)): (new AlignToPose(trajectories[0].getInitialPose().get(), swerve)))
+          .andThen(posTargets[0].charAt(0) == 'S' ? (stationaryShotRoutine(trajectories[0].getInitialPose().get(),Auton.AUTON_PRELOADSCORE_WAIT_TIME)): (new InstantCommand()))
           ,new InstantCommand(()->SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY, false)),
           trajectories[0].cmd()
         )
@@ -253,7 +253,7 @@ public final class Autos {
             .andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)))));
         }
         else{
-          trajectories[n].done().onTrue(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false)).andThen(trajectories[n+1].cmd()));
+          trajectories[n].done().onTrue(new AlignToPose(trajectories[n+1].getInitialPose().get(), swerve).andThen(new InstantCommand(()-> SmartDashboard.putBoolean(Auton.USE_AUTO_SHOOT_KEY,false))).andThen(trajectories[n+1].cmd()));
         }
 
         if(posTargets[posTargets.length-1].charAt(0) == 'C'){
@@ -312,7 +312,7 @@ public final class Autos {
           posTarget += currentModularAuto.charAt(character);
         }
       }
-      SmartDashboard.putStringArray("posTargets", posTargets);
+      //SmartDashboard.putStringArray("posTargets", posTargets);
       return posTargets;
       
     }
@@ -324,9 +324,9 @@ public final class Autos {
   }
   private String[] getPosTargetsWithoutTrajVariation(String[] posTargets){
     String[] fixedposTargets = posTargets;
-     for(int pos = 0; pos < posTargets.length - 1; pos ++){
+     for(int pos = 0; pos <= posTargets.length - 1; pos ++){
         if(posTargets[pos].length() > 3){
-          fixedposTargets[pos] = posTargets[pos].substring(0,2);
+          fixedposTargets[pos] = posTargets[pos].substring(0,3);
         }
         else{
           fixedposTargets[pos] = posTargets[pos];
@@ -337,7 +337,7 @@ public final class Autos {
   }
   private String[] getTrajVaritation(String[] posTargets){
     String[] trajVariation = posTargets;
-    for(int pos = 0; pos < posTargets.length - 1; pos ++){
+    for(int pos = 0; pos <= posTargets.length - 1; pos ++){
         if(posTargets[pos].length() > 3){
           trajVariation[pos] = String.valueOf(posTargets[pos].charAt(3));
         }
@@ -345,7 +345,9 @@ public final class Autos {
           trajVariation[pos] = "";
         }
       }
+    SmartDashboard.putStringArray("trajVaritation",trajVariation);
     return trajVariation;
+    
   }
   private List<SwerveSample> getLaunchOnFlyTraj(AutoTrajectory ogTraj,double shootStart,double shootEnd){
     List<SwerveSample> movingTraj = new ArrayList<>();
