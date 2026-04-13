@@ -260,7 +260,8 @@ public final class Autos {
           
           trajectories[trajectories.length-1].done().onTrue(
             new AlignToPose(trajectories[trajectories.length-1].getFinalPose().get(), swerve).andThen(
-            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)))
+            new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)).andThen(
+            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true))))
           );
 
         }
