@@ -260,7 +260,7 @@ public class FuelHandlerCommand extends Command {
 
       case AIMING:
         SmartDashboard.putString("State","Aiming");
-        shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset);
+        shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset,target != Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"));
         indexingSpeed = ShooterConstants.INDEXER_IDLE_SPEED;
 
         absdrive.setLocustDriving(false);
@@ -298,7 +298,7 @@ public class FuelHandlerCommand extends Command {
 
       case SHOOTING:
         SmartDashboard.putString("State","Shooting");
-        shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset);
+        shooter.setShooterExitVelocity(shootingVelocity, shootingRPMOffset, target != Auton.POSE_MAP.get(swerve.getAlliance()).get("Hub"));
         indexingSpeed = ShooterConstants.INDEXINGSPEED;
 
         absdrive.setCenterOfRotation(ShooterConstants.SHOOTERLOCATION.toTranslation2d());
@@ -328,7 +328,7 @@ public class FuelHandlerCommand extends Command {
       break;
 
       case MANUALSHOOT:
-        shooter.setShooterExitVelocity(ShooterConstants.MANUALSHOOTSPEED,shootingRPMOffset);
+        shooter.setShooterExitVelocity(ShooterConstants.MANUALSHOOTSPEED,shootingRPMOffset,true);
         intakeSpeed = IntakeConstants.SHOOTINGSPEED;
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);

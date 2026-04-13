@@ -191,12 +191,12 @@ public class Shooter extends SubsystemBase {
     double rpm = velocity * ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONSLOPE  + ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONINTERCEPT;
     //use an interpolation to find what rpms will give the desired velocity
     setShooterSpeeds(rpm,rpm);
-    //setShooterSpeeds(rpm, rpm);
+    //setShooterSpeeds(5000, 250);
   }
-  public void setShooterExitVelocity(double velocity, double RPMoffset){
+  public void setShooterExitVelocity(double velocity, double RPMoffset, boolean passing){
     double rpm = velocity * ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONSLOPE  + ShooterConstants.VELOCITY_to_RPM_INTERPOLATIONINTERCEPT;
     //use an interpolation to find what rpms will give the desired velocity
-    setShooterSpeeds(rpm + RPMoffset,rpm + RPMoffset);
+    setShooterSpeeds((passing? 4:1) * rpm + RPMoffset,(passing? 0.25:1)*rpm + RPMoffset);
   }
   public boolean shooterAtSpeed(){
     return Math.abs(topRollerSetPoint - topRollerEncoder.getVelocity()) <= ShooterConstants.SHOOTERTOLERANCE &&
