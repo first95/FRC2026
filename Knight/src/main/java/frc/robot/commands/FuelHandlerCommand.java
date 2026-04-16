@@ -240,7 +240,7 @@ public class FuelHandlerCommand extends Command {
 
       
 
-        absdrive.setLocustDriving(false);
+        absdrive.setLocustDriving(true);
 
 
         intakeSpeed = IntakeConstants.INTAKINGSPEED;
@@ -333,7 +333,7 @@ public class FuelHandlerCommand extends Command {
         intake.setAgitator1Speed(IntakeConstants.AGITATOR1SHOOTINGSPEED);
         intake.setAgitator2Speed(IntakeConstants.AGITATOR2SHOOTINGSPEED);
 
-        // if(shooter.shooterAtSpeed()){
+        //if(shooter.shooterAtSpeed()){
           indexingSpeed = ShooterConstants.INDEXINGSPEED;
         //}
         
