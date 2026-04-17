@@ -147,9 +147,6 @@ public final class Autos {
     AutoRoutine routine = autoFactory.newRoutine("testClimbnoDrive");
     routine.active().onTrue(
       Commands.sequence(
-        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, true)),
-        new WaitCommand(3),
-        new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_UP_KEY, false)),
         new InstantCommand(()->SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)))
         );
     return routine;
@@ -171,7 +168,7 @@ public final class Autos {
 
 
   public AutoRoutine leftSideMidFieldAuto(){
-    SmartDashboard.putString("currentModularAuto", "SS0,LT0,SS0,LT0x,SS0,");
+    SmartDashboard.putString("currentModularAuto", "SS0,SS0,SS0x,");
     return ModularAuto();
   }
 
@@ -259,9 +256,9 @@ public final class Autos {
         if(posTargets[posTargets.length-1].charAt(0) == 'C'){
           
           trajectories[trajectories.length-1].done().onTrue(
-            new AlignToPose(trajectories[trajectories.length-1].getFinalPose().get(), swerve).andThen(
-            new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)).andThen(
-            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true))))
+            new InstantCommand(()-> SmartDashboard.putBoolean(Auton.AUTO_CLIMB_DOWN_KEY, true)).andThen(
+            new AlignToPose(trajectories[trajectories.length-1].getFinalPose().get(), swerve)).andThen(
+            new InstantCommand(() -> SmartDashboard.putBoolean(Auton.AUTO_INTAKE_KEY, false)))
           );
 
         }

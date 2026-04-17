@@ -342,6 +342,7 @@ public class RobotContainer {
 
   public void setBrakes(boolean setbrake){
     drivebase.setMotorBrake(setbrake);
+    climber.setClimberSpeed(0);
   }
 
   private Map<String, Optional<Trajectory<SwerveSample>>> loadTrajectories() {

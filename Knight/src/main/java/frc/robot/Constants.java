@@ -300,7 +300,7 @@ public final class Constants {
 
 
         public static final double RPMOFFSET_INCREMENT = 20; 
-        public static final double REDSTARTINGRPMOFFSET = -60;
+        public static final double REDSTARTINGRPMOFFSET = 0;
 
         public static final double MINRANGE = 2.62;
         public static final double MAXRANGE = Units.inchesToMeters(170);
@@ -363,7 +363,7 @@ public final class Constants {
 
         public static final boolean INVERTED = true;
 
-        public static final int SMARTCURRENTLIMIT = 80;
+        public static final int SMARTCURRENTLIMIT = 17;
 
         public static final double CLIMBINGSPEED = 1;
 
@@ -372,7 +372,7 @@ public final class Constants {
         public static final double AUTOCURRENTTHRESHOLD = 30;
 
         public static final double CLIMBUPSETPOINT = 0;
-        public static final double CLIMBDOWNSETPOINT = -230;
+        public static final double CLIMBDOWNSETPOINT = -212;
 
 
     }
@@ -424,7 +424,7 @@ public final class Constants {
 
         public static final double AUTON_STATIONARY_SCORING_WAIT_TIME = 2;
         public static final double AUTON_PRELOADSCORE_WAIT_TIME = 0.2;
-        public static final double STARTING_INTAKE_WAIT = 0.25;
+        public static final double STARTING_INTAKE_WAIT = 0.25/2;
 
         // Trapezoidal drive PID constants
         public static final double DRIVE_ACCELERATION_LIMIT = 2.1; // m/s/s
