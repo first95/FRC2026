@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,12 +35,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    //turn off pheonix logger
+    SignalLogger.enableAutoLogging(false);
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     initializeDashboard();
     m_robotContainer.setIsAuto(false);
 
+    
     // Grab the build computer, branchname, git commit ID and build timestamp from the Jar manifest
     // and toss the on the smart dashboard
     String hostbranch = Robot.class.getPackage().getImplementationTitle();
