@@ -126,12 +126,12 @@ public class AbsoluteDrive extends Command {
 
       // Convert joystick inputs to m/s by scaling by max linear speed.  Also uses a cubic function
       // to allow for precise control and fast movement.
-      x = Math.pow(vX.getAsDouble(), 3) * Drivebase.MAX_SPEED;
-      y = Math.pow(vY.getAsDouble(), 3) * Drivebase.MAX_SPEED;
+      x = Math.pow(vX.getAsDouble(), 3) * Drivebase.MAX_SPEED * Drivebase.VELOCTIYMULTFACTOR;
+      y = Math.pow(vY.getAsDouble(), 3) * Drivebase.MAX_SPEED * Drivebase.VELOCTIYMULTFACTOR;
 
       // Limit velocity to prevent tippy
-      //Translation2d translation = limitVelocity(new Translation2d(x, y));
-      Translation2d translation = new Translation2d(x, y);
+      Translation2d translation = limitVelocity(new Translation2d(x, y));
+      //Translation2d translation = new Translation2d(x, y);
       
 
       // Make the robot move
@@ -243,11 +243,14 @@ public class AbsoluteDrive extends Command {
 
     // Creates an acceleration vector with the direction of delta V and a magnitude
     // of the maximum allowed acceleration in that direction 
+    // Translation2d maxAccel = new Translation2d(
+    //   calcMaxAccel(deltaV
+    //     // Rotates the velocity vector to convert from field-relative to robot-relative
+    //     .rotateBy(swerve.getTelePose().getRotation().unaryMinus())
+    //     .getAngle()),
+    //   deltaV.getAngle());
     Translation2d maxAccel = new Translation2d(
-      calcMaxAccel(deltaV
-        // Rotates the velocity vector to convert from field-relative to robot-relative
-        .rotateBy(swerve.getTelePose().getRotation().unaryMinus())
-        .getAngle()),
+      Constants.Drivebase.MAX_ACCELERATION,
       deltaV.getAngle());
 
     // Calculate the maximum achievable velocity by the next loop cycle.

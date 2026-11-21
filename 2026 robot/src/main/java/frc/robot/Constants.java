@@ -97,13 +97,20 @@ public final class Constants {
         // Drivetrain limitations
         public static final double MAX_SPEED = (VORTEX_FREE_SPEED * Units.inchesToMeters(3 * Math.PI)) / (60 * 4.71); // meters per second NOT A LIMIT!!! DO NOT TOUCH!!!
         public static final double MAX_ANGULAR_VELOCITY = MAX_SPEED / Math.hypot(FRONT_LEFT_X, FRONT_LEFT_Y); // rad/s
+
+        public static final double VELOCTIYMULTFACTOR = 0.6;
+        public static final double ACCELERATIONMULTFACTOR = 0.1;
+        
         // Theoretical max acceleration should be as follows:
         // (NEO stall torque * module gearing * number of modules) / (wheel radius *
         // robot mass) = m/s/s
         // (2.6 * 6.75 * 4) / (Units.inchesToMeters(2) * ROBOT_MASS)
         // However, the drive is traction-limited, so the max accelration is actually
         // (wheel coefficient of friction * gravity)
-        public static final double MAX_ACCELERATION = 1 * GRAVITY; // COF is 1.1 but careful
+
+        //public static final double MAX_ACCELERATION = 1 * GRAVITY;
+        public static final double MAX_ACCELERATION = 1 * GRAVITY*ACCELERATIONMULTFACTOR; // COF is 1.1 but careful
+
         public static final double MAX_ANGULAR_ACCELERATION = MAX_ACCELERATION / Math.hypot(FRONT_LEFT_X, FRONT_LEFT_Y);
         // max speed (RPM) / gear ratio, convert to deg/min, divide by 60 for deg/s
         public static final double MAX_MODULE_ANGULAR_SPEED = Units.rotationsToDegrees(NEO_550_FREE_SPEED * 7 / 372)/ 60; // deg/sk
